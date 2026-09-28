@@ -1,0 +1,23 @@
+{
+ "instances": 1484,
+ "failures": {
+  "sql_executes": 0,
+  "gold_reproduces": 0,
+  "schema_refs": 0,
+  "slots_in_text": 0,
+  "translation": 0,
+  "leak_sql_across_splits": 0,
+  "leak_question_across_splits": 0,
+  "heldout_template_in_train": 0
+ },
+ "examples": {
+  "sql_executes": [],
+  "gold_reproduces": [],
+  "schema_refs": [],
+  "slots_in_text": [],
+  "translation": [],
+  "leak_sql_across_splits": [],
+  "leak_question_across_splits": [],
+  "heldout_template_in_train": []
+ }
+}

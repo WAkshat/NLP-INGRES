@@ -1,0 +1,174 @@
+unit_id,unit_name,unit_type,district_id,district_name,state_id,state_name,n_years,is_ambiguous_name,has_respelling,unit_display,district_display,state_display
+d842be3b-74be-4ca4-9452-867a89ae8b40,CAR NICOBAR,ISLAND,a2e33af2-ef94-4213-9bb6-6708b6f4b2df,NICOBAR,68dad067-a4cc-4397-a6fd-fc10ef7cc933,ANDAMAN AND NICOBAR ISLANDS,3,False,False,Car Nicobar,Nicobar,Andaman and Nicobar Islands
+5efa1eb7-410c-4ae0-91b7-a6f39eb551ab,GREAT NICOBAR,BLOCK,a2e33af2-ef94-4213-9bb6-6708b6f4b2df,NICOBAR,68dad067-a4cc-4397-a6fd-fc10ef7cc933,ANDAMAN AND NICOBAR ISLANDS,3,False,False,Great Nicobar,Nicobar,Andaman and Nicobar Islands
+5781a2e3-0a1c-417f-b5c5-4b27b98d7c11,FERRARGANJ,BLOCK,afe15e73-a428-476f-b0d2-43431fbbb781,SOUTH ANDAMAN,68dad067-a4cc-4397-a6fd-fc10ef7cc933,ANDAMAN AND NICOBAR ISLANDS,3,False,False,Ferrarganj,South Andaman,Andaman and Nicobar Islands
+125582ee-e600-4e73-b020-4be94d591237,LITTLE ANDAMAN,ISLAND,afe15e73-a428-476f-b0d2-43431fbbb781,SOUTH ANDAMAN,68dad067-a4cc-4397-a6fd-fc10ef7cc933,ANDAMAN AND NICOBAR ISLANDS,5,False,False,Little Andaman,South Andaman,Andaman and Nicobar Islands
+01888a3b-cc73-4b42-afbc-dc3aab0a44b5,BUCHINAIDU KHANDRI,BLOCK,5a2529a7-a25b-449b-8b8a-2f0196cd1560,TIRUPATHI,609c5df4-6414-4bbd-a22d-ff5fbdad6836,ANDHRA PRADESH,4,False,False,Buchinaidu Khandri,Tirupathi,Andhra Pradesh
+eb36b3c1-f417-4fb1-8b3b-fcfaedfa3d04,CHINNAGOTTIGALLU,BLOCK,5a2529a7-a25b-449b-8b8a-2f0196cd1560,TIRUPATHI,609c5df4-6414-4bbd-a22d-ff5fbdad6836,ANDHRA PRADESH,4,False,False,Chinnagottigallu,Tirupathi,Andhra Pradesh
+5bf2e713-d58e-4e14-be4f-5c6d9f4f80b7,B KODUR,BLOCK,8aaaa8a3-72bc-4cba-82f6-132638c8c777,Y.S.R Kadapa,609c5df4-6414-4bbd-a22d-ff5fbdad6836,ANDHRA PRADESH,5,False,False,B Kodur,Y.S.R Kadapa,Andhra Pradesh
+7ef4df9a-0b91-4293-96fe-ded36c860e23,BRAHMAMGARIMATTAM,BLOCK,8aaaa8a3-72bc-4cba-82f6-132638c8c777,Y.S.R Kadapa,609c5df4-6414-4bbd-a22d-ff5fbdad6836,ANDHRA PRADESH,5,False,False,Brahmamgarimattam,Y.S.R Kadapa,Andhra Pradesh
+0d546a5c-76e2-4d60-a7b5-680a043e1768,Pasighat,BLOCK,85ee1284-8a94-4a00-8bc7-564d95133591,EAST SIANG,f318279f-537d-4373-b9dc-ac347cdef82f,ARUNACHAL PRADESH,3,False,False,Pasighat,East Siang,Arunachal Pradesh
+71cb5ca4-be4e-4cfd-86d2-161630a81699,Ruksin,BLOCK,85ee1284-8a94-4a00-8bc7-564d95133591,EAST SIANG,f318279f-537d-4373-b9dc-ac347cdef82f,ARUNACHAL PRADESH,3,False,False,Ruksin,East Siang,Arunachal Pradesh
+183b5e22-7911-45c8-b899-ed05777f5b69,Lekang_Mahadevpur,BLOCK,f6557512-fac3-43b0-b580-c48b6915c24a,LOHIT,f318279f-537d-4373-b9dc-ac347cdef82f,ARUNACHAL PRADESH,3,False,False,Lekang Mahadevpur,Lohit,Arunachal Pradesh
+d1292ea5-eb68-4026-9f8b-03a879f89f3e,Tezu,BLOCK,f6557512-fac3-43b0-b580-c48b6915c24a,LOHIT,f318279f-537d-4373-b9dc-ac347cdef82f,ARUNACHAL PRADESH,3,False,False,Tezu,Lohit,Arunachal Pradesh
+dffb2e3b-7ac0-487b-81c0-d6528057e4c5,CHAKCHAKA (PART),BLOCK,26b268a2-5ecf-4b52-a6ad-bfa164482450,CHIRANG,94360caf-ebf0-4303-8c9e-3509bb0cded2,ASSAM,3,False,False,Chakchaka (part),Chirang,Assam
+2ef690dc-f42e-4f13-acfc-512fb08965db,MANIKPUR (PART),BLOCK,26b268a2-5ecf-4b52-a6ad-bfa164482450,CHIRANG,94360caf-ebf0-4303-8c9e-3509bb0cded2,ASSAM,3,False,False,Manikpur (part),Chirang,Assam
+4df68f35-f6b9-4ecd-9c9c-b9490ebc54f5,RAMPUR,BLOCK,c35c8566-88ed-4494-b7af-10c12e475177,KAMRUP,94360caf-ebf0-4303-8c9e-3509bb0cded2,ASSAM,3,True,False,Rampur,Kamrup,Assam
+e4be4552-1f3c-4934-808d-d9a460d48f0c,BARHAMPUR,BLOCK,ed201586-ae74-4268-b6ef-a86332783113,NAGAON,94360caf-ebf0-4303-8c9e-3509bb0cded2,ASSAM,3,False,False,Barhampur,Nagaon,Assam
+1b89daca-28cb-41f4-9af2-80275a93245c,BINNAKANDI,BLOCK,ed201586-ae74-4268-b6ef-a86332783113,NAGAON,94360caf-ebf0-4303-8c9e-3509bb0cded2,ASSAM,3,False,False,Binnakandi,Nagaon,Assam
+9e2fbfeb-8c9d-4d93-bd52-cc5c596922a5,BAGHMARA,BLOCK,6ac91db2-0b7d-49ba-99b1-bc3692bb017e,SONITPUR,94360caf-ebf0-4303-8c9e-3509bb0cded2,ASSAM,3,True,False,Baghmara,Sonitpur,Assam
+91b73879-c2e8-432c-8008-f72fc5a8537b,Rajoun,BLOCK,3a2296b5-5a32-44bf-ab9e-57ddcc664c2b,BANKA,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,False,True,Rajoun,Banka,Bihar
+d1a4d813-478c-47ad-a271-9b7e7a5ac0dc,SHAHPUR,BLOCK,f381a4a9-7034-4323-9740-5430b6e9753b,BHOJPUR,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,True,False,Shahpur,Bhojpur,Bihar
+5de39238-65ef-424f-9996-9a3f50a580a4,Khizar Sarai,BLOCK,535c0735-5709-4e16-b842-83fb97fa3ade,GAYA,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,False,True,Khizar Sarai,Gaya,Bihar
+01bbee00-a1b8-40ed-9cfc-c382fd1232fa,MANPUR,BLOCK,535c0735-5709-4e16-b842-83fb97fa3ade,GAYA,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,True,False,Manpur,Gaya,Bihar
+747bfc68-3e9c-4d21-a329-652f21fe1514,MOHANPUR,BLOCK,535c0735-5709-4e16-b842-83fb97fa3ade,GAYA,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,True,False,Mohanpur,Gaya,Bihar
+997b1476-f36c-45ca-84d2-5d364c580e26,BARAULI,BLOCK,7e57372d-a2ae-4801-bc3c-9d8ee6952de8,GOPALGANJ,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,False,False,Barauli,Gopalganj,Bihar
+039c9db7-5369-4f20-af5b-597b30052e2d,GOPALGANJ,BLOCK,7e57372d-a2ae-4801-bc3c-9d8ee6952de8,GOPALGANJ,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,False,False,Gopalganj,Gopalganj,Bihar
+35719335-44ae-4315-a1df-63da478896a5,Panchdevari,BLOCK,7e57372d-a2ae-4801-bc3c-9d8ee6952de8,GOPALGANJ,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,False,True,Panchdevari,Gopalganj,Bihar
+c45478af-62b2-4a5c-84da-799e1cce75ce,Adhaura,BLOCK,84d4e37f-47da-47ca-a9b4-59cd8dd41902,KAIMUR,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,False,True,Adhaura,Kaimur,Bihar
+e3407e93-a511-4be4-928d-0ab11db389e4,BHABHUA,BLOCK,84d4e37f-47da-47ca-a9b4-59cd8dd41902,KAIMUR,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,False,False,Bhabhua,Kaimur,Bihar
+ea8686bc-4227-4d6e-b895-cf2390b344bb,CHAINPUR,BLOCK,84d4e37f-47da-47ca-a9b4-59cd8dd41902,KAIMUR,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,False,False,Chainpur,Kaimur,Bihar
+0e8bdeeb-6b2e-4d80-8141-38072e38d074,RAMPUR,BLOCK,84d4e37f-47da-47ca-a9b4-59cd8dd41902,KAIMUR,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,True,False,Rampur,Kaimur,Bihar
+f8246add-0f76-4edf-9b18-c9d57074cf76,Jamalpur,BLOCK,36994ed2-7338-4936-b3bd-de99dabb6790,MUNGER,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,True,False,Jamalpur,Munger,Bihar
+d7884ef3-7e9c-479a-824b-06e1625e647f,Karai Parsarai,BLOCK,11a6a277-312e-4529-a981-c338f30f65f3,NALANDA,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,False,True,Karai Parsarai,Nalanda,Bihar
+bf8c6708-d32d-4e7a-9403-640ca99a7cbc,Phulwari Sharif,BLOCK,0590b500-6e52-481e-951d-7664d3da56ab,PATNA,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,False,True,Phulwari Sharif,Patna,Bihar
+aa9e328d-8478-4b40-b934-9b3afd58a89d,MOHANPUR,BLOCK,f6c6a4e3-cad6-46a4-b644-3ad9485e67bf,SAMASTIPUR,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,True,False,Mohanpur,Samastipur,Bihar
+4d6f50b2-278b-4459-b56a-e556b70c8627,Narkatiaganj,BLOCK,42bbcf32-6a75-406c-999c-71aeae5b40fa,WEST CHAMPARAN,ae12d8f1-e36c-445f-8d32-80f958766b4e,BIHAR,5,False,True,Narkatiaganj,West Champaran,Bihar
+578739f7-390b-4d4e-91e5-bbef076cb1b5,CHANDIGARH,DISTRICT,578739f7-390b-4d4e-91e5-bbef076cb1b5,CHANDIGARH,d6da1adf-2a9c-4908-a356-e7668d4ab108,CHANDIGARH,5,False,False,Chandigarh,Chandigarh,Chandigarh
+3514fd94-14c0-49d2-b691-0eafe49869b7,BERLA,BLOCK,01d78dd6-c209-4976-b177-8b75a93f23e2,BEMETARA,bd81d570-0e97-4dad-9bcd-219a05f56f2f,CHHATTISGARH,5,False,False,Berla,Bemetara,Chhattisgarh
+6b7333c5-e91e-416b-af09-adf29c89d70b,SAJA,BLOCK,01d78dd6-c209-4976-b177-8b75a93f23e2,BEMETARA,bd81d570-0e97-4dad-9bcd-219a05f56f2f,CHHATTISGARH,5,False,False,Saja,Bemetara,Chhattisgarh
+b93c1fd4-133f-4be8-b89d-7520bcebaa0e,DULDULA,BLOCK,e36f5ae6-350a-4b52-a228-21d56440fef8,JASHPUR,bd81d570-0e97-4dad-9bcd-219a05f56f2f,CHHATTISGARH,5,False,False,Duldula,Jashpur,Chhattisgarh
+59b30e97-d429-436f-ba6c-380abf57acca,KANSABEL,BLOCK,e36f5ae6-350a-4b52-a228-21d56440fef8,JASHPUR,bd81d570-0e97-4dad-9bcd-219a05f56f2f,CHHATTISGARH,5,False,False,Kansabel,Jashpur,Chhattisgarh
+a7b045d4-f80c-4329-a7e7-a0a5ea2af625,MANPUR,BLOCK,5792e7e2-6727-4b70-81cc-3a548e220227,MOHLA-MANPUR_AMBAGARHCHOWKI,bd81d570-0e97-4dad-9bcd-219a05f56f2f,CHHATTISGARH,5,True,False,Manpur,Mohla-Manpur Ambagarhchowki,Chhattisgarh
+a132105f-736d-491c-a1ab-badd01c7e7c0,KHARSIYA,BLOCK,ca2034f3-7139-493e-b55b-84deb9ec89f0,RAIGARH,bd81d570-0e97-4dad-9bcd-219a05f56f2f,CHHATTISGARH,5,False,True,Kharsiya,Raigarh,Chhattisgarh
+806ccebe-5763-4539-ab4a-1092cf30ac2f,DADRA NAGAR HAVELI,DISTRICT,806ccebe-5763-4539-ab4a-1092cf30ac2f,DADRA NAGAR HAVELI,f5c761d1-d9c5-4e5f-af48-2cdfc1c92ce8,DADRA AND NAGAR HAVELI,5,False,False,Dadra Nagar Haveli,Dadra Nagar Haveli,Dadra and Nagar Haveli
+238ded6a-a865-4eeb-a80a-c9a43935eccd,DAMAN,DISTRICT,238ded6a-a865-4eeb-a80a-c9a43935eccd,DAMAN,ee1789e0-3831-4cdb-b0b8-77231309cd7e,DAMAN AND DIU,5,False,False,Daman,Daman,Daman and Diu
+eebce92a-ba08-42d3-b74c-e3a90cc18742,DIU,DISTRICT,eebce92a-ba08-42d3-b74c-e3a90cc18742,DIU,ee1789e0-3831-4cdb-b0b8-77231309cd7e,DAMAN AND DIU,5,False,False,Diu,Diu,Daman and Diu
+d77d2446-a1b1-426f-8d76-ebaf78d044cd,NAZUR LAND,TEHSIL,0336d4df-8cbc-496d-a3f3-2733f422c90a,EAST,a1ac5d18-8c9a-4047-8fdd-4d7d9deaa34e,DELHI,5,False,False,Nazur Land,East,Delhi
+13ed684b-644e-4ae4-951f-e84b7cbc9277,DWARKA,TEHSIL,4a951048-ced5-4b96-8516-08530255f91b,SOUTH EAST,a1ac5d18-8c9a-4047-8fdd-4d7d9deaa34e,DELHI,5,False,False,Dwarka,South East,Delhi
+08a98b4d-1418-47e0-9029-0371e975eb60,KAPASHERA,TEHSIL,4a951048-ced5-4b96-8516-08530255f91b,SOUTH EAST,a1ac5d18-8c9a-4047-8fdd-4d7d9deaa34e,DELHI,5,False,False,Kapashera,South East,Delhi
+ec2253bb-20b9-4789-b42d-f5db0ee58b02,BICHOLIM,TALUK,263270cc-5797-436b-bdd3-01db6b794e95,GOA NORTH,7f615d2f-0be6-42bf-891f-7239e101e487,GOA,5,False,False,Bicholim,Goa North,Goa
+d0a66f89-a350-402e-b1ab-b969c11804ee,SATARI,TALUK,263270cc-5797-436b-bdd3-01db6b794e95,GOA NORTH,7f615d2f-0be6-42bf-891f-7239e101e487,GOA,5,False,False,Satari,Goa North,Goa
+41d8763b-aa8e-411f-a0f5-4c3bad0aceb7,DHARBANDORA,TALUK,7b17a41f-5c03-44a7-b4c4-7129aaa7a590,SOUTH GOA,7f615d2f-0be6-42bf-891f-7239e101e487,GOA,5,False,False,Dharbandora,South Goa,Goa
+7cfb07e5-712e-45a0-8d86-a9d7c772a2bf,PONDA,TALUK,7b17a41f-5c03-44a7-b4c4-7129aaa7a590,SOUTH GOA,7f615d2f-0be6-42bf-891f-7239e101e487,GOA,5,False,False,Ponda,South Goa,Goa
+ada3d523-9805-4cd9-b2a7-113568891b9a,ANKLESVAR,TALUK,9dbf484f-1760-46a4-9888-7163cdd5d351,BHARUCH,8fd29251-6e20-4f33-9a96-f47cab45eb13,GUJARAT,5,False,False,Anklesvar,Bharuch,Gujarat
+d6c5bfee-5b22-4188-aeaf-a5d06c9dbaa4,HANSOT,TALUK,9dbf484f-1760-46a4-9888-7163cdd5d351,BHARUCH,8fd29251-6e20-4f33-9a96-f47cab45eb13,GUJARAT,5,False,False,Hansot,Bharuch,Gujarat
+e3de6f42-98c6-4ac8-8aa2-17ea2252c172,DEVGADH BARIA,TALUK,53c1850f-35bc-45b9-b540-b774c69436da,DAHOD,8fd29251-6e20-4f33-9a96-f47cab45eb13,GUJARAT,5,False,False,Devgadh Baria,Dahod,Gujarat
+38f7f215-9e88-49e6-a90e-02d7e79590ff,FATEPURA,TALUK,53c1850f-35bc-45b9-b540-b774c69436da,DAHOD,8fd29251-6e20-4f33-9a96-f47cab45eb13,GUJARAT,5,False,False,Fatepura,Dahod,Gujarat
+1ee413fd-a399-4f9b-8dbb-90314c2b702c,JIND,BLOCK,9ab13fe9-c9e4-4154-acdf-ea4c1a5f39b5,JIND,648a95f6-9249-4c92-8ae4-a9d93eb7c898,HARYANA,5,False,False,Jind,Jind,Haryana
+3bf36966-93fb-4db3-a398-edc08d0dec9a,NARWANA,BLOCK,9ab13fe9-c9e4-4154-acdf-ea4c1a5f39b5,JIND,648a95f6-9249-4c92-8ae4-a9d93eb7c898,HARYANA,5,False,False,Narwana,Jind,Haryana
+ab3d5599-f366-4686-a0bf-63e9376138a1,HASSANPUR,BLOCK,48957d1f-7d07-4a84-9859-cdf6e02bbb3b,PALWAL,648a95f6-9249-4c92-8ae4-a9d93eb7c898,HARYANA,5,False,False,Hassanpur,Palwal,Haryana
+c660399b-96ad-49bd-8485-28ada95b15b8,HODAL,BLOCK,48957d1f-7d07-4a84-9859-cdf6e02bbb3b,PALWAL,648a95f6-9249-4c92-8ae4-a9d93eb7c898,HARYANA,5,False,False,Hodal,Palwal,Haryana
+73c08ad6-25f0-46c5-9942-4f9e6afa3e50,Chauntra,BLOCK,dd241938-bd9c-4968-8829-e1c39b427c4c,MND,b8c2ccc0-b638-468a-84e7-3512ece9b3a5,HIMACHAL PRADESH,1,False,False,Chauntra,Mandi,Himachal Pradesh
+611528d4-e575-4b31-98c6-571ec9335ac4,Sundarnagar,BLOCK,dd241938-bd9c-4968-8829-e1c39b427c4c,MND,b8c2ccc0-b638-468a-84e7-3512ece9b3a5,HIMACHAL PRADESH,1,False,False,Sundarnagar,Mandi,Himachal Pradesh
+a7795e7d-7856-423e-9c24-a3e3348e7c26,Nahan,BLOCK,ef3862a7-7fa9-49bc-8b9a-1d12108667fd,SRM,b8c2ccc0-b638-468a-84e7-3512ece9b3a5,HIMACHAL PRADESH,1,False,False,Nahan,Sirmaur,Himachal Pradesh
+59f848ee-c829-42c7-b842-e189a587c120,Paonta Sahib,BLOCK,ef3862a7-7fa9-49bc-8b9a-1d12108667fd,SRM,b8c2ccc0-b638-468a-84e7-3512ece9b3a5,HIMACHAL PRADESH,1,False,False,Paonta Sahib,Sirmaur,Himachal Pradesh
+d6c153ca-ba14-4a24-bb3a-b9937a04f332,Kishtwar,BLOCK,919c8b5b-a408-4f7b-992b-83b2d9042afb,Kishtwar,12f0823e-2c16-4765-8137-585b3d5123ac,JAMMU AND KASHMIR,2,False,False,Kishtwar,Kishtwar,Jammu and Kashmir
+35e1d6c8-09be-440a-b4b0-098de72048ae,Padder,BLOCK,919c8b5b-a408-4f7b-992b-83b2d9042afb,Kishtwar,12f0823e-2c16-4765-8137-585b3d5123ac,JAMMU AND KASHMIR,2,False,False,Padder,Kishtwar,Jammu and Kashmir
+2df9d9f2-70d4-42fa-86e0-bdc7dfa225cd,Nanglai sahib,BLOCK,3767e193-3e17-48cc-8d42-fa27af22c18e,Poonch,12f0823e-2c16-4765-8137-585b3d5123ac,JAMMU AND KASHMIR,2,False,False,Nanglai sahib,Poonch,Jammu and Kashmir
+30f1b4a3-fbc1-4b31-8a1f-83e8ec08f502,Surankote,BLOCK,3767e193-3e17-48cc-8d42-fa27af22c18e,Poonch,12f0823e-2c16-4765-8137-585b3d5123ac,JAMMU AND KASHMIR,2,False,False,Surankote,Poonch,Jammu and Kashmir
+b8eb2b7d-436b-4d4e-b20c-5d0d6039738b,MOHANPUR,BLOCK,f3a833a0-9b0b-43c8-b986-0ec957a0f1be,DEOGHAR,496bae22-c752-43d6-9bda-7798f9d3b32f,JHARKHAND,5,True,False,Mohanpur,Deoghar,Jharkhand
+dbef555b-0464-48b0-8899-fb6c85f5c4ff,BAGHMARA,BLOCK,edd956c4-f86f-4973-83bf-fdb668035494,DHANBAD,496bae22-c752-43d6-9bda-7798f9d3b32f,JHARKHAND,5,True,False,Baghmara,Dhanbad,Jharkhand
+9ce5a84b-cc20-43d9-974c-2bdd4a32aaad,BENGABAD,BLOCK,5a282da9-238c-4cab-af78-76502d667eaa,GIRIDIH,496bae22-c752-43d6-9bda-7798f9d3b32f,JHARKHAND,5,False,False,Bengabad,Giridih,Jharkhand
+d5945088-424a-4bcd-b7a4-35bac29703ca,DEORI,BLOCK,5a282da9-238c-4cab-af78-76502d667eaa,GIRIDIH,496bae22-c752-43d6-9bda-7798f9d3b32f,JHARKHAND,5,True,False,Deori,Giridih,Jharkhand
+32320201-7c48-48b3-8405-412c50fbe70a,KARRO,BLOCK,f1f6bbff-f0fa-4cd4-825e-91aba4d9bb47,LOHARDAGA,496bae22-c752-43d6-9bda-7798f9d3b32f,JHARKHAND,5,False,False,Karro,Lohardaga,Jharkhand
+8941568d-f5e5-473e-9014-eebe2aaabc14,KURU,BLOCK,f1f6bbff-f0fa-4cd4-825e-91aba4d9bb47,LOHARDAGA,496bae22-c752-43d6-9bda-7798f9d3b32f,JHARKHAND,5,False,False,Kuru,Lohardaga,Jharkhand
+6a7957a5-89b2-4eb9-abaa-86b234a4b32b,Hosanagar,TALUK,7275b7e2-8f12-4a17-a3d2-8190ad8e0d00,Shivamogga,eaec6bbb-a219-415f-bdba-991c42586352,KARNATAKA,4,False,False,Hosanagar,Shivamogga,Karnataka
+6e19b2b9-75ce-4154-9be6-6cb50b416ebe,Shikaripura,TALUK,7275b7e2-8f12-4a17-a3d2-8190ad8e0d00,Shivamogga,eaec6bbb-a219-415f-bdba-991c42586352,KARNATAKA,4,False,False,Shikaripura,Shivamogga,Karnataka
+0897be82-9131-4cab-ba8c-d799cf44dc66,Hagaribommanahalli,TALUK,ecbae4c8-3945-49c2-8443-605071ed523f,Vijayanagara,eaec6bbb-a219-415f-bdba-991c42586352,KARNATAKA,4,False,False,Hagaribommanahalli,Vijayanagara,Karnataka
+1bca0060-488f-4784-903d-cf736b63f726,Hospet,TALUK,ecbae4c8-3945-49c2-8443-605071ed523f,Vijayanagara,eaec6bbb-a219-415f-bdba-991c42586352,KARNATAKA,4,False,False,Hospet,Vijayanagara,Karnataka
+f358c0ee-2538-49f3-9739-3a27569ddeea,KALIKAVU,BLOCK,c5fcd1f9-4fea-49b7-aecb-56b1af0f53e0,MALAPPURAM,ca25704a-43d0-42ad-bcf4-b2b60270594c,KERALA,5,False,False,Kalikavu,Malappuram,Kerala
+db2c1be3-52f0-4392-8f7c-b0e1485cc6a1,KUTTIPPURAM,BLOCK,c5fcd1f9-4fea-49b7-aecb-56b1af0f53e0,MALAPPURAM,ca25704a-43d0-42ad-bcf4-b2b60270594c,KERALA,5,False,False,Kuttippuram,Malappuram,Kerala
+63dd13b6-69e7-4b55-b4e5-05348cb5d541,ATTAPPADI,BLOCK,78d8a892-5d6f-4c96-a150-efa4ad477d77,PALAKKAD,ca25704a-43d0-42ad-bcf4-b2b60270594c,KERALA,5,False,False,Attappadi,Palakkad,Kerala
+6b517636-8dc7-400b-98a8-540a47401880,KOLLENGODE,BLOCK,78d8a892-5d6f-4c96-a150-efa4ad477d77,PALAKKAD,ca25704a-43d0-42ad-bcf4-b2b60270594c,KERALA,5,False,False,Kollengode,Palakkad,Kerala
+1bd6a5fe-c0e2-402d-b03c-628fcbdd307f,DRASS,BLOCK,bbb18b34-aa38-4e88-b8e2-b5cfaa76b49b,KARGIL,6ad10263-20ad-4001-86c0-738be00ec03e,LADAKH,3,False,False,Drass,Kargil,Ladakh
+52897566-63fc-499d-acb7-9518eafc9eaa,KARGIL,BLOCK,bbb18b34-aa38-4e88-b8e2-b5cfaa76b49b,KARGIL,6ad10263-20ad-4001-86c0-738be00ec03e,LADAKH,3,False,False,Kargil,Kargil,Ladakh
+be391234-337b-414c-b190-446270d629f3,DISKIT,BLOCK,273076c1-5539-468c-82c1-cc90fd25ebf0,LEH,6ad10263-20ad-4001-86c0-738be00ec03e,LADAKH,3,False,False,Diskit,Leh,Ladakh
+38ef2b03-a0fa-46cc-934e-4eb7e263642c,KHARU,BLOCK,273076c1-5539-468c-82c1-cc90fd25ebf0,LEH,6ad10263-20ad-4001-86c0-738be00ec03e,LADAKH,3,False,False,Kharu,Leh,Ladakh
+4738a413-b193-4334-b83a-005bdc6e7c38,KAVARATTI,DISTRICT,4738a413-b193-4334-b83a-005bdc6e7c38,KAVARATTI,5f2a2b2b-cd02-4a00-94ec-3fc97d9f0d19,LAKSHDWEEP,5,False,False,Kavaratti,Kavaratti,Lakshadweep
+a16e5d5a-6ab4-4074-a7af-a660e6369e27,KILTAN,DISTRICT,a16e5d5a-6ab4-4074-a7af-a660e6369e27,KILTAN,5f2a2b2b-cd02-4a00-94ec-3fc97d9f0d19,LAKSHDWEEP,5,False,False,Kiltan,Kiltan,Lakshadweep
+be21e977-7e4c-4531-9f40-4e1de12f2913,PUSHPARAJGARH,BLOCK,973db8af-af2b-4921-b071-dd2c2bddaecf,ANUPPUR,f38e6de8-396e-47b4-af18-32c333eddccc,MADHYA PRADESH,5,False,True,Pushparajgarh,Anuppur,Madhya Pradesh
+82d7477f-976f-48e5-be7c-2ccbf69a7c0d,MUNGAOLI,BLOCK,9ba3473e-dd30-43ae-bd73-060526b2bdbb,ASHOKNAGAR,f38e6de8-396e-47b4-af18-32c333eddccc,MADHYA PRADESH,5,False,True,Mungaoli,Ashoknagar,Madhya Pradesh
+fbb280fc-7506-45df-9267-d6f874571981,SHAHPUR,BLOCK,3f809da8-bad3-430a-ab3c-820964b2ce70,BETUL,f38e6de8-396e-47b4-af18-32c333eddccc,MADHYA PRADESH,5,True,False,Shahpur,Betul,Madhya Pradesh
+9c7b6c91-dc33-4e05-bd32-413115967b2a,BHIND,BLOCK,e81028d6-8a1e-4bc4-b18e-1d2d8c0ec146,BHIND,f38e6de8-396e-47b4-af18-32c333eddccc,MADHYA PRADESH,5,False,False,Bhind,Bhind,Madhya Pradesh
+b07cad2e-a3e6-47ea-b71a-6a96ec9c860a,LAHAR,BLOCK,e81028d6-8a1e-4bc4-b18e-1d2d8c0ec146,BHIND,f38e6de8-396e-47b4-af18-32c333eddccc,MADHYA PRADESH,5,False,False,Lahar,Bhind,Madhya Pradesh
+2034cdd5-49e8-40f7-9149-9e247ce0a379,GAURIHAR,BLOCK,93e8e962-cb83-4126-9240-63b2eef9c5a1,CHHATARPUR,f38e6de8-396e-47b4-af18-32c333eddccc,MADHYA PRADESH,5,False,True,Gaurihar,Chhatarpur,Madhya Pradesh
+e8550727-ba26-4a0d-9240-b34b6421cbb5,RAJGARH,BLOCK,1ebd9022-db03-4825-8916-a51a4bc08524,RAJGARH,f38e6de8-396e-47b4-af18-32c333eddccc,MADHYA PRADESH,5,True,False,Rajgarh,Rajgarh,Madhya Pradesh
+e6a57269-2671-46bd-be94-19382f3c616d,BINA,BLOCK,c709ece2-1163-4806-82dd-a718a7f96f63,SAGAR,f38e6de8-396e-47b4-af18-32c333eddccc,MADHYA PRADESH,5,False,False,Bina,Sagar,Madhya Pradesh
+4305e655-8633-4fc9-a7b7-c6c44a6a7095,DEORI,BLOCK,c709ece2-1163-4806-82dd-a718a7f96f63,SAGAR,f38e6de8-396e-47b4-af18-32c333eddccc,MADHYA PRADESH,5,True,False,Deori,Sagar,Madhya Pradesh
+be551713-3c91-441a-ac5c-f1ed27caeaa3,JAISINAGAR,BLOCK,c709ece2-1163-4806-82dd-a718a7f96f63,SAGAR,f38e6de8-396e-47b4-af18-32c333eddccc,MADHYA PRADESH,5,False,False,Jaisinagar,Sagar,Madhya Pradesh
+4fc9a075-cc52-4272-b8c2-0ac7aa572c72,MANPUR,BLOCK,1c91d362-6d41-47dc-93e9-e94656d30e9e,UMARIA,f38e6de8-396e-47b4-af18-32c333eddccc,MADHYA PRADESH,5,True,False,Manpur,Umaria,Madhya Pradesh
+ef6fedc8-eabc-4252-b00f-73c5d4ec0ec0,Deori,TALUK,d7b247af-f077-4e02-8821-562806615c4b,Gondiya,e7b3f02d-2497-4bcd-9e20-baa4b621822b,MAHARASHTRA,5,True,False,Deori,Gondiya,Maharashtra
+64f500e4-84cb-4e36-8d71-02770f4c5825,Anantpal Sh,TALUK,692181cb-dadd-47bd-83bb-af325f412f98,Latur,e7b3f02d-2497-4bcd-9e20-baa4b621822b,MAHARASHTRA,5,False,False,Anantpal Sh,Latur,Maharashtra
+1fe66caa-0701-43bb-9b8b-6f83288baa24,Chakur,TALUK,692181cb-dadd-47bd-83bb-af325f412f98,Latur,e7b3f02d-2497-4bcd-9e20-baa4b621822b,MAHARASHTRA,5,False,False,Chakur,Latur,Maharashtra
+8c8cecfc-d1b7-43b3-b4d0-a89251d35a97,Chandwad,TALUK,7a59f50c-2b31-47cf-a2d9-9d11ca370774,Nashik,e7b3f02d-2497-4bcd-9e20-baa4b621822b,MAHARASHTRA,5,False,False,Chandwad,Nashik,Maharashtra
+e6d9065c-8826-4b6a-ab3a-e082b9d73e46,Dindori,TALUK,7a59f50c-2b31-47cf-a2d9-9d11ca370774,Nashik,e7b3f02d-2497-4bcd-9e20-baa4b621822b,MAHARASHTRA,5,False,False,Dindori,Nashik,Maharashtra
+4bad09c1-d36f-4943-bee5-c5fbfad5a018,CHURACHANDPUR,BLOCK,cface756-418e-4c28-990a-28dcf1cb7e0d,CHURACHANPUR,0ee3cc5b-1b67-465c-9528-46540aea9cb7,MANIPUR,5,False,False,Churachandpur,Churachanpur,Manipur
+8b3c5c3e-acb7-4f7f-a350-5dd103f117c4,IMPHAL WEST I,BLOCK,3db84a10-0b68-47cc-8f4e-5d92a2d84a6d,IMPHAL WEST,0ee3cc5b-1b67-465c-9528-46540aea9cb7,MANIPUR,5,False,False,Imphal West I,Imphal West,Manipur
+5fd1f073-e07f-47ca-ae45-a4b2a1ed91c8,IMPHAL WEST II,BLOCK,3db84a10-0b68-47cc-8f4e-5d92a2d84a6d,IMPHAL WEST,0ee3cc5b-1b67-465c-9528-46540aea9cb7,MANIPUR,5,False,False,Imphal West II,Imphal West,Manipur
+312abd5e-7896-4a35-9f97-7032d458c2d9,Baghmara,BLOCK,89199c37-70a8-4a27-8419-027596f30e33,SOUTH GARO HILLS,b967d23e-68c8-492c-a372-9623441f7d24,MEGHALAYA,3,True,False,Baghmara,South Garo Hills,Meghalaya
+f256db46-dec5-43f9-9d88-02a014d1f2f7,Mawkyrwat,BLOCK,0a250916-9c9f-480e-ad14-d0da9ed7966e,SOUTH WEST KHASI HILLS,b967d23e-68c8-492c-a372-9623441f7d24,MEGHALAYA,3,False,False,Mawkyrwat,South West Khasi Hills,Meghalaya
+e5020c33-b40c-4a2c-b3a4-fa003715644a,Ranikor,BLOCK,0a250916-9c9f-480e-ad14-d0da9ed7966e,SOUTH WEST KHASI HILLS,b967d23e-68c8-492c-a372-9623441f7d24,MEGHALAYA,3,False,False,Ranikor,South West Khasi Hills,Meghalaya
+22d7d260-76a9-46f1-8d0c-2a1ca600ed9f,Mawshynrut,BLOCK,7d4600a9-9fe4-458a-99a8-83b10f4bf679,WEST KHASI HILLS,b967d23e-68c8-492c-a372-9623441f7d24,MEGHALAYA,3,False,False,Mawshynrut,West Khasi Hills,Meghalaya
+efd280ae-8786-4825-b368-ef8dba19e8dd,Nongstoin,BLOCK,7d4600a9-9fe4-458a-99a8-83b10f4bf679,WEST KHASI HILLS,b967d23e-68c8-492c-a372-9623441f7d24,MEGHALAYA,3,False,False,Nongstoin,West Khasi Hills,Meghalaya
+d4787f85-d1cd-48e9-bafa-08624d1e86b1,BILKHAWTHLIR,BLOCK,a2430a8d-6e64-4eea-803a-1272e30c2559,KOLASIB,812072c8-d651-485c-88e8-7dd29d8c183b,MIZORAM,5,False,False,Bilkhawthlir,Kolasib,Mizoram
+00a84116-fdc9-485a-babd-abee04ac3b30,NORTH THINGDAWL,BLOCK,a2430a8d-6e64-4eea-803a-1272e30c2559,KOLASIB,812072c8-d651-485c-88e8-7dd29d8c183b,MIZORAM,5,False,False,North Thingdawl,Kolasib,Mizoram
+3299f188-e429-4f23-8875-a778b598954b,E LUNGDAR,BLOCK,fe91f489-ed29-45c0-9b8e-f550fe34810d,SERCHHIP,812072c8-d651-485c-88e8-7dd29d8c183b,MIZORAM,5,False,False,E Lungdar,Serchhip,Mizoram
+d601e448-6314-476e-a9bc-2d273a3d45ac,SERCHHIP,BLOCK,fe91f489-ed29-45c0-9b8e-f550fe34810d,SERCHHIP,812072c8-d651-485c-88e8-7dd29d8c183b,MIZORAM,5,False,False,Serchhip,Serchhip,Mizoram
+35a9025c-7b8c-48f1-a69b-7c11d2142cad,Jakhama,BLOCK,01e3bb8d-d5dc-4424-80fa-39d8110e7953,Kohima,37572702-1c31-4723-8328-0a1757f6b4e1,NAGALAND,3,False,False,Jakhama,Kohima,Nagaland
+72fc2743-666e-4e58-af8c-2ddbe297c7a4,Tseminyu,BLOCK,01e3bb8d-d5dc-4424-80fa-39d8110e7953,Kohima,37572702-1c31-4723-8328-0a1757f6b4e1,NAGALAND,3,False,False,Tseminyu,Kohima,Nagaland
+7bb8238a-afe1-4973-ad3d-ddf4f3cabe05,Longleng,BLOCK,820077ab-bf59-476f-a3c6-07ad4f75bc3e,Longleng,37572702-1c31-4723-8328-0a1757f6b4e1,NAGALAND,3,False,False,Longleng,Longleng,Nagaland
+f5342dea-0795-4e99-a9de-1d02820c253f,Tamlu,BLOCK,820077ab-bf59-476f-a3c6-07ad4f75bc3e,Longleng,37572702-1c31-4723-8328-0a1757f6b4e1,NAGALAND,3,False,False,Tamlu,Longleng,Nagaland
+100e47f3-3e2c-4ae7-82e8-4a33c393977d,BIRIDI,BLOCK,f1fcbfed-6de1-4183-ba6d-bb17285cab63,JAGATSINGHPUR,d19a5290-2e40-494a-83d2-98f4c845b1f1,ODISHA,5,False,False,Biridi,Jagatsinghpur,Odisha
+d69f88ba-ab28-430b-b402-cceae0e283d2,JAGATSINGHPUR,BLOCK,f1fcbfed-6de1-4183-ba6d-bb17285cab63,JAGATSINGHPUR,d19a5290-2e40-494a-83d2-98f4c845b1f1,ODISHA,5,False,False,Jagatsinghpur,Jagatsinghpur,Odisha
+696f4256-480c-4bdc-b1b6-ddb102aefa35,DERABISH,BLOCK,f9df174e-27ee-4238-a5dd-ea26bfb80323,KENDRAPARA,d19a5290-2e40-494a-83d2-98f4c845b1f1,ODISHA,5,False,False,Derabish,Kendrapara,Odisha
+9157c1d3-40cf-43bb-b694-faa5cb20e83d,KENDRAPARA,BLOCK,f9df174e-27ee-4238-a5dd-ea26bfb80323,KENDRAPARA,d19a5290-2e40-494a-83d2-98f4c845b1f1,ODISHA,5,False,False,Kendrapara,Kendrapara,Odisha
+6b78fa34-3173-4e8b-b545-fd82bb053da9,KARAIKAL,REGION,f467febf-3708-45c8-b556-eac952bdbe3d,KARAIKAL,fd163bec-156c-4633-a7b7-5dfee5fcdf57,PUDUCHERRY,3,False,False,Karaikal,Karaikal,Puducherry
+de69e7f3-4897-45a2-885d-525ddc03dd20,MAHE,TALUK,b8e6f4c8-046d-4f3a-9fb0-403c8081f66d,PUDUCHERRY,fd163bec-156c-4633-a7b7-5dfee5fcdf57,PUDUCHERRY,3,False,False,Mahe,Puducherry,Puducherry
+0b3a8ce7-4fd5-48df-a1d7-1022740adc1f,PUDUCHERRY,REGION,b8e6f4c8-046d-4f3a-9fb0-403c8081f66d,PUDUCHERRY,fd163bec-156c-4633-a7b7-5dfee5fcdf57,PUDUCHERRY,3,False,False,Puducherry,Puducherry,Puducherry
+964b217e-f094-42ad-9dce-adf2a1a01bce,Talwandi Sabo,BLOCK,620f7ab7-aea6-4731-81e1-c6b0de279095,Bathinda,5ff5533e-36c5-4c24-abff-1cbbea6f2bdf,PUNJAB,5,False,True,Talwandi Sabo,Bathinda,Punjab
+68121520-fc4e-4c5c-acbe-b552f848fca1,Dasuya,BLOCK,5d09ebe2-3891-41f8-be24-61aaf2236bb2,Hoshiarpur,5ff5533e-36c5-4c24-abff-1cbbea6f2bdf,PUNJAB,5,False,False,Dasuya,Hoshiarpur,Punjab
+8ad11fde-6642-4d53-ae9d-e3d8162f6cd9,Hajipur,BLOCK,5d09ebe2-3891-41f8-be24-61aaf2236bb2,Hoshiarpur,5ff5533e-36c5-4c24-abff-1cbbea6f2bdf,PUNJAB,5,False,True,Hajipur,Hoshiarpur,Punjab
+85f44d17-8ea9-4afe-9fc9-84b57a6e23d8,Kot Ise Khan At Dharamkot,BLOCK,8720b483-a714-4bc4-9721-fea32657232b,Moga,5ff5533e-36c5-4c24-abff-1cbbea6f2bdf,PUNJAB,4,False,False,Kot Ise Khan At Dharamkot,Moga,Punjab
+1f09f5b5-81c0-46cb-a6f6-f8bca9e357a5,Moga-1,BLOCK,8720b483-a714-4bc4-9721-fea32657232b,Moga,5ff5533e-36c5-4c24-abff-1cbbea6f2bdf,PUNJAB,5,False,True,Moga-1,Moga,Punjab
+04fe3ccd-638f-4a04-991b-f4e9b97e51dd,RAJGARH,BLOCK,0c780f85-2c8f-4c47-ba5a-8ab0ee6a1b11,ALWAR,785cc6f0-e9d0-4961-9578-08ed2f24377a,RAJASTHAN,5,True,False,Rajgarh,Alwar,Rajasthan
+50b25ae1-e9c3-4edb-8db2-6d542bdfb9d1,RAJGARH,BLOCK,07f93dd5-eb2c-4520-8eb1-9efefd247496,CHURU,785cc6f0-e9d0-4961-9578-08ed2f24377a,RAJASTHAN,5,True,False,Rajgarh,Churu,Rajasthan
+fbebc4bd-8085-444f-9e93-02ea11dca7e5,JAISALMER_URBAN,BLOCK,e40d7368-e754-47c9-a418-a596f98313d3,JAISALMER,785cc6f0-e9d0-4961-9578-08ed2f24377a,RAJASTHAN,4,False,False,Jaisalmer Urban,Jaisalmer,Rajasthan
+5de23b1e-82df-45fe-9b60-0d82b838f76b,SANKRA,BLOCK,e40d7368-e754-47c9-a418-a596f98313d3,JAISALMER,785cc6f0-e9d0-4961-9578-08ed2f24377a,RAJASTHAN,5,False,False,Sankra,Jaisalmer,Rajasthan
+bda9bdd6-473f-4d88-a84f-c227ea26a395,DESURI,BLOCK,d8b99c26-465d-4a50-99c4-1be47534bbcc,PALI,785cc6f0-e9d0-4961-9578-08ed2f24377a,RAJASTHAN,5,False,False,Desuri,Pali,Rajasthan
+15ac0843-02b2-4912-91a5-b97b580e947e,PALI,BLOCK,d8b99c26-465d-4a50-99c4-1be47534bbcc,PALI,785cc6f0-e9d0-4961-9578-08ed2f24377a,RAJASTHAN,5,False,False,Pali,Pali,Rajasthan
+c53dd3ff-e6d1-44ef-a627-67bfd89b2c52,Dentam,BLOCK,5d73cde8-fd94-4ada-8f35-cf50fec9c6e3,Gyalsingh,19903c2c-ed18-4782-a679-dc10e8aa71ed,SIKKIM,2,False,False,Dentam,Gyalsingh,Sikkim
+a49fa539-35a6-415d-a7f1-cdb8cdc848a5,Gyalsingh_ROA,BLOCK,5d73cde8-fd94-4ada-8f35-cf50fec9c6e3,Gyalsingh,19903c2c-ed18-4782-a679-dc10e8aa71ed,SIKKIM,2,False,False,Gyalsingh ROA,Gyalsingh,Sikkim
+21ae37d0-62ae-465c-8264-a0ac9bba4701,Namchibong,BLOCK,cf565d57-06a0-4b24-abaa-3a56039e4378,Pakyong,19903c2c-ed18-4782-a679-dc10e8aa71ed,SIKKIM,2,False,False,Namchibong,Pakyong,Sikkim
+cf5246e3-250f-4835-9b55-ea82c9ee485c,Pakyong_ROA,BLOCK,cf565d57-06a0-4b24-abaa-3a56039e4378,Pakyong,19903c2c-ed18-4782-a679-dc10e8aa71ed,SIKKIM,2,False,False,Pakyong ROA,Pakyong,Sikkim
+1d420697-359a-4d8a-8473-c58093ffdcc2,NATRAMPALLI,TALUK,95c58d7f-5c9a-4448-9d6b-1a55356b3a1b,TIRUPATHUR,e98cd5b7-6556-4c0f-a778-3429e1c14a6b,TAMILNADU,3,False,False,Natrampalli,Tirupathur,Tamil Nadu
+1249d66c-b9b2-4a3f-88b3-85dbd6b4c387,VANIYAMBADI,TALUK,95c58d7f-5c9a-4448-9d6b-1a55356b3a1b,TIRUPATHUR,e98cd5b7-6556-4c0f-a778-3429e1c14a6b,TAMILNADU,3,False,False,Vaniyambadi,Tirupathur,Tamil Nadu
+3b49f7ed-c721-48c8-980e-772a514fa1fa,GUDIYATTAM,TALUK,161b1ce6-66a4-46c2-a4f7-e262f5a3b06f,VELLORE,e98cd5b7-6556-4c0f-a778-3429e1c14a6b,TAMILNADU,3,False,False,Gudiyattam,Vellore,Tamil Nadu
+91e05d7f-44a4-4418-ab58-6076855ad535,KATPADI,TALUK,161b1ce6-66a4-46c2-a4f7-e262f5a3b06f,VELLORE,e98cd5b7-6556-4c0f-a778-3429e1c14a6b,TAMILNADU,3,False,False,Katpadi,Vellore,Tamil Nadu
+d85f2378-93ee-4dee-b10c-4769bb81cf01,Chinnagudur,BLOCK,be0f4d42-6233-4066-9378-00a051649c8b,Mahabubabad,a1588b13-5700-450d-b51d-b782ed565801,TELANGANA,5,False,False,Chinnagudur,Mahabubabad,Telangana
+5dc0be0e-a3bf-4e94-a5cd-ea9004b74314,Dornakal,BLOCK,be0f4d42-6233-4066-9378-00a051649c8b,Mahabubabad,a1588b13-5700-450d-b51d-b782ed565801,TELANGANA,5,False,False,Dornakal,Mahabubabad,Telangana
+fbf9765f-5818-4fa7-a58b-4bd37f521fb7,Chegunta,BLOCK,37d0bcbb-06f5-44ba-828f-4edb4ca66193,Medak,a1588b13-5700-450d-b51d-b782ed565801,TELANGANA,5,False,False,Chegunta,Medak,Telangana
+26cf62d6-087b-46ca-b4fd-3c6c531e613d,Havelighanpur,BLOCK,37d0bcbb-06f5-44ba-828f-4edb4ca66193,Medak,a1588b13-5700-450d-b51d-b782ed565801,TELANGANA,5,False,False,Havelighanpur,Medak,Telangana
+4af2321e-e1ac-4ae6-87dd-7028a7bbe3e6,KAKRABAN,BLOCK,4fe34e90-d752-4508-9395-448713c94aa9,GOMATI,40320284-8d82-4f7e-80d7-00a00bb0e5b0,TRIPURA,5,False,False,Kakraban,Gomati,Tripura
+bb74d986-5950-4ece-b16c-7807b15d5bef,KILLA,BLOCK,4fe34e90-d752-4508-9395-448713c94aa9,GOMATI,40320284-8d82-4f7e-80d7-00a00bb0e5b0,TRIPURA,5,False,False,Killa,Gomati,Tripura
+e8011030-4cc0-47ad-8f86-60b9c1392d17,BHARAT CH NAGAR,BLOCK,dc0694df-2ed2-43b7-b759-adbee978e9f5,SOUTH TRIPURA,40320284-8d82-4f7e-80d7-00a00bb0e5b0,TRIPURA,5,False,False,Bharat Ch Nagar,South Tripura,Tripura
+2812fe0c-2447-463d-b81c-999e02c47a02,JOLAIBARI,BLOCK,dc0694df-2ed2-43b7-b759-adbee978e9f5,SOUTH TRIPURA,40320284-8d82-4f7e-80d7-00a00bb0e5b0,TRIPURA,5,False,False,Jolaibari,South Tripura,Tripura
+dd1bc3e3-e95f-46aa-a4c6-80dc53dd856b,MOHANPUR,BLOCK,27af4645-a66a-484a-9a84-449010ea2b98,WEST TRIPURA,40320284-8d82-4f7e-80d7-00a00bb0e5b0,TRIPURA,5,True,False,Mohanpur,West Tripura,Tripura
+c7fbc0c5-dd7c-4dbb-b16e-e38d0c4ea214,BISHESHWARGANJ,BLOCK,2af18a4c-8197-4e80-a5f1-935ed9a0cc41,BAHRAICH,edce8ca7-bf15-4b5e-b4c5-b10c543acd83,UTTAR PRADESH,5,False,False,Bisheshwarganj,Bahraich,Uttar Pradesh
+a4b7f6c9-389b-4653-9040-7ac707d148a8,FAKHARPUR,BLOCK,2af18a4c-8197-4e80-a5f1-935ed9a0cc41,BAHRAICH,edce8ca7-bf15-4b5e-b4c5-b10c543acd83,UTTAR PRADESH,5,False,False,Fakharpur,Bahraich,Uttar Pradesh
+861f2d61-1f97-4393-b257-f9ee2a3a503d,RAMPUR,BLOCK,c40d13e8-7934-409a-83c9-0d9ef24f9315,JAUNPUR,edce8ca7-bf15-4b5e-b4c5-b10c543acd83,UTTAR PRADESH,5,True,False,Rampur,Jaunpur,Uttar Pradesh
+11c09e1d-3344-42c3-ba1a-fed7db720a37,JAMALPUR,BLOCK,69be251d-0023-4093-8582-ec7362e6cda6,MIRZAPUR,edce8ca7-bf15-4b5e-b4c5-b10c543acd83,UTTAR PRADESH,5,True,False,Jamalpur,Mirzapur,Uttar Pradesh
+aad367c5-2c31-4631-ab68-f54d9eafbeaa,RAJGARH,BLOCK,69be251d-0023-4093-8582-ec7362e6cda6,MIRZAPUR,edce8ca7-bf15-4b5e-b4c5-b10c543acd83,UTTAR PRADESH,5,True,False,Rajgarh,Mirzapur,Uttar Pradesh
+3380f765-fd3b-41a9-94a0-eb367d6a539f,CHHAJLET,BLOCK,05301719-37ac-49b0-a4c3-1e8306709a62,MORADABAD,edce8ca7-bf15-4b5e-b4c5-b10c543acd83,UTTAR PRADESH,5,False,False,Chhajlet,Moradabad,Uttar Pradesh
+69b83af0-86e5-4e59-ae61-02a96c23dfe8,KUNDARKI (DENGAPUR),BLOCK,05301719-37ac-49b0-a4c3-1e8306709a62,MORADABAD,edce8ca7-bf15-4b5e-b4c5-b10c543acd83,UTTAR PRADESH,5,False,False,Kundarki (dengapur),Moradabad,Uttar Pradesh
+01b59413-a0e0-4225-9d4f-72a66bdf7ca4,SHAHPUR,BLOCK,ae02fb3e-dc7a-41e7-b0fd-9a4d0f4bf63b,MUZAFFARNAGAR,edce8ca7-bf15-4b5e-b4c5-b10c543acd83,UTTAR PRADESH,5,True,False,Shahpur,Muzaffarnagar,Uttar Pradesh
+4ba53f2d-15f1-41e8-941c-f1a28cc583b1,Bhagwanpur,BLOCK,6f45bd2a-d7a9-4e7c-8cb6-7d93162575d6,HARIDWAR,200030a1-6d27-4dff-988a-e2104ff62ab8,UTTARAKHAND,5,False,False,Bhagwanpur,Haridwar,Uttarakhand
+75a5893e-1fbb-4a00-8715-02f28ecda6f1,Laksar,BLOCK,6f45bd2a-d7a9-4e7c-8cb6-7d93162575d6,HARIDWAR,200030a1-6d27-4dff-988a-e2104ff62ab8,UTTARAKHAND,5,False,True,Laksar,Haridwar,Uttarakhand
+bb9a3a57-a01d-4362-975e-72c6d90bac13,Gadarpur,BLOCK,93dd313d-a378-470a-bfd5-7b5f43aabc30,UDHAMSINGH NAGAR,200030a1-6d27-4dff-988a-e2104ff62ab8,UTTARAKHAND,5,False,False,Gadarpur,Udhamsingh Nagar,Uttarakhand
+d281531e-a448-4ecb-b9bb-0e3118826278,Kashipur,BLOCK,93dd313d-a378-470a-bfd5-7b5f43aabc30,UDHAMSINGH NAGAR,200030a1-6d27-4dff-988a-e2104ff62ab8,UTTARAKHAND,5,False,False,Kashipur,Udhamsingh Nagar,Uttarakhand
+69eb25bc-c590-4af2-bd19-53e35f03b218,ALIPURDUAR-II,BLOCK,3ac98a1f-e397-471b-9558-34b9209237dd,ALIPURDUAR,68ecabb4-0ea5-4909-b8e3-20bbaa7b91e8,WEST BENGAL,5,False,False,Alipurduar-II,Alipurduar,West Bengal
+ffc0bcf9-83f4-4e36-96e5-155b99bde6f0,KUMARGRAM,BLOCK,3ac98a1f-e397-471b-9558-34b9209237dd,ALIPURDUAR,68ecabb4-0ea5-4909-b8e3-20bbaa7b91e8,WEST BENGAL,5,False,False,Kumargram,Alipurduar,West Bengal
+89976913-7ade-4ae8-ac6e-d56775aa32c8,BELDANGA-II,BLOCK,061b2eed-8592-429e-a8f3-777b183c2d6e,MURSHIDABAD,68ecabb4-0ea5-4909-b8e3-20bbaa7b91e8,WEST BENGAL,5,False,False,Beldanga-II,Murshidabad,West Bengal
+c53d420b-bcb9-406a-8be7-57ccc52edbcb,BHAGAWANGOLA-I,BLOCK,061b2eed-8592-429e-a8f3-777b183c2d6e,MURSHIDABAD,68ecabb4-0ea5-4909-b8e3-20bbaa7b91e8,WEST BENGAL,5,False,False,Bhagawangola-I,Murshidabad,West Bengal
+4c190ccf-ddbf-4226-860d-cfe03b66cc1f,MOHANPUR,BLOCK,93b3c8a7-68d6-49bd-81bf-73eb2541e0b2,PASCHIM MEDINIPUR,68ecabb4-0ea5-4909-b8e3-20bbaa7b91e8,WEST BENGAL,5,True,False,Mohanpur,Paschim Medinipur,West Bengal
+a071f4e7-a808-4b48-bd0a-9f1113f087f8,JAMALPUR,BLOCK,5f3696cc-de6f-410d-97ab-cf854a63e2e9,PURBA BARDDHAMAN,68ecabb4-0ea5-4909-b8e3-20bbaa7b91e8,WEST BENGAL,5,True,False,Jamalpur,Purba Barddhaman,West Bengal

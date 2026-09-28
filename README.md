@@ -3,7 +3,7 @@
 Multilingual (English / Hindi / Hinglish / a Dravidian language) Text-to-SQL research over
 India's official groundwater assessment data (**INGRES**, CGWB + IIT Hyderabad).
 
-> Status: **Phase 1-2 (data layer) done and validated**. See [`PROJECT_STATUS.md`](PROJECT_STATUS.md) for what is
+> Status: **Phases 1-3 done and validated** (data layer, canonical DB, INGRES-Bench v1). See [`PROJECT_STATUS.md`](PROJECT_STATUS.md) for what is
 > done, validated, and pending. No model results exist yet; every result slot below is
 > `TODO — requires experiment` until the corresponding experiment has been run.
 
@@ -26,8 +26,13 @@ Official INGRES data, crawled from the portal's public JSON endpoint and reconci
 published national reports. Details, caveats and all numbers: [`docs/DATA_ACCESS_REPORT.md`](docs/DATA_ACCESS_REPORT.md).
 Schema: [`docs/INGRES_SCHEMA.md`](docs/INGRES_SCHEMA.md) / `data/schema/schema.json`.
 
-## 4-11. INGRES-Bench, architecture, components, baselines
-TODO — later phases (benchmark, baselines, schema linking, entity resolution, tokenization study,
+## 4. INGRES-Bench
+371 items × 4 languages (English, Hindi, Hinglish, Tamil) = 1,484 NL→SQL instances with executed gold results,
+4 difficulty levels, train/dev/test/hard-test splits. Construction protocol, QC and limitations:
+[`docs/INGRES_BENCH.md`](docs/INGRES_BENCH.md).
+
+## 5-11. Architecture, components, baselines
+TODO — later phases (baselines, schema linking, entity resolution, tokenization study,
 numeric grounding, agentic system).
 
 ## 12. Evaluation methodology
@@ -45,6 +50,8 @@ pip install -r requirements.txt
 python scripts/crawl_ingres.py      # ~12 min per assessment year, resumable; raw JSON -> data/raw/ingres_api/
 python scripts/audit_data.py        # interim parquet + reports/data_audit.json
 python scripts/build_schema.py      # data/processed/ingres.db + data/schema/schema.json + docs/INGRES_SCHEMA.md
+python scripts/build_benchmark.py   # data/benchmark/*.jsonl (INGRES-Bench v1)
+python scripts/qc_benchmark.py      # benchmark quality control
 python -m pytest
 ```
 
@@ -54,6 +61,7 @@ configs/            data.yaml (years, paths, crawl politeness)
 src/ingestion/      INGRES API client/crawler, raw->interim flattening, canonical DB builder
 src/normalization/  cross-year location crosswalk
 src/utils/          read-only SQL executor (authorizer-enforced)
+src/benchmark/      INGRES-Bench entity pool, lexicon, intents, builder
 scripts/            crawl / audit / build entry points
 data/raw|interim|processed|schema   (raw + interim + db are regenerable and git-ignored)
 docs/  reports/  tests/

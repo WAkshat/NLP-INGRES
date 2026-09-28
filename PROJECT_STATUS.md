@@ -6,8 +6,8 @@ _Last updated: 2026-09-28_
 |---|---|---|
 | 1. Data-access audit + ingestion | **Done, validated** | `docs/DATA_ACCESS_REPORT.md`, `reports/data_audit.json` |
 | 2. Schema extraction + canonical DB | **Done, validated** | `data/processed/ingres.db`, `docs/INGRES_SCHEMA.md`, `tests/test_db_against_published.py` |
-| 3. INGRES-Bench | Next | — |
-| 4. Baselines (keyword, BM25, embeddings, frontier LLM) | Not started | — |
+| 3. INGRES-Bench | **Done, validated** (LLM-authored, not native-speaker verified) | `docs/INGRES_BENCH.md`, `reports/benchmark_qc.json` |
+| 4. Baselines (keyword, BM25, embeddings, frontier LLM) | **Next** (frontier-LLM baseline needs an API key) | — |
 | 5. Learned schema linking | Not started | — |
 | 6. Geographic entity resolution | Not started (raw material collected: 445 real respellings, 169 names shared across states, HP district codes) | `reports/crosswalk_renames.csv` |
 | 7. Tokenizer / code-mixing study | Not started | — |
@@ -58,11 +58,17 @@ Code-mixing reduces schema-linking accuracy; romanization raises tokenizer ferti
 baselines; entity resolution improves execution accuracy; numeric grounding reduces unsupported numbers; agentic
 decomposition helps only on a hard subset and costs more on simple queries.
 
-## Next phase: INGRES-Bench (Phase 3)
-Plan to confirm before building:
-- Question sources: real schema, real entities; cross-year questions **restricted to state/year pairs with unchanged
-  granularity** and carrying the comparability caveat.
-- Gold SQL is executed through `src/utils/safe_sql.py`; gold results are stored; a QC script re-executes every item.
-- Multilingual versions: English is the canonical text. Hindi / Hinglish / Dravidian versions need a translation protocol
-  that preserves SQL semantics. **A decision is needed on which Dravidian language (Tamil / Telugu / Kannada / Malayalam) and
-  who validates the translations**, because machine translation alone does not meet the benchmark requirement.
+## Phase 3 summary (INGRES-Bench v1)
+- 371 items x 4 languages (English, Hindi, Hinglish, **Tamil**) = 1,484 instances; 38 intents over 4 difficulty levels;
+  splits train 153 / dev 57 / test 96 / hard_test 65 items (all languages of an item share a split).
+- Gold SQL executed on the real DB; QC (`scripts/qc_benchmark.py`): 0 failures on all 8 checks; slot checker catches
+  97.1% of deliberately corrupted questions; manual review 24/24 semantically correct.
+- Tamil chosen (no native speaker available): slot-aligned generation + automatic transliteration and slot checks;
+  documented as not native-speaker verified. Independent MT back-translation check not yet run (needs a model download).
+- Tests: 40 passing.
+
+## Next phase: baselines (Phase 4)
+- Evaluator implementing the execution-accuracy protocol in `docs/INGRES_BENCH.md` §7.
+- Baselines A (rule/keyword), B (BM25 schema retrieval), C (off-the-shelf multilingual embeddings), D (frontier LLM).
+- **Needs from the user:** an LLM API key (Anthropic, and ideally a second provider to control for same-family bias;
+  see INGRES_BENCH.md §6), set as environment variables. A, B and C run locally without keys.
