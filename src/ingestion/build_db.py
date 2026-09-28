@@ -11,6 +11,7 @@ schema-linking decision, as it is for users of the portal):
     district_assessments(district_id, assessment_year, <metrics>)
     unit_assessments    (unit_id,     assessment_year, district_id, ingres_uuid, category, <metrics>)
     location_crosswalk  (level, assessment_year, ingres_uuid, canonical_id, match_method)
+    state_unit_granularity(state_id, assessment_year, unit_type, n_units)
 
 district_id / unit_id are canonical cross-year ids (src/normalization/crosswalk.py): some states
 re-issue every UUID in a new cycle, so raw UUIDs cannot be used to join years.
@@ -49,13 +50,17 @@ METRICS: dict[str, tuple[str, str, str]] = {
     "stage_of_extraction_pct": ("stageOfExtraction.total", "%", "Stage of ground water extraction = extraction / extractable resource x 100"),
     "domestic_allocation_ham": ("gwallocation.domestic.total", "ham", "Projected allocation for domestic use (projection year UNCERTAIN)"),
     "future_availability_ham": ("availabilityForFutureUse.total", "ham", "Net annual ground water availability for future use"),
-    "recharge_poor_quality_ham": ("rechargeData.total.poor_quality", "ham", "Portion of annual recharge in poor-quality (saline) groundwater zones"),
-    "extractable_poor_quality_ham": ("currentAvailabilityForAllPurposes.poor_quality", "ham", "Portion of extractable resource in poor-quality zones"),
-    "extraction_poor_quality_ham": ("draftData.total.poor_quality", "ham", "Portion of extraction in poor-quality zones"),
+    "recharge_poor_quality_ham": ("rechargeData.total.poor_quality", "ham", "Portion of annual recharge in poor-quality (saline) zones; 0 when the source reports none. Fresh recharge = annual_recharge_ham - this"),
+    "extractable_poor_quality_ham": ("currentAvailabilityForAllPurposes.poor_quality", "ham", "Portion of extractable resource in poor-quality zones; 0 when the source reports none"),
+    "extraction_poor_quality_ham": ("draftData.total.poor_quality", "ham", "Portion of extraction in poor-quality zones; 0 when the source reports none"),
     "rainfall_mm": ("rainfall.total", "mm", "Rainfall used in the assessment (averaging method UNCERTAIN)"),
     "total_area_ha": ("area.total.totalArea", "ha", "Total geographical area"),
     "recharge_worthy_area_ha": ("area.recharge_worthy.totalArea", "ha", "Recharge-worthy area"),
 }
+
+POOR_QUALITY_PARENT = {"recharge_poor_quality_ham": "annual_recharge_ham",
+                       "extractable_poor_quality_ham": "extractable_resource_ham",
+                       "extraction_poor_quality_ham": "extraction_total_ham"}
 
 CATEGORIES = {"safe": "Safe", "semi_critical": "Semi-Critical", "critical": "Critical",
               "over_exploited": "Over-Exploited", "saline": "Saline", "salinity": "Saline",
@@ -112,6 +117,11 @@ def build(locations: pd.DataFrame, facts: pd.DataFrame, years: list[str], db_pat
     for c in METRICS:
         if c not in wide:
             wide[c] = None
+    # The API omits the `poor_quality` key when a location has no saline component. Left as NULL, any
+    # `total - poor_quality` expression silently drops those rows from SUM(). Rule: parent metric present
+    # and poor-quality key absent => 0; parent absent => NULL. (Raw absence is preserved in interim/.)
+    for pq, parent in POOR_QUALITY_PARENT.items():
+        wide[pq] = wide[pq].where(wide[pq].notna() | wide[parent].isna(), 0.0)
     metric_cols = list(METRICS)
 
     def fact(level, idcol):
@@ -148,6 +158,11 @@ def build(locations: pd.DataFrame, facts: pd.DataFrame, years: list[str], db_pat
                   [["unit_id", "unit_name", "unit_type", "district_id", "state_id"]])
     units = pd.concat([units, extra_dims], ignore_index=True).drop_duplicates("unit_id")
 
+    # per-state unit granularity per cycle: cross-year unit comparisons are only meaningful where it is unchanged
+    gran = (locs[locs.level == "unit"].assign(unit_type=lambda d: d.unit_type.fillna("UNKNOWN"))
+            .groupby(["state_uuid", "year", "unit_type"]).size().rename("n_units").reset_index()
+            .rename(columns={"state_uuid": "state_id", "year": "assessment_year"}))
+
     ym = pd.DataFrame([{"assessment_year": y, "gwra_year": YEAR_META[y][0],
                         "is_complete": int(YEAR_META[y][1] is None), "methodology": "GEC-2015",
                         "caveat": YEAR_META[y][1] or METHOD_CAVEAT} for y in years])
@@ -174,12 +189,15 @@ CREATE TABLE unit_assessments (unit_id TEXT NOT NULL REFERENCES assessment_units
   assessment_year TEXT NOT NULL REFERENCES assessment_years(assessment_year),
   district_id TEXT REFERENCES districts(district_id), ingres_uuid TEXT, category TEXT, is_district_as_unit INTEGER,
   {mcols}, PRIMARY KEY (unit_id, assessment_year));
+CREATE TABLE state_unit_granularity (state_id TEXT REFERENCES states(state_id),
+  assessment_year TEXT REFERENCES assessment_years(assessment_year), unit_type TEXT, n_units INTEGER,
+  PRIMARY KEY (state_id, assessment_year, unit_type));
 CREATE TABLE location_crosswalk (level TEXT, assessment_year TEXT, ingres_uuid TEXT, canonical_id TEXT,
   match_method TEXT, PRIMARY KEY (level, assessment_year, ingres_uuid));
 """)
     tables = {"assessment_years": ym, "states": states, "districts": districts, "assessment_units": units,
               "state_assessments": fact("state", "state_id"), "district_assessments": fact("district", "district_id"),
-              "unit_assessments": ua, "location_crosswalk": cw}
+              "unit_assessments": ua, "state_unit_granularity": gran, "location_crosswalk": cw}
     for name, df in tables.items():
         df.to_sql(name, con, if_exists="append", index=False)
     bad = con.execute("PRAGMA foreign_key_check").fetchall()

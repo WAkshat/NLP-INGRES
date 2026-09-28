@@ -1,21 +1,70 @@
 {
-  "raw_files": 775,
-  "fact_rows": 2152056,
-  "distinct_raw_fields": 210,
+  "raw_files": 867,
+  "fact_rows": 6217844,
+  "distinct_raw_fields": 235,
   "rows_by_year_level": {
-    "2022-2023|district": 125,
+    "2016-2017|district": 668,
+    "2016-2017|state": 33,
+    "2016-2017|unit": 5279,
+    "2019-2020|district": 721,
+    "2019-2020|state": 37,
+    "2019-2020|unit": 6737,
+    "2021-2022|district": 746,
+    "2021-2022|state": 37,
+    "2021-2022|unit": 7168,
+    "2022-2023|district": 734,
     "2022-2023|state": 37,
-    "2022-2023|unit": 548,
+    "2022-2023|unit": 6670,
     "2023-2024|district": 730,
     "2023-2024|state": 37,
     "2023-2024|unit": 6965,
     "2024-2025|district": 735,
     "2024-2025|state": 37,
-    "2024-2025|unit": 6984
+    "2024-2025|unit": 6984,
+    "2025-2026|district": 705,
+    "2025-2026|state": 35,
+    "2025-2026|unit": 6354
   },
   "unit_types_by_year": {
+    "2016-2017": {
+      "BLOCK": 3215,
+      "FIRKA": 1296,
+      "null": 329,
+      "TALUK": 261,
+      "DISTRICT": 97,
+      "ISLAND": 36,
+      "TEHSIL": 34,
+      "VALLEY": 10,
+      "VILLAGE": 1
+    },
+    "2019-2020": {
+      "BLOCK": 3845,
+      "FIRKA": 1166,
+      "MANDAL": 920,
+      "TALUK": 613,
+      "DISTRICT": 97,
+      "ISLAND": 37,
+      "TEHSIL": 34,
+      "VALLEY": 25
+    },
+    "2021-2022": {
+      "BLOCK": 4947,
+      "FIRKA": 1166,
+      "TALUK": 851,
+      "DISTRICT": 97,
+      "ISLAND": 37,
+      "VALLEY": 35,
+      "TEHSIL": 34,
+      "null": 1
+    },
     "2022-2023": {
-      "BLOCK": 548
+      "BLOCK": 5424,
+      "TALUK": 1167,
+      "TEHSIL": 34,
+      "DISTRICT": 30,
+      "VALLEY": 10,
+      "null": 3,
+      "ISLAND": 2
     },
     "2023-2024": {
       "BLOCK": 5737,
@@ -34,6 +83,14 @@
       "DISTRICT": 4,
       "ISLAND": 2,
       "REGION": 2
+    },
+    "2025-2026": {
+      "BLOCK": 5123,
+      "TALUK": 1184,
+      "TEHSIL": 39,
+      "DISTRICT": 4,
+      "ISLAND": 2,
+      "REGION": 2
     }
   },
   "unit_types_by_state": {
@@ -42,13 +99,17 @@
       "ISLAND"
     ],
     "ANDHRA PRADESH": [
-      "BLOCK"
+      "BLOCK",
+      "MANDAL",
+      "VILLAGE"
     ],
     "ARUNACHAL PRADESH": [
-      "BLOCK"
+      "BLOCK",
+      "DISTRICT"
     ],
     "ASSAM": [
-      "BLOCK"
+      "BLOCK",
+      "DISTRICT"
     ],
     "BIHAR": [
       "BLOCK"
@@ -82,19 +143,23 @@
       "VALLEY"
     ],
     "JAMMU AND KASHMIR": [
-      "BLOCK"
+      "BLOCK",
+      "DISTRICT"
     ],
     "JHARKHAND": [
       "BLOCK"
     ],
     "KARNATAKA": [
+      "BLOCK",
       "TALUK"
     ],
     "KERALA": [
       "BLOCK"
     ],
     "LADAKH": [
-      "BLOCK"
+      "BLOCK",
+      "DISTRICT",
+      "VALLEY"
     ],
     "MADHYA PRADESH": [
       "BLOCK"
@@ -106,13 +171,15 @@
       "BLOCK"
     ],
     "MEGHALAYA": [
-      "BLOCK"
+      "BLOCK",
+      "DISTRICT"
     ],
     "MIZORAM": [
       "BLOCK"
     ],
     "NAGALAND": [
-      "BLOCK"
+      "BLOCK",
+      "DISTRICT"
     ],
     "ODISHA": [
       "BLOCK"
@@ -128,13 +195,16 @@
       "BLOCK"
     ],
     "SIKKIM": [
-      "BLOCK"
+      "BLOCK",
+      "DISTRICT"
     ],
     "TAMILNADU": [
+      "FIRKA",
       "TALUK"
     ],
     "TELANGANA": [
-      "BLOCK"
+      "BLOCK",
+      "MANDAL"
     ],
     "TRIPURA": [
       "BLOCK"
@@ -150,11 +220,94 @@
     ]
   },
   "states_missing_by_year": {
+    "2016-2017": [
+      "LADAKH",
+      "SIKKIM",
+      "TELANGANA",
+      "WEST BENGAL"
+    ],
+    "2019-2020": [],
+    "2021-2022": [],
     "2022-2023": [],
     "2023-2024": [],
-    "2024-2025": []
+    "2024-2025": [],
+    "2025-2026": [
+      "ANDHRA PRADESH",
+      "LAKSHDWEEP"
+    ]
   },
   "districts_without_metrics": {
+    "2019-2020": [
+      "ALMORA (UTTARAKHAND)",
+      "ANJAW (ARUNACHAL PRADESH)",
+      "BAGESHWAR (UTTARAKHAND)",
+      "CHAMOLI (UTTARAKHAND)",
+      "CHAMPAWAT (UTTARAKHAND)",
+      "CHM (HIMACHAL PRADESH)",
+      "DIBANG VALLEY (ARUNACHAL PRADESH)",
+      "HMP (HIMACHAL PRADESH)",
+      "KIN (HIMACHAL PRADESH)",
+      "MND (HIMACHAL PRADESH)",
+      "PAURIGARHWAL (UTTARAKHAND)",
+      "PITHORAGARH (UTTARAKHAND)",
+      "RUDRAPRAYAG (UTTARAKHAND)",
+      "SHIMLA (HIMACHAL PRADESH)",
+      "SHM (HIMACHAL PRADESH)",
+      "SIRMAUR (HIMACHAL PRADESH)",
+      "SLN (HIMACHAL PRADESH)",
+      "SOLAN (HIMACHAL PRADESH)",
+      "SRM (HIMACHAL PRADESH)",
+      "TEHRI GARHWAL (UTTARAKHAND)",
+      "UNA (HIMACHAL PRADESH)",
+      "UNA (HIMACHAL PRADESH)",
+      "UTTARKASHI (UTTARAKHAND)"
+    ],
+    "2021-2022": [
+      "ALMORA (UTTARAKHAND)",
+      "ANJAW (ARUNACHAL PRADESH)",
+      "BAGESHWAR (UTTARAKHAND)",
+      "CHAMOLI (UTTARAKHAND)",
+      "CHAMPAWAT (UTTARAKHAND)",
+      "CHM (HIMACHAL PRADESH)",
+      "DIBANG VALLEY (ARUNACHAL PRADESH)",
+      "HMP (HIMACHAL PRADESH)",
+      "KIN (HIMACHAL PRADESH)",
+      "KOLKATTA (WEST BENGAL)",
+      "KURUNG KUMEY (ARUNACHAL PRADESH)",
+      "MND (HIMACHAL PRADESH)",
+      "PAURIGARHWAL (UTTARAKHAND)",
+      "PITHORAGARH (UTTARAKHAND)",
+      "RANA AND KUTCH (GUJARAT)",
+      "RUDRAPRAYAG (UTTARAKHAND)",
+      "SHIMLA (HIMACHAL PRADESH)",
+      "SHM (HIMACHAL PRADESH)",
+      "SIRMAUR (HIMACHAL PRADESH)",
+      "SLN (HIMACHAL PRADESH)",
+      "SOLAN (HIMACHAL PRADESH)",
+      "SOUTH 24 PARGANAS (WEST BENGAL)",
+      "SRM (HIMACHAL PRADESH)",
+      "TAWANG (ARUNACHAL PRADESH)",
+      "TEHRI GARHWAL (UTTARAKHAND)",
+      "UNA (HIMACHAL PRADESH)",
+      "UNA (HIMACHAL PRADESH)",
+      "UPPER SIANG (ARUNACHAL PRADESH)",
+      "UTTARKASHI (UTTARAKHAND)"
+    ],
+    "2022-2023": [
+      "ALMORA (UTTARAKHAND)",
+      "BAGESHWAR (UTTARAKHAND)",
+      "CHAMOLI (UTTARAKHAND)",
+      "CHAMPAWAT (UTTARAKHAND)",
+      "KOLKATTA (WEST BENGAL)",
+      "PAURIGARHWAL (UTTARAKHAND)",
+      "PITHORAGARH (UTTARAKHAND)",
+      "RANA AND KUTCH (GUJARAT)",
+      "RESERVE FOREST (TAMILNADU)",
+      "RUDRAPRAYAG (UTTARAKHAND)",
+      "SOUTH 24 PARGANAS (WEST BENGAL)",
+      "TEHRI GARHWAL (UTTARAKHAND)",
+      "UTTARKASHI (UTTARAKHAND)"
+    ],
     "2023-2024": [
       "RANA AND KUTCH (GUJARAT)"
     ],
@@ -167,44 +320,152 @@
       "LAS (HIMACHAL PRADESH)",
       "RANA AND KUTCH (GUJARAT)",
       "SHM (HIMACHAL PRADESH)"
+    ],
+    "2025-2026": [
+      "BLS (HIMACHAL PRADESH)",
+      "CHM (HIMACHAL PRADESH)",
+      "HMP (HIMACHAL PRADESH)",
+      "KIN (HIMACHAL PRADESH)",
+      "KUL (HIMACHAL PRADESH)",
+      "LAS (HIMACHAL PRADESH)",
+      "RANA AND KUTCH (GUJARAT)",
+      "SHM (HIMACHAL PRADESH)"
     ]
   },
   "districts_without_child_units": {
+    "2016-2017": [
+      "AGATTI (LAKSHDWEEP)",
+      "ALMORA (UTTARAKHAND)",
+      "AMINI (LAKSHDWEEP)",
+      "ANDROTH (LAKSHDWEEP)",
+      "Ahilyanagar (MAHARASHTRA)",
+      "Akola (MAHARASHTRA)",
+      "Amravati (MAHARASHTRA)",
+      "BAGESHWAR (UTTARAKHAND)",
+      "Bagalkot (KARNATAKA)",
+      "Ballari (KARNATAKA)",
+      "Beed (MAHARASHTRA)",
+      "Belagavi (KARNATAKA)",
+      "Bengaluru (Rural) (KARNATAKA)",
+      "Bengaluru (Urban) (KARNATAKA)",
+      "Bengaluru South (KARNATAKA)",
+      "Bhandara (MAHARASHTRA)",
+      "Bidar (KARNATAKA)",
+      "Buldhana (MAHARASHTRA)",
+      "CHAMOLI (UTTARAKHAND)",
+      "CHAMPAWAT (UTTARAKHAND)",
+      "CHANDEL (MANIPUR)",
+      "CHETLAT (LAKSHDWEEP)",
+      "CHM (HIMACHAL PRADESH)",
+      "Ch.Sambhajinagar (MAHARASHTRA)",
+      "Chamarajanagara (KARNATAKA)",
+      "Chandrapur (MAHARASHTRA)",
+      "Chikkaballapura (KARNATAKA)",
+      "Chikkamagaluru (KARNATAKA)",
+      "Chitradurga (KARNATAKA)",
+      "Dakshina Kannada (KARNATAKA)",
+      "Dharashiv (MAHARASHTRA)",
+      "Dharwad (KARNATAKA)",
+      "Dhule (MAHARASHTRA)",
+      "Gadag (KARNATAKA)",
+      "Gadchiroli (MAHARASHTRA)",
+      "Gondiya (MAHARASHTRA)",
+      "HMP (HIMACHAL PRADESH)",
+      "Hassan (KARNATAKA)",
+      "Haveri (KARNATAKA)",
+      "Hingoli (MAHARASHTRA)",
+      "Jalgaon (MAHARASHTRA)",
+      "Jalna (MAHARASHTRA)",
+      "KADMAT (LAKSHDWEEP)",
+      "KALPENI (LAKSHDWEEP)",
+      "KARAIKAL (PUDUCHERRY)",
+      "KAVARATTI (LAKSHDWEEP)",
+      "KILTAN (LAKSHDWEEP)",
+      "KIN (HIMACHAL PRADESH)",
+      "Kalburgi (KARNATAKA)",
+      "Kolara (KARNATAKA)",
+      "Kolhapur (MAHARASHTRA)",
+      "Koppal (KARNATAKA)",
+      "Latur (MAHARASHTRA)",
+      "MAHE (PUDUCHERRY)",
+      "MINICOY (LAKSHDWEEP)",
+      "Mandya (KARNATAKA)",
+      "Mysuru (KARNATAKA)",
+      "Nagpur (MAHARASHTRA)",
+      "Nanded (MAHARASHTRA)",
+      "Nandurbar (MAHARASHTRA)",
+      "Nashik (MAHARASHTRA)",
+      "PAURIGARHWAL (UTTARAKHAND)",
+      "PITHORAGARH (UTTARAKHAND)",
+      "PUDUCHERRY (PUDUCHERRY)",
+      "Palghar (MAHARASHTRA)",
+      "Parbhani (MAHARASHTRA)",
+      "Pune (MAHARASHTRA)",
+      "RUDRAPRAYAG (UTTARAKHAND)",
+      "Raichur (KARNATAKA)",
+      "Raigad (MAHARASHTRA)",
+      "Ratnagiri (MAHARASHTRA)",
+      "SHIMLA (HIMACHAL PRADESH)",
+      "SHM (HIMACHAL PRADESH)",
+      "SIRMAUR (HIMACHAL PRADESH)",
+      "SLN (HIMACHAL PRADESH)",
+      "SOLAN (HIMACHAL PRADESH)",
+      "SRM (HIMACHAL PRADESH)",
+      "Sangli (MAHARASHTRA)",
+      "Satara (MAHARASHTRA)",
+      "Shivamogga (KARNATAKA)",
+      "Sindhudurg (MAHARASHTRA)",
+      "Solapur (MAHARASHTRA)",
+      "TEHRI GARHWAL (UTTARAKHAND)",
+      "Thane (MAHARASHTRA)",
+      "Tumakuru (KARNATAKA)",
+      "UNA (HIMACHAL PRADESH)",
+      "UTTARKASHI (UTTARAKHAND)",
+      "Udupi (KARNATAKA)",
+      "Uttara Kannada (KARNATAKA)",
+      "Vijayapura (KARNATAKA)",
+      "Wardha (MAHARASHTRA)",
+      "Washim (MAHARASHTRA)",
+      "YANAM (PUDUCHERRY)",
+      "Yadgir (KARNATAKA)",
+      "Yavatmal (MAHARASHTRA)"
+    ],
+    "2019-2020": [
+      "AGATTI (LAKSHDWEEP)",
+      "AMINI (LAKSHDWEEP)",
+      "ANDROTH (LAKSHDWEEP)",
+      "CHETLAT (LAKSHDWEEP)",
+      "KADMAT (LAKSHDWEEP)",
+      "KALPENI (LAKSHDWEEP)",
+      "KARAIKAL (PUDUCHERRY)",
+      "KAVARATTI (LAKSHDWEEP)",
+      "KILTAN (LAKSHDWEEP)",
+      "MAHE (PUDUCHERRY)",
+      "MINICOY (LAKSHDWEEP)",
+      "PUDUCHERRY (PUDUCHERRY)",
+      "YANAM (PUDUCHERRY)"
+    ],
+    "2021-2022": [
+      "AGATTI (LAKSHDWEEP)",
+      "AMINI (LAKSHDWEEP)",
+      "ANDROTH (LAKSHDWEEP)",
+      "CHETLAT (LAKSHDWEEP)",
+      "KADMAT (LAKSHDWEEP)",
+      "KALPENI (LAKSHDWEEP)",
+      "KARAIKAL (PUDUCHERRY)",
+      "KAVARATTI (LAKSHDWEEP)",
+      "KILTAN (LAKSHDWEEP)",
+      "MAHE (PUDUCHERRY)",
+      "MINICOY (LAKSHDWEEP)",
+      "PUDUCHERRY (PUDUCHERRY)",
+      "YANAM (PUDUCHERRY)"
+    ],
     "2022-2023": [
-      "ARARIA (BIHAR)",
-      "ARWAL (BIHAR)",
-      "AURANGABAD (BIHAR)",
-      "BHAGALPUR (BIHAR)",
-      "BHOJPUR (BIHAR)",
-      "BUXAR (BIHAR)",
-      "DARBHANGA (BIHAR)",
-      "EAST CHAMPARAN (BIHAR)",
-      "GAYA (BIHAR)",
-      "GOPALGANJ (BIHAR)",
-      "JAMUI (BIHAR)",
-      "JEHANABAD (BIHAR)",
-      "KAIMUR (BIHAR)",
-      "KATIHAR (BIHAR)",
-      "KHAGARIA (BIHAR)",
-      "KISHANGANJ (BIHAR)",
-      "LAKHISARAI (BIHAR)",
-      "MADHEPURA (BIHAR)",
-      "MADHUBANI (BIHAR)",
-      "MUNGER (BIHAR)",
-      "MUZAFFARPUR (BIHAR)",
-      "NALANDA (BIHAR)",
-      "PATNA (BIHAR)",
-      "PURNEA (BIHAR)",
-      "ROHTAS (BIHAR)",
-      "SAHARSA (BIHAR)",
-      "SAMASTIPUR (BIHAR)",
-      "SARAN (BIHAR)",
-      "SHEIKHPURA (BIHAR)",
-      "SHEOHAR (BIHAR)",
-      "SITAMARHI (BIHAR)",
-      "SIWAN (BIHAR)",
-      "VAISHALI (BIHAR)",
-      "WEST CHAMPARAN (BIHAR)"
+      "AMINI (LAKSHDWEEP)",
+      "ANDROTH (LAKSHDWEEP)",
+      "KAVARATTI (LAKSHDWEEP)",
+      "KILTAN (LAKSHDWEEP)",
+      "MINICOY (LAKSHDWEEP)"
     ],
     "2023-2024": [
       "AMINI (LAKSHDWEEP)",
@@ -226,125 +487,226 @@
       "LAS (HIMACHAL PRADESH)",
       "MINICOY (LAKSHDWEEP)",
       "SHM (HIMACHAL PRADESH)"
+    ],
+    "2025-2026": [
+      "BLS (HIMACHAL PRADESH)",
+      "CHM (HIMACHAL PRADESH)",
+      "HMP (HIMACHAL PRADESH)",
+      "KIN (HIMACHAL PRADESH)",
+      "KUL (HIMACHAL PRADESH)",
+      "LAS (HIMACHAL PRADESH)",
+      "SHM (HIMACHAL PRADESH)"
     ]
   },
   "missing_rate_unit_fields": {
     "recharge_total": {
-      "2022-2023": 0.0,
+      "2016-2017": 0.0,
+      "2019-2020": 0.0141,
+      "2021-2022": 0.018,
+      "2022-2023": 0.0166,
       "2023-2024": 0.0003,
-      "2024-2025": 0.0004
+      "2024-2025": 0.0004,
+      "2025-2026": 0.0003
     },
     "extractable_total": {
-      "2022-2023": 0.0,
+      "2016-2017": 0.0,
+      "2019-2020": 0.0,
+      "2021-2022": 0.0001,
+      "2022-2023": 0.0001,
       "2023-2024": 0.0001,
-      "2024-2025": 0.0
+      "2024-2025": 0.0,
+      "2025-2026": 0.0
     },
     "extraction_total": {
-      "2022-2023": 0.104,
+      "2016-2017": 0.029,
+      "2019-2020": 0.018,
+      "2021-2022": 0.0173,
+      "2022-2023": 0.0237,
       "2023-2024": 0.0373,
-      "2024-2025": 0.0372
+      "2024-2025": 0.0372,
+      "2025-2026": 0.0408
     },
     "extraction_irrigation": {
-      "2022-2023": 0.0,
+      "2016-2017": 0.0,
+      "2019-2020": 0.0123,
+      "2021-2022": 0.0109,
+      "2022-2023": 0.0001,
       "2023-2024": 0.0001,
-      "2024-2025": 0.0001
+      "2024-2025": 0.0001,
+      "2025-2026": 0.0
     },
     "extraction_domestic": {
+      "2016-2017": 0.0002,
+      "2019-2020": 0.0123,
+      "2021-2022": 0.0106,
       "2022-2023": 0.0,
       "2023-2024": 0.0,
-      "2024-2025": 0.0
+      "2024-2025": 0.0,
+      "2025-2026": 0.0
     },
     "extraction_industrial": {
+      "2016-2017": 0.4094,
+      "2019-2020": 0.0123,
+      "2021-2022": 0.0107,
       "2022-2023": 0.0,
       "2023-2024": 0.0001,
-      "2024-2025": 0.0001
+      "2024-2025": 0.0001,
+      "2025-2026": 0.0
     },
     "stage_of_extraction": {
-      "2022-2023": 0.104,
+      "2016-2017": 0.0373,
+      "2019-2020": 0.018,
+      "2021-2022": 0.0173,
+      "2022-2023": 0.0237,
       "2023-2024": 0.0373,
-      "2024-2025": 0.0372
+      "2024-2025": 0.0372,
+      "2025-2026": 0.0408
     },
     "future_availability": {
+      "2016-2017": 0.0,
+      "2019-2020": 0.0,
+      "2021-2022": 0.0,
       "2022-2023": 0.0,
       "2023-2024": 0.0,
-      "2024-2025": 0.0
+      "2024-2025": 0.0,
+      "2025-2026": 0.0
     },
     "natural_discharge": {
-      "2022-2023": 0.0,
+      "2016-2017": 0.0,
+      "2019-2020": 0.0,
+      "2021-2022": 0.0001,
+      "2022-2023": 0.0001,
       "2023-2024": 0.0001,
-      "2024-2025": 0.0
+      "2024-2025": 0.0,
+      "2025-2026": 0.0
     },
     "rainfall_mm": {
-      "2022-2023": 0.0,
+      "2016-2017": 0.8769,
+      "2019-2020": 0.0539,
+      "2021-2022": 0.018,
+      "2022-2023": 0.0165,
       "2023-2024": 0.0003,
-      "2024-2025": 0.0004
+      "2024-2025": 0.0004,
+      "2025-2026": 0.0003
     },
     "total_area": {
-      "2022-2023": 0.0,
+      "2016-2017": 0.0,
+      "2019-2020": 0.0,
+      "2021-2022": 0.0001,
+      "2022-2023": 0.0001,
       "2023-2024": 0.0001,
-      "2024-2025": 0.0
+      "2024-2025": 0.0,
+      "2025-2026": 0.0
     },
     "category": {
-      "2022-2023": 0.0,
+      "2016-2017": 0.0,
+      "2019-2020": 0.0,
+      "2021-2022": 0.0001,
+      "2022-2023": 0.0001,
       "2023-2024": 0.0001,
-      "2024-2025": 0.0
+      "2024-2025": 0.0,
+      "2025-2026": 0.0
     }
   },
   "zero_rate_unit_fields": {
     "area.total.totalArea": {
-      "2022-2023": 0.0,
+      "2016-2017": 0.8753,
+      "2019-2020": 0.0001,
+      "2021-2022": 0.0003,
+      "2022-2023": 0.0004,
       "2023-2024": 0.0068,
-      "2024-2025": 0.007
+      "2024-2025": 0.007,
+      "2025-2026": 0.0075
     },
     "availabilityForFutureUse.total": {
-      "2022-2023": 0.1252,
+      "2016-2017": 0.231,
+      "2019-2020": 0.1193,
+      "2021-2022": 0.1076,
+      "2022-2023": 0.1069,
       "2023-2024": 0.1148,
-      "2024-2025": 0.1102
+      "2024-2025": 0.1102,
+      "2025-2026": 0.1112
     },
     "currentAvailabilityForAllPurposes.total": {
-      "2022-2023": 0.097,
+      "2016-2017": 0.0388,
+      "2019-2020": 0.0236,
+      "2021-2022": 0.0286,
+      "2022-2023": 0.0331,
       "2023-2024": 0.0445,
-      "2024-2025": 0.044
+      "2024-2025": 0.044,
+      "2025-2026": 0.0407
     },
     "draftData.agriculture.total": {
-      "2022-2023": 0.2551,
+      "2016-2017": 0.0716,
+      "2019-2020": 0.0431,
+      "2021-2022": 0.0514,
+      "2022-2023": 0.0726,
       "2023-2024": 0.0809,
-      "2024-2025": 0.0807
+      "2024-2025": 0.0807,
+      "2025-2026": 0.0885
     },
     "draftData.domestic.total": {
-      "2022-2023": 0.097,
+      "2016-2017": 0.0478,
+      "2019-2020": 0.0243,
+      "2021-2022": 0.0314,
+      "2022-2023": 0.0428,
       "2023-2024": 0.0534,
-      "2024-2025": 0.0542
+      "2024-2025": 0.0542,
+      "2025-2026": 0.0553
     },
     "draftData.industry.total": {
-      "2022-2023": 0.5806,
+      "2016-2017": 0.2025,
+      "2019-2020": 0.5624,
+      "2021-2022": 0.4221,
+      "2022-2023": 0.3711,
       "2023-2024": 0.3536,
-      "2024-2025": 0.3336
+      "2024-2025": 0.3336,
+      "2025-2026": 0.2924
     },
     "draftData.total.total": {
-      "2022-2023": 0.0,
+      "2016-2017": 0.0135,
+      "2019-2020": 0.007,
+      "2021-2022": 0.0132,
+      "2022-2023": 0.0104,
       "2023-2024": 0.01,
-      "2024-2025": 0.0096
+      "2024-2025": 0.0096,
+      "2025-2026": 0.0096
     },
     "loss.total": {
-      "2022-2023": 0.097,
+      "2016-2017": 0.0391,
+      "2019-2020": 0.0236,
+      "2021-2022": 0.0286,
+      "2022-2023": 0.0332,
       "2023-2024": 0.0445,
-      "2024-2025": 0.044
+      "2024-2025": 0.044,
+      "2025-2026": 0.0437
     },
     "rainfall.total": {
-      "2022-2023": 0.097,
+      "2016-2017": 0.0318,
+      "2019-2020": 0.0073,
+      "2021-2022": 0.0113,
+      "2022-2023": 0.0127,
       "2023-2024": 0.0364,
-      "2024-2025": 0.0353
+      "2024-2025": 0.0353,
+      "2025-2026": 0.0474
     },
     "rechargeData.total.total": {
-      "2022-2023": 0.097,
+      "2016-2017": 0.0391,
+      "2019-2020": 0.0078,
+      "2021-2022": 0.0089,
+      "2022-2023": 0.0168,
       "2023-2024": 0.0443,
-      "2024-2025": 0.0435
+      "2024-2025": 0.0435,
+      "2025-2026": 0.0403
     },
     "stageOfExtraction.total": {
-      "2022-2023": 0.0078,
+      "2016-2017": 0.0089,
+      "2019-2020": 0.0095,
+      "2021-2022": 0.0076,
+      "2022-2023": 0.0034,
       "2023-2024": 0.0038,
-      "2024-2025": 0.0031
+      "2024-2025": 0.0031,
+      "2025-2026": 0.0031
     }
   },
   "duplicate_uuid_within_year_level": 0,
@@ -377,13 +739,41 @@
   },
   "units_named_like_their_district_latest_year": 360,
   "name_issues": {
-    "unusual punctuation": 145,
-    "double space": 3
+    "unusual punctuation": 387,
+    "double space": 12
   },
   "name_issue_examples": [
     {
       "level": "unit",
-      "name": "Lekang_Mahadevpur",
+      "name": "ONGOLE_RURAL",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "UDHAGA  MANDALAM",
+      "issues": [
+        "double space"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "CHITTOOR_RURAL",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "VIZIANAGARAM_RURAL",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "ADONI_1",
       "issues": [
         "unusual punctuation"
       ]
@@ -397,14 +787,7 @@
     },
     {
       "level": "unit",
-      "name": "Namchi_ROA",
-      "issues": [
-        "unusual punctuation"
-      ]
-    },
-    {
-      "level": "unit",
-      "name": "GURGAON_URBAN",
+      "name": "BHOPAL_URBAN",
       "issues": [
         "unusual punctuation"
       ]
@@ -418,13 +801,6 @@
     },
     {
       "level": "unit",
-      "name": "NANDYAL_RURAL",
-      "issues": [
-        "unusual punctuation"
-      ]
-    },
-    {
-      "level": "unit",
       "name": "Vemulawada_Rural",
       "issues": [
         "unusual punctuation"
@@ -432,14 +808,7 @@
     },
     {
       "level": "unit",
-      "name": "BIKANER_RURAL",
-      "issues": [
-        "unusual punctuation"
-      ]
-    },
-    {
-      "level": "unit",
-      "name": "BIKANER_URBAN",
+      "name": "ANDAL ( ANDAL+PANDAB",
       "issues": [
         "unusual punctuation"
       ]
@@ -467,58 +836,9 @@
     },
     {
       "level": "unit",
-      "name": "ONGOLE_RURAL",
-      "issues": [
-        "unusual punctuation"
-      ]
-    },
-    {
-      "level": "unit",
-      "name": "Gyalsingh_ROA",
-      "issues": [
-        "unusual punctuation"
-      ]
-    },
-    {
-      "level": "unit",
-      "name": "AJMER_URBAN",
-      "issues": [
-        "unusual punctuation"
-      ]
-    },
-    {
-      "level": "unit",
-      "name": "PEESANGAN_RURAL",
-      "issues": [
-        "unusual punctuation"
-      ]
-    },
-    {
-      "level": "unit",
-      "name": "SHRINAGAR_RURAL",
-      "issues": [
-        "unusual punctuation"
-      ]
-    },
-    {
-      "level": "unit",
       "name": "DHARAMSHALA  VALLEY",
       "issues": [
         "double space"
-      ]
-    },
-    {
-      "level": "unit",
-      "name": "LADPURA_RURAL",
-      "issues": [
-        "unusual punctuation"
-      ]
-    },
-    {
-      "level": "unit",
-      "name": "KOTA_URBAN",
-      "issues": [
-        "unusual punctuation"
       ]
     },
     {
@@ -555,6 +875,48 @@
       "issues": [
         "unusual punctuation"
       ]
+    },
+    {
+      "level": "unit",
+      "name": "Nagar_Kurnool",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Turkapalle_M",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Atmakur_M",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "NAXALBARI(SILIGURI+N",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "KHARIBARI(KHARIBARI+",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Dundigal_Gandimaisamma",
+      "issues": [
+        "unusual punctuation"
+      ]
     }
   ],
   "uuids_with_multiple_name_spellings_across_years": {
@@ -565,6 +927,24 @@
   "name_change_examples": {},
   "uuid_overlap_consecutive_years": {
     "state": {
+      "2016-2017->2019-2020": {
+        "a": 33,
+        "b": 37,
+        "common": 33,
+        "jaccard": 0.8919
+      },
+      "2019-2020->2021-2022": {
+        "a": 37,
+        "b": 37,
+        "common": 37,
+        "jaccard": 1.0
+      },
+      "2021-2022->2022-2023": {
+        "a": 37,
+        "b": 37,
+        "common": 37,
+        "jaccard": 1.0
+      },
       "2022-2023->2023-2024": {
         "a": 37,
         "b": 37,
@@ -576,50 +956,145 @@
         "b": 37,
         "common": 37,
         "jaccard": 1.0
+      },
+      "2024-2025->2025-2026": {
+        "a": 37,
+        "b": 35,
+        "common": 35,
+        "jaccard": 0.9459
       }
     },
     "district": {
+      "2016-2017->2019-2020": {
+        "a": 668,
+        "b": 721,
+        "common": 653,
+        "jaccard": 0.8872
+      },
+      "2019-2020->2021-2022": {
+        "a": 721,
+        "b": 746,
+        "common": 664,
+        "jaccard": 0.8269
+      },
+      "2021-2022->2022-2023": {
+        "a": 746,
+        "b": 734,
+        "common": 714,
+        "jaccard": 0.9321
+      },
       "2022-2023->2023-2024": {
-        "a": 125,
+        "a": 734,
         "b": 730,
-        "common": 125,
-        "jaccard": 0.1712
+        "common": 710,
+        "jaccard": 0.9416
       },
       "2023-2024->2024-2025": {
         "a": 730,
         "b": 735,
         "common": 723,
         "jaccard": 0.9744
+      },
+      "2024-2025->2025-2026": {
+        "a": 735,
+        "b": 705,
+        "common": 704,
+        "jaccard": 0.9565
       }
     },
     "unit": {
+      "2016-2017->2019-2020": {
+        "a": 5279,
+        "b": 6737,
+        "common": 4962,
+        "jaccard": 0.7034
+      },
+      "2019-2020->2021-2022": {
+        "a": 6737,
+        "b": 7168,
+        "common": 1712,
+        "jaccard": 0.1404
+      },
+      "2021-2022->2022-2023": {
+        "a": 7168,
+        "b": 6670,
+        "common": 5691,
+        "jaccard": 0.6985
+      },
       "2022-2023->2023-2024": {
-        "a": 548,
+        "a": 6670,
         "b": 6965,
-        "common": 548,
-        "jaccard": 0.0787
+        "common": 5655,
+        "jaccard": 0.7086
       },
       "2023-2024->2024-2025": {
         "a": 6965,
         "b": 6984,
         "common": 5697,
         "jaccard": 0.6904
+      },
+      "2024-2025->2025-2026": {
+        "a": 6984,
+        "b": 6354,
+        "common": 5443,
+        "jaccard": 0.6894
       }
     }
   },
   "units_that_changed_parent_district": 0,
   "units_changed_parent_examples": [],
-  "units_present_in_all_years": 231,
-  "units_total_distinct": 8252,
+  "units_present_in_all_years": 564,
+  "units_total_distinct": 16993,
   "national_reconciliation": {
+    "2016-2017": {
+      "recharge_total_bcm": 843.55,
+      "recharge_fresh_bcm": 839.57,
+      "extractable_fresh_bcm": 893.21,
+      "extraction_fresh_bcm": 608.63,
+      "soe_api": 68.14,
+      "units_api": 5279,
+      "units_api_excl_hilly": 5124
+    },
+    "2019-2020": {
+      "recharge_total_bcm": 448.89,
+      "recharge_fresh_bcm": 436.2,
+      "extractable_fresh_bcm": 397.68,
+      "extraction_fresh_bcm": 244.92,
+      "soe_api": 61.59,
+      "units_api": 6737,
+      "units_api_excl_hilly": 6616,
+      "published": {
+        "gwra": 2020,
+        "extraction_approx": 245,
+        "src": "https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1848469 (only '245 BCM' extraction located; other figures NOT verified)"
+      }
+    },
+    "2021-2022": {
+      "recharge_total_bcm": 450.48,
+      "recharge_fresh_bcm": 437.61,
+      "extractable_fresh_bcm": 398.09,
+      "extraction_fresh_bcm": 239.18,
+      "soe_api": 60.08,
+      "units_api": 7168,
+      "units_api_excl_hilly": 7044,
+      "published": {
+        "gwra": 2022,
+        "recharge": 437.6,
+        "extractable": 398.08,
+        "extraction": 239.16,
+        "soe": 60.08,
+        "units": 7089,
+        "src": "https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=1874808"
+      }
+    },
     "2022-2023": {
       "recharge_total_bcm": 470.22,
       "recharge_fresh_bcm": 449.05,
       "extractable_fresh_bcm": 407.19,
       "extraction_fresh_bcm": 241.31,
       "soe_api": 59.26,
-      "units_api": 548,
-      "units_api_excl_hilly": 491,
+      "units_api": 6670,
+      "units_api_excl_hilly": 6512,
       "published": {
         "gwra": 2023,
         "recharge": 449.08,
@@ -662,14 +1137,38 @@
         "soe": 60.63,
         "src": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2220203"
       }
+    },
+    "2025-2026": {
+      "recharge_total_bcm": 449.88,
+      "recharge_fresh_bcm": 428.31,
+      "extractable_fresh_bcm": 387.72,
+      "extraction_fresh_bcm": 240.28,
+      "soe_api": 61.97,
+      "units_api": 6354,
+      "units_api_excl_hilly": 6095
     }
   },
   "unit_sum_vs_district": {
     "rechargeData.total.total": {
+      "2016-2017": {
+        "parents": 573,
+        "within_0.1pct": 0.8883,
+        "max_rel_diff": 11.4104
+      },
+      "2019-2020": {
+        "parents": 685,
+        "within_0.1pct": 0.9781,
+        "max_rel_diff": 0.8531
+      },
+      "2021-2022": {
+        "parents": 704,
+        "within_0.1pct": 0.983,
+        "max_rel_diff": 0.5383
+      },
       "2022-2023": {
-        "parents": 91,
-        "within_0.1pct": 1.0,
-        "max_rel_diff": 0.0
+        "parents": 716,
+        "within_0.1pct": 0.9832,
+        "max_rel_diff": 0.454
       },
       "2023-2024": {
         "parents": 724,
@@ -680,13 +1179,33 @@
         "parents": 722,
         "within_0.1pct": 0.9861,
         "max_rel_diff": 0.5763
+      },
+      "2025-2026": {
+        "parents": 697,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
       }
     },
     "draftData.total.total": {
+      "2016-2017": {
+        "parents": 557,
+        "within_0.1pct": 0.9013,
+        "max_rel_diff": 172.0233
+      },
+      "2019-2020": {
+        "parents": 678,
+        "within_0.1pct": 0.9779,
+        "max_rel_diff": 0.8489
+      },
+      "2021-2022": {
+        "parents": 702,
+        "within_0.1pct": 0.9858,
+        "max_rel_diff": 0.5063
+      },
       "2022-2023": {
-        "parents": 86,
-        "within_0.1pct": 1.0,
-        "max_rel_diff": 0.0
+        "parents": 709,
+        "within_0.1pct": 0.9859,
+        "max_rel_diff": 0.4865
       },
       "2023-2024": {
         "parents": 710,
@@ -697,13 +1216,33 @@
         "parents": 708,
         "within_0.1pct": 0.9859,
         "max_rel_diff": 0.5609
+      },
+      "2025-2026": {
+        "parents": 683,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
       }
     }
   },
   "district_sum_vs_state": {
     "rechargeData.total.total": {
+      "2016-2017": {
+        "parents": 33,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
+      "2019-2020": {
+        "parents": 37,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
+      "2021-2022": {
+        "parents": 37,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
       "2022-2023": {
-        "parents": 5,
+        "parents": 37,
         "within_0.1pct": 1.0,
         "max_rel_diff": 0.0
       },
@@ -714,13 +1253,33 @@
       },
       "2024-2025": {
         "parents": 37,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
+      "2025-2026": {
+        "parents": 35,
         "within_0.1pct": 1.0,
         "max_rel_diff": 0.0
       }
     },
     "draftData.total.total": {
+      "2016-2017": {
+        "parents": 33,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
+      "2019-2020": {
+        "parents": 37,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
+      "2021-2022": {
+        "parents": 37,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
       "2022-2023": {
-        "parents": 5,
+        "parents": 37,
         "within_0.1pct": 1.0,
         "max_rel_diff": 0.0
       },
@@ -731,18 +1290,50 @@
       },
       "2024-2025": {
         "parents": 37,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
+      "2025-2026": {
+        "parents": 35,
         "within_0.1pct": 1.0,
         "max_rel_diff": 0.0
       }
     }
   },
   "unit_category_values": {
+    "2016-2017": {
+      "safe": 3226,
+      "over_exploited": 1032,
+      "semi_critical": 575,
+      "critical": 208,
+      "Hilly Area": 153,
+      "salinity": 82,
+      "hilly": 2,
+      "none": 1
+    },
+    "2019-2020": {
+      "safe": 4143,
+      "over_exploited": 1095,
+      "semi_critical": 1034,
+      "critical": 262,
+      "Hilly Area": 121,
+      "salinity": 82
+    },
+    "2021-2022": {
+      "safe": 4744,
+      "over_exploited": 1005,
+      "semi_critical": 880,
+      "critical": 258,
+      "salinity": 157,
+      "Hilly Area": 123
+    },
     "2022-2023": {
-      "safe": 391,
-      "semi_critical": 69,
-      "Hilly Area": 57,
-      "over_exploited": 26,
-      "critical": 5
+      "safe": 4761,
+      "over_exploited": 732,
+      "semi_critical": 693,
+      "critical": 199,
+      "Hilly Area": 157,
+      "salinity": 127
     },
     "2023-2024": {
       "safe": 4922,
@@ -759,12 +1350,95 @@
       "Hilly Area": 260,
       "critical": 201,
       "salinity": 127
+    },
+    "2025-2026": {
+      "safe": 4387,
+      "semi_critical": 743,
+      "over_exploited": 687,
+      "Hilly Area": 259,
+      "critical": 190,
+      "salinity": 88
     }
   },
   "category_matches_soe_threshold": {
+    "2016-2017": 0.9958,
+    "2019-2020": 0.9881,
+    "2021-2022": 1.0,
     "2022-2023": 1.0,
     "2023-2024": 1.0,
-    "2024-2025": 1.0
+    "2024-2025": 1.0,
+    "2025-2026": 1.0
   },
-  "category_mismatch_examples": []
+  "category_mismatch_examples": [
+    {
+      "year": "2016-2017",
+      "uuid": "b42cdfca-a5ad-4b89-a72c-8154b1247c9f",
+      "value_str": "critical",
+      "value_num": 100.296,
+      "expected": "over_exploited"
+    },
+    {
+      "year": "2016-2017",
+      "uuid": "ae179e72-a084-45c8-9e99-8d90d830a050",
+      "value_str": "safe",
+      "value_num": 70.039,
+      "expected": "semi_critical"
+    },
+    {
+      "year": "2016-2017",
+      "uuid": "39299481-a8d0-47d0-802e-9bb6bacd660c",
+      "value_str": "safe",
+      "value_num": 70.055,
+      "expected": "semi_critical"
+    },
+    {
+      "year": "2016-2017",
+      "uuid": "229e04f6-54dd-4922-8d2d-654ad21bba8a",
+      "value_str": "safe",
+      "value_num": 70.018,
+      "expected": "semi_critical"
+    },
+    {
+      "year": "2016-2017",
+      "uuid": "3dbefd39-9a53-4eec-a61e-7a50b7aa1da5",
+      "value_str": "safe",
+      "value_num": 70.063,
+      "expected": "semi_critical"
+    },
+    {
+      "year": "2016-2017",
+      "uuid": "32f12fb6-338b-4b38-8691-c62d2a077914",
+      "value_str": "critical",
+      "value_num": 100.215,
+      "expected": "over_exploited"
+    },
+    {
+      "year": "2016-2017",
+      "uuid": "d5ba40ec-55cd-4b31-b8e2-9f39748be575",
+      "value_str": "safe",
+      "value_num": 105.151,
+      "expected": "over_exploited"
+    },
+    {
+      "year": "2016-2017",
+      "uuid": "34f3e070-6910-4ba4-a16f-c5e7e38156af",
+      "value_str": "safe",
+      "value_num": 85.085,
+      "expected": "semi_critical"
+    },
+    {
+      "year": "2016-2017",
+      "uuid": "48d23743-9170-49dc-9b36-b05fbd70147a",
+      "value_str": "critical",
+      "value_num": 100.078,
+      "expected": "over_exploited"
+    },
+    {
+      "year": "2016-2017",
+      "uuid": "92886bb9-358d-4810-a6c0-c40e6714278b",
+      "value_str": "safe",
+      "value_num": 70.223,
+      "expected": "semi_critical"
+    }
+  ]
 }

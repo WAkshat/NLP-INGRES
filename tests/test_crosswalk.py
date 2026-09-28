@@ -59,3 +59,29 @@ def test_name_state_fallback_when_district_renamed():
     ]
     cw = crosswalk(_locs(rows), "unit").set_index(["year", "uuid"])
     assert cw.loc[("2023", "u_old")].tolist() == ["u_new", "name_state"]
+
+
+def test_granularity_change_not_linked_by_name():
+    # Tamil Nadu style: firka "Alpha" in 2023, taluk "Alpha" in 2024 -> different units, never linked
+    df = _locs([("2023", "district", "D", "Dist", "S", "D"), ("2024", "district", "D", "Dist", "S", "D"),
+                ("2023", "unit", "f1", "Alpha", "S", "D"), ("2024", "unit", "t1", "Alpha", "S", "D")])
+    df["unit_type"] = [None, None, "FIRKA", "TALUK"]
+    cw = crosswalk(df, "unit").set_index(["year", "uuid"])
+    assert cw.loc[("2023", "f1")].match_method == "first_seen"
+    df["unit_type"] = [None, None, "MANDAL", "BLOCK"]  # AP/TS relabel only
+    cw = crosswalk(df, "unit").set_index(["year", "uuid"])
+    assert cw.loc[("2023", "f1")].tolist() == ["t1", "name"]
+
+
+def test_fuzzy_rejects_split_qualifiers():
+    df = _locs([("2023", "district", "D", "Dist", "S", "D"), ("2024", "district", "D", "Dist", "S", "D"),
+                ("2023", "unit", "o", "SANGANER", "S", "D"), ("2024", "unit", "n", "SANGANER_RURAL", "S", "D")])
+    cw = crosswalk(df, "unit").set_index(["year", "uuid"])
+    assert cw.loc[("2023", "o")].match_method == "first_seen"
+
+
+def test_fuzzy_rejects_different_ordinals():
+    df = _locs([("2023", "district", "D", "Dist", "S", "D"), ("2024", "district", "D", "Dist", "S", "D"),
+                ("2023", "unit", "o", "MYLAPORE - TIRUVALLI-III", "S", "D"),
+                ("2024", "unit", "n", "MYLAPORE - TIRUVALLIKENI-II", "S", "D")])
+    assert crosswalk(df, "unit").set_index(["year", "uuid"]).loc[("2023", "o")].match_method == "first_seen"

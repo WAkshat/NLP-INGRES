@@ -3,7 +3,7 @@
 Multilingual (English / Hindi / Hinglish / a Dravidian language) Text-to-SQL research over
 India's official groundwater assessment data (**INGRES**, CGWB + IIT Hyderabad).
 
-> Status: **Phase 1-2 (data layer)**. See [`PROJECT_STATUS.md`](PROJECT_STATUS.md) for what is
+> Status: **Phase 1-2 (data layer) done and validated**. See [`PROJECT_STATUS.md`](PROJECT_STATUS.md) for what is
 > done, validated, and pending. No model results exist yet; every result slot below is
 > `TODO — requires experiment` until the corresponding experiment has been run.
 

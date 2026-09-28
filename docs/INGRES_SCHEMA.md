@@ -16,9 +16,9 @@ Assessment cycles available in INGRES. `assessment_year` is the portal label; `g
 
 | column | type | unit | null % | description | raw INGRES field | examples |
 |---|---|---|---:|---|---|---|
-| `assessment_year` | TEXT |  | 0.0 | Assessment cycle label, e.g. '2024-2025' |  | 2022-2023, 2023-2024, 2021-2022 |
-| `gwra_year` | INTEGER |  | 0.0 | Year of the corresponding published Dynamic Ground Water Resource Assessment report |  | 2023, 2024, 2025 |
-| `is_complete` | INTEGER |  | 0.0 | 1 if the cycle has full national coverage and reconciles with published totals |  | 1 |
+| `assessment_year` | TEXT |  | 0.0 | Assessment cycle label, e.g. '2024-2025' |  | 2023-2024, 2021-2022, 2022-2023 |
+| `gwra_year` | INTEGER |  | 0.0 | Year of the corresponding published Dynamic Ground Water Resource Assessment report |  | 2025, 2020, 2023 |
+| `is_complete` | INTEGER |  | 0.0 | 1 if the cycle has full national coverage and is not flagged (see caveat); national reconciliation status per year is in docs/DATA_ACCESS_REPORT.md |  | 1 |
 | `methodology` | TEXT |  | 0.0 | Assessment methodology (GEC-2015 for all included cycles) |  | GEC-2015 |
 | `caveat` | TEXT |  | 0.0 | Comparability caveat to surface when comparing years |  | All cycles use GEC-2015 methodology, but assessment-unit boundaries, district reorganisations, input data and parameter revisions differ between cycles; treat cross-year differences as historical change detection, not trend estimates. |
 
@@ -32,10 +32,10 @@ States and Union Territories as named in INGRES (UPPER CASE, INGRES spellings e.
 
 | column | type | unit | null % | description | raw INGRES field | examples |
 |---|---|---|---:|---|---|---|
-| `state_id` | TEXT |  | 0.0 | INGRES location UUID of the state (stable across cycles) |  | 812072c8-d651-485c-88e8-7dd29d8c183b, 648a95f6-9249-4c92-8ae4-a9d93eb7c898, 7f615d2f-0be6-42bf-891f-7239e101e487 |
-| `state_name` | TEXT |  | 0.0 | State/UT name as spelled in INGRES |  | JAMMU AND KASHMIR, RAJASTHAN, GUJARAT |
+| `state_id` | TEXT |  | 0.0 | INGRES location UUID of the state (stable across cycles) |  | 19903c2c-ed18-4782-a679-dc10e8aa71ed, 40320284-8d82-4f7e-80d7-00a00bb0e5b0, b8c2ccc0-b638-468a-84e7-3512ece9b3a5 |
+| `state_name` | TEXT |  | 0.0 | State/UT name as spelled in INGRES |  | PUDUCHERRY, JAMMU AND KASHMIR, TELANGANA |
 
-## `districts` (742 rows)
+## `districts` (770 rows)
 
 Districts as named in INGRES (case varies by state).
 
@@ -45,11 +45,11 @@ Districts as named in INGRES (case varies by state).
 
 | column | type | unit | null % | description | raw INGRES field | examples |
 |---|---|---|---:|---|---|---|
-| `district_id` | TEXT |  | 0.0 | Canonical cross-year district id (the district's INGRES UUID in the latest cycle it appears in) |  | b9cf8347-253b-47db-9ff2-6015d408b7ba, 484ec0d1-4f41-471a-b1bc-68310211676d, bfd34098-3b14-4716-bf1a-01f52c6ef506 |
-| `district_name` | TEXT |  | 0.0 | District name as spelled in INGRES |  | YAMUNA NAGAR, Raichur, SAHARSA |
-| `state_id` | TEXT |  | 0.0 | INGRES location UUID of the state (stable across cycles) |  | 8fd29251-6e20-4f33-9a96-f47cab45eb13, 68dad067-a4cc-4397-a6fd-fc10ef7cc933, 785cc6f0-e9d0-4961-9578-08ed2f24377a |
+| `district_id` | TEXT |  | 0.0 | Canonical cross-year district id (the district's INGRES UUID in the latest cycle it appears in) |  | d74a8fdb-1214-40f3-b2cf-92ff3a6ecda2, 2c6bac68-449e-4524-9c1a-116ce87e07f3, 6f45bd2a-d7a9-4e7c-8cb6-7d93162575d6 |
+| `district_name` | TEXT |  | 0.0 | District name as spelled in INGRES |  | SHIMLA, Sri Potti Sriramulu Nellore, AMINI |
+| `state_id` | TEXT |  | 0.0 | INGRES location UUID of the state (stable across cycles) |  | fd163bec-156c-4633-a7b7-5dfee5fcdf57, e7b3f02d-2497-4bcd-9e20-baa4b621822b, e98cd5b7-6556-4c0f-a778-3429e1c14a6b |
 
-## `assessment_units` (7,016 rows)
+## `assessment_units` (8,751 rows)
 
 Groundwater assessment units (block / taluk / mandal / firka / tehsil / ...; see unit_type). Names are NOT unique across the country.
 
@@ -59,13 +59,13 @@ Groundwater assessment units (block / taluk / mandal / firka / tehsil / ...; see
 
 | column | type | unit | null % | description | raw INGRES field | examples |
 |---|---|---|---:|---|---|---|
-| `unit_id` | TEXT |  | 0.0 | Canonical cross-year assessment-unit id (INGRES UUID in the latest cycle it appears in); join years on this |  | 7f68eeab-e3bd-4ab2-8c18-9b0466a5711a, 07d5fcb0-e5a0-47cb-81c3-779a53a549bf, 367e3299-f884-4f0c-bd69-c786e46576d9 |
-| `unit_name` | TEXT |  | 0.0 | Assessment unit name as spelled in INGRES |  | RAYAGADA, SAHASPUR LOHARA, Machhiwara |
-| `unit_type` | TEXT |  | 0.0 | Type of assessment unit (BLOCK, TALUK, MANDAL, FIRKA, ...) |  | TALUK, BLOCK, TEHSIL |
-| `district_id` | TEXT |  | 0.0 | Canonical cross-year district id (the district's INGRES UUID in the latest cycle it appears in) |  | 8a2c6c25-cac5-4d6c-afa1-bba9b7f1d8ba, 811b73a2-6b19-47be-8792-a78d4a0c26f4, c3e0e168-1d14-4c6b-b4a7-4fd9f9e592d6 |
-| `state_id` | TEXT |  | 0.0 | INGRES location UUID of the state (stable across cycles) |  | a1588b13-5700-450d-b51d-b782ed565801, 200030a1-6d27-4dff-988a-e2104ff62ab8, 94360caf-ebf0-4303-8c9e-3509bb0cded2 |
+| `unit_id` | TEXT |  | 0.0 | Canonical cross-year assessment-unit id (INGRES UUID in the latest cycle it appears in); join years on this |  | 07260919-e069-4703-80fe-90894c1f4721, 17ed4a6c-4d2a-4cdc-8f1a-d09f1b700eb4, 2238cba1-dd66-483c-9aa1-5cbb28e98dd9 |
+| `unit_name` | TEXT |  | 0.0 | Assessment unit name as spelled in INGRES |  | AMBER_RURAL, DAWATH, ORATHANAD |
+| `unit_type` | TEXT |  | 0.0 | Type of assessment unit as labelled by INGRES (BLOCK, TALUK, TEHSIL, MANDAL, FIRKA, VALLEY, ISLAND, DISTRICT, ...); MANDAL and BLOCK both denote AP/Telangana mandals |  | VALLEY, DISTRICT, TALUK |
+| `district_id` | TEXT |  | 0.0 | Canonical cross-year district id (the district's INGRES UUID in the latest cycle it appears in) |  | 8e7a2ecd-8d57-4803-8f33-b74a1be8c4ed, eebce92a-ba08-42d3-b74c-e3a90cc18742, d3682053-0790-48a1-96aa-b239aff50126 |
+| `state_id` | TEXT |  | 0.0 | INGRES location UUID of the state (stable across cycles) |  | a1ac5d18-8c9a-4047-8fdd-4d7d9deaa34e, 648a95f6-9249-4c92-8ae4-a9d93eb7c898, b967d23e-68c8-492c-a372-9623441f7d24 |
 
-## `state_assessments` (74 rows)
+## `state_assessments` (185 rows)
 
 Official state-level aggregates reported by INGRES for each cycle.
 
@@ -75,34 +75,34 @@ Official state-level aggregates reported by INGRES for each cycle.
 
 | column | type | unit | null % | description | raw INGRES field | examples |
 |---|---|---|---:|---|---|---|
-| `state_id` | TEXT |  | 0.0 | INGRES location UUID of the state (stable across cycles) |  | 8fd29251-6e20-4f33-9a96-f47cab45eb13, ae12d8f1-e36c-445f-8d32-80f958766b4e, f318279f-537d-4373-b9dc-ac347cdef82f |
-| `assessment_year` | TEXT |  | 0.0 | Assessment cycle label, e.g. '2024-2025' |  | 2024-2025, 2023-2024 |
-| `annual_recharge_ham` | REAL | ham | 0.0 | Total annual ground water recharge (all sources) | `rechargeData.total.total` | 1380.26, 8815.86, 1606140.62 |
-| `recharge_rainfall_ham` | REAL | ham | 0.0 | Recharge from rainfall | `rechargeData.rainfall.total` | 2717451.49, 2004877.7, 384282.61 |
-| `recharge_canal_ham` | REAL | ham | 21.6 | Recharge from canal seepage | `rechargeData.canal.total` | 56725.7, 0.0, 34919.26 |
-| `recharge_surface_irrigation_ham` | REAL | ham | 0.0 | Recharge from return flow of surface-water irrigation | `rechargeData.surface_irrigation.total` | 564456.13, 37196.13, 5776.06 |
-| `recharge_gw_irrigation_ham` | REAL | ham | 0.0 | Recharge from return flow of groundwater irrigation | `rechargeData.gw_irrigation.total` | 347460.04, 209036.76, 6115.28 |
-| `recharge_water_bodies_ham` | REAL | ham | 2.7 | Recharge from tanks, ponds and other water bodies | `rechargeData.water_body.total` | 37076.34, 91911.62, 52051.2 |
-| `recharge_artificial_structures_ham` | REAL | ham | 13.5 | Recharge from water conservation / artificial recharge structures | `rechargeData.artificial_structure.total` | 70.81, 32225.03, 80851.32 |
-| `recharge_pipeline_ham` | REAL | ham | 71.6 | Recharge from pipeline leakage (**UNCERTAIN**: inferred from field name) | `rechargeData.pipeline.total` | 25.73, 8303.75, 15.86 |
-| `recharge_sewage_ham` | REAL | ham | 71.6 | Recharge from sewage (**UNCERTAIN**: inferred from field name) | `rechargeData.sewage.total` | 4687.5, 0.0, 3787.5 |
-| `natural_discharge_ham` | REAL | ham | 0.0 | Total natural discharges (portal field `loss`) | `loss.total` | 724.27, 1656.15, 318595.2 |
-| `extractable_resource_ham` | REAL | ham | 0.0 | Annual extractable ground water resource | `currentAvailabilityForAllPurposes.total` | 3344.04, 17347.9, 2784427.12 |
-| `extraction_total_ham` | REAL | ham | 0.0 | Annual ground water extraction for all uses | `draftData.total.total` | 1453959.23, 51310.56, 1273.07 |
-| `extraction_irrigation_ham` | REAL | ham | 0.0 | Annual ground water extraction for irrigation | `draftData.agriculture.total` | 550.5, 1695.0, 1622370.12 |
-| `extraction_domestic_ham` | REAL | ham | 0.0 | Annual ground water extraction for domestic use | `draftData.domestic.total` | 99638.26, 1645.82, 4573.38 |
-| `extraction_industrial_ham` | REAL | ham | 0.0 | Annual ground water extraction for industrial use | `draftData.industry.total` | 24562.88, 480.99, 21339.76 |
-| `stage_of_extraction_pct` | REAL | % | 0.0 | Stage of ground water extraction = extraction / extractable resource x 100 | `stageOfExtraction.total` | 68.51, 136.75, 58.4 |
-| `domestic_allocation_ham` | REAL | ham | 0.0 | Projected allocation for domestic use (projection year **UNCERTAIN**) | `gwallocation.domestic.total` | 537709.72, 87862.31, 69242.23 |
-| `future_availability_ham` | REAL | ham | 0.0 | Net annual ground water availability for future use | `availabilityForFutureUse.total` | 106510.9, 143561.42, 1502399.39 |
-| `recharge_poor_quality_ham` | REAL | ham | 2.7 | Portion of annual recharge in poor-quality (saline) groundwater zones | `rechargeData.total.poor_quality` | 26999.76, 348577.65, 231225.32 |
-| `extractable_poor_quality_ham` | REAL | ham | 1.4 | Portion of extractable resource in poor-quality zones | `currentAvailabilityForAllPurposes.poor_quality` | 316070.41, 209151.58, 276520.6 |
-| `extraction_poor_quality_ham` | REAL | ham | 67.6 | Portion of extraction in poor-quality zones | `draftData.total.poor_quality` | 88696.55, 283181.11, 3.15 |
-| `rainfall_mm` | REAL | mm | 0.0 | Rainfall used in the assessment (averaging method **UNCERTAIN**) | `rainfall.total` | 2091.39, 855.95, 486.28 |
-| `total_area_ha` | REAL | ha | 0.0 | Total geographical area | `area.total.totalArea` | 5034468.0, 7913405.0, 9270867.0 |
-| `recharge_worthy_area_ha` | REAL | ha | 0.0 | Recharge-worthy area | `area.recharge_worthy.totalArea` | 314941.0, 385507.42, 10858986.17 |
+| `state_id` | TEXT |  | 0.0 | INGRES location UUID of the state (stable across cycles) |  | d6da1adf-2a9c-4908-a356-e7668d4ab108, b967d23e-68c8-492c-a372-9623441f7d24, 40320284-8d82-4f7e-80d7-00a00bb0e5b0 |
+| `assessment_year` | TEXT |  | 0.0 | Assessment cycle label, e.g. '2024-2025' |  | 2024-2025, 2022-2023, 2019-2020 |
+| `annual_recharge_ham` | REAL | ham | 0.0 | Total annual ground water recharge (all sources) | `rechargeData.total.total` | 1205394.28, 1542269.38, 31811.76 |
+| `recharge_rainfall_ham` | REAL | ham | 0.0 | Recharge from rainfall | `rechargeData.rainfall.total` | 301852.86, 6534.19, 1050105.29 |
+| `recharge_canal_ham` | REAL | ham | 18.9 | Recharge from canal seepage | `rechargeData.canal.total` | 56725.7, 49791.06, 192401.36 |
+| `recharge_surface_irrigation_ham` | REAL | ham | 0.5 | Recharge from return flow of surface-water irrigation | `rechargeData.surface_irrigation.total` | 815.86, 190.83, 158377.78 |
+| `recharge_gw_irrigation_ham` | REAL | ham | 0.5 | Recharge from return flow of groundwater irrigation | `rechargeData.gw_irrigation.total` | 386318.69, 166741.43, 29243.49 |
+| `recharge_water_bodies_ham` | REAL | ham | 4.9 | Recharge from tanks, ponds and other water bodies | `rechargeData.water_body.total` | 37792.97, 5341.64, 48995.73 |
+| `recharge_artificial_structures_ham` | REAL | ham | 15.7 | Recharge from water conservation / artificial recharge structures | `rechargeData.artificial_structure.total` | 11933.29, 7545.88, 1621.26 |
+| `recharge_pipeline_ham` | REAL | ham | 74.1 | Recharge from pipeline leakage (**UNCERTAIN**: inferred from field name) | `rechargeData.pipeline.total` | 6880.25, 4909.43, 2212.45 |
+| `recharge_sewage_ham` | REAL | ham | 74.1 | Recharge from sewage (**UNCERTAIN**: inferred from field name) | `rechargeData.sewage.total` | 3787.5, 1277.5, 282.15 |
+| `natural_discharge_ham` | REAL | ham | 0.0 | Total natural discharges (portal field `loss`) | `loss.total` | 5144.04, 21665.37, 278093.45 |
+| `extractable_resource_ham` | REAL | ham | 0.0 | Annual extractable ground water resource | `currentAvailabilityForAllPurposes.total` | 30501.34, 1984084.22, 39756.25 |
+| `extraction_total_ham` | REAL | ham | 0.0 | Annual ground water extraction for all uses | `draftData.total.total` | 574658.11, 629687.36, 108023.94 |
+| `extraction_irrigation_ham` | REAL | ham | 0.0 | Annual ground water extraction for irrigation | `draftData.agriculture.total` | 1144126.57, 2763192.94, 7622.39 |
+| `extraction_domestic_ham` | REAL | ham | 0.0 | Annual ground water extraction for domestic use | `draftData.domestic.total` | 73227.07, 763.93, 25621.01 |
+| `extraction_industrial_ham` | REAL | ham | 0.0 | Annual ground water extraction for industrial use | `draftData.industry.total` | 471.53, 196.67, 19331.58 |
+| `stage_of_extraction_pct` | REAL | % | 0.0 | Stage of ground water extraction = extraction / extractable resource x 100 | `stageOfExtraction.total` | 23.63, 54.55, 56.82 |
+| `domestic_allocation_ham` | REAL | ham | 0.0 | Projected allocation for domestic use (projection year **UNCERTAIN**) | `gwallocation.domestic.total` | 587432.28, 115977.34, 225020.96 |
+| `future_availability_ham` | REAL | ham | 0.0 | Net annual ground water availability for future use | `availabilityForFutureUse.total` | 104180.62, 1823247.02, 396097.98 |
+| `recharge_poor_quality_ham` | REAL | ham | 0.0 | Portion of annual recharge in poor-quality (saline) zones; 0 when the source reports none. Fresh recharge = annual_recharge_ham - this | `rechargeData.total.poor_quality` | 26999.76, 296906.11, 290982.7 |
+| `extractable_poor_quality_ham` | REAL | ham | 0.0 | Portion of extractable resource in poor-quality zones; 0 when the source reports none | `currentAvailabilityForAllPurposes.poor_quality` | 121991.21, 14490.22, 14453.78 |
+| `extraction_poor_quality_ham` | REAL | ham | 0.0 | Portion of extraction in poor-quality zones; 0 when the source reports none | `draftData.total.poor_quality` | 80291.57, 15973.8, 4640.2 |
+| `rainfall_mm` | REAL | mm | 0.5 | Rainfall used in the assessment (averaging method **UNCERTAIN**) | `rainfall.total` | 1291.43, 1305.1, 2098.03 |
+| `total_area_ha` | REAL | ha | 0.0 | Total geographical area | `area.total.totalArea` | 23764573.48, 23763483.48, 26034900.57 |
+| `recharge_worthy_area_ha` | REAL | ha | 0.0 | Recharge-worthy area | `area.recharge_worthy.totalArea` | 29072107.0, 872368.0, 127639.0 |
 
-## `district_assessments` (1,389 rows)
+## `district_assessments` (3,659 rows)
 
 Official district-level aggregates reported by INGRES for each cycle.
 
@@ -112,34 +112,34 @@ Official district-level aggregates reported by INGRES for each cycle.
 
 | column | type | unit | null % | description | raw INGRES field | examples |
 |---|---|---|---:|---|---|---|
-| `district_id` | TEXT |  | 0.0 | Canonical cross-year district id (the district's INGRES UUID in the latest cycle it appears in) |  | 4d7464bc-ee47-48c7-8650-7aa5c88d320a, 75a0cd47-d6b2-44a9-8e7b-5818e4c6f056, bdebeba0-dc1e-4287-a936-176224b53665 |
-| `assessment_year` | TEXT |  | 0.0 | Assessment cycle label, e.g. '2024-2025' |  | 2023-2024, 2024-2025 |
-| `annual_recharge_ham` | REAL | ham | 0.1 | Total annual ground water recharge (all sources) | `rechargeData.total.total` | 14789.98, 14237.16, 71141.15 |
-| `recharge_rainfall_ham` | REAL | ham | 0.1 | Recharge from rainfall | `rechargeData.rainfall.total` | 7346.73, 22975.5, 27535.41 |
-| `recharge_canal_ham` | REAL | ham | 16.5 | Recharge from canal seepage | `rechargeData.canal.total` | 2428.39, 15313.44, 1098.78 |
-| `recharge_surface_irrigation_ham` | REAL | ham | 1.1 | Recharge from return flow of surface-water irrigation | `rechargeData.surface_irrigation.total` | 81.35, 371.7, 7223.35 |
-| `recharge_gw_irrigation_ham` | REAL | ham | 0.1 | Recharge from return flow of groundwater irrigation | `rechargeData.gw_irrigation.total` | 14256.02, 427.44, 42.88 |
-| `recharge_water_bodies_ham` | REAL | ham | 6.3 | Recharge from tanks, ponds and other water bodies | `rechargeData.water_body.total` | 2390.81, 70.71, 267.09 |
-| `recharge_artificial_structures_ham` | REAL | ham | 19.9 | Recharge from water conservation / artificial recharge structures | `rechargeData.artificial_structure.total` | 686.63, 8.77, 6663.6 |
-| `recharge_pipeline_ham` | REAL | ham | 94.3 | Recharge from pipeline leakage (**UNCERTAIN**: inferred from field name) | `rechargeData.pipeline.total` | 2202.87, 1547.26, 8303.75 |
-| `recharge_sewage_ham` | REAL | ham | 94.3 | Recharge from sewage (**UNCERTAIN**: inferred from field name) | `rechargeData.sewage.total` | 100.0, 600.0, 282.15 |
-| `natural_discharge_ham` | REAL | ham | 0.0 | Total natural discharges (portal field `loss`) | `loss.total` | 1750.25, 12908.47, 103.89 |
-| `extractable_resource_ham` | REAL | ham | 0.0 | Annual extractable ground water resource | `currentAvailabilityForAllPurposes.total` | 32125.95, 154635.0, 142302.6 |
-| `extraction_total_ham` | REAL | ham | 2.1 | Annual ground water extraction for all uses | `draftData.total.total` | 9652.54, 54648.73, 17102.61 |
-| `extraction_irrigation_ham` | REAL | ham | 0.1 | Annual ground water extraction for irrigation | `draftData.agriculture.total` | 27777.04, 48268.8, 1324.38 |
-| `extraction_domestic_ham` | REAL | ham | 0.0 | Annual ground water extraction for domestic use | `draftData.domestic.total` | 2023.71, 5588.09, 3455.49 |
-| `extraction_industrial_ham` | REAL | ham | 0.1 | Annual ground water extraction for industrial use | `draftData.industry.total` | 13.12, 2768.0, 1201.9 |
-| `stage_of_extraction_pct` | REAL | % | 2.1 | Stage of ground water extraction = extraction / extractable resource x 100 | `stageOfExtraction.total` | 51.6, 35.44, 60.3 |
-| `domestic_allocation_ham` | REAL | ham | 0.0 | Projected allocation for domestic use (projection year **UNCERTAIN**) | `gwallocation.domestic.total` | 5164.97, 3589.85, 831.54 |
-| `future_availability_ham` | REAL | ham | 0.0 | Net annual ground water availability for future use | `availabilityForFutureUse.total` | 26672.58, 27731.87, 19082.98 |
-| `recharge_poor_quality_ham` | REAL | ham | 9.4 | Portion of annual recharge in poor-quality (saline) groundwater zones | `rechargeData.total.poor_quality` | 6965.83, 35375.11, 31350.69 |
-| `extractable_poor_quality_ham` | REAL | ham | 4.7 | Portion of extractable resource in poor-quality zones | `currentAvailabilityForAllPurposes.poor_quality` | 132.5, 1.07, 40720.88 |
-| `extraction_poor_quality_ham` | REAL | ham | 87.5 | Portion of extraction in poor-quality zones | `draftData.total.poor_quality` | 3885.19, 9664.55, 41960.92 |
-| `rainfall_mm` | REAL | mm | 0.1 | Rainfall used in the assessment (averaging method **UNCERTAIN**) | `rainfall.total` | 1805.54, 377.93, 2925.58 |
-| `total_area_ha` | REAL | ha | 0.0 | Total geographical area | `area.total.totalArea` | 266800.0, 275091.45, 121670.13 |
-| `recharge_worthy_area_ha` | REAL | ha | 0.0 | Recharge-worthy area | `area.recharge_worthy.totalArea` | 319283.0, 254263.43, 135138.96 |
+| `district_id` | TEXT |  | 0.0 | Canonical cross-year district id (the district's INGRES UUID in the latest cycle it appears in) |  | a16e5d5a-6ab4-4074-a7af-a660e6369e27, 5792e7e2-6727-4b70-81cc-3a548e220227, da387a13-be8a-4810-bddf-688f3c49dc7f |
+| `assessment_year` | TEXT |  | 0.0 | Assessment cycle label, e.g. '2024-2025' |  | 2021-2022, 2022-2023, 2023-2024 |
+| `annual_recharge_ham` | REAL | ham | 1.8 | Total annual ground water recharge (all sources) | `rechargeData.total.total` | 64784.27, 85854.56, 70074.03 |
+| `recharge_rainfall_ham` | REAL | ham | 1.8 | Recharge from rainfall | `rechargeData.rainfall.total` | 11344.59, 178565.7, 58606.26 |
+| `recharge_canal_ham` | REAL | ham | 18.0 | Recharge from canal seepage | `rechargeData.canal.total` | 1432.31, 24127.43, 42161.18 |
+| `recharge_surface_irrigation_ham` | REAL | ham | 3.3 | Recharge from return flow of surface-water irrigation | `rechargeData.surface_irrigation.total` | 144.62, 1542.72, 48774.08 |
+| `recharge_gw_irrigation_ham` | REAL | ham | 2.3 | Recharge from return flow of groundwater irrigation | `rechargeData.gw_irrigation.total` | 1590.29, 7745.13, 7346.39 |
+| `recharge_water_bodies_ham` | REAL | ham | 8.0 | Recharge from tanks, ponds and other water bodies | `rechargeData.water_body.total` | 20.93, 423.53, 1392.12 |
+| `recharge_artificial_structures_ham` | REAL | ham | 24.7 | Recharge from water conservation / artificial recharge structures | `rechargeData.artificial_structure.total` | 524.73, 1566.77, 359.37 |
+| `recharge_pipeline_ham` | REAL | ham | 94.5 | Recharge from pipeline leakage (**UNCERTAIN**: inferred from field name) | `rechargeData.pipeline.total` | 2469.22, 1456.35, 459.9 |
+| `recharge_sewage_ham` | REAL | ham | 94.5 | Recharge from sewage (**UNCERTAIN**: inferred from field name) | `rechargeData.sewage.total` | 140.0, 87.5, 0.0 |
+| `natural_discharge_ham` | REAL | ham | 0.1 | Total natural discharges (portal field `loss`) | `loss.total` | 8992.63, 10281.34, 439.66 |
+| `extractable_resource_ham` | REAL | ham | 0.1 | Annual extractable ground water resource | `currentAvailabilityForAllPurposes.total` | 23576.82, 43035.33, 72978.88 |
+| `extraction_total_ham` | REAL | ham | 3.0 | Annual ground water extraction for all uses | `draftData.total.total` | 99345.83, 12858.12, 283.17 |
+| `extraction_irrigation_ham` | REAL | ham | 0.9 | Annual ground water extraction for irrigation | `draftData.agriculture.total` | 33580.73, 25329.04, 52856.94 |
+| `extraction_domestic_ham` | REAL | ham | 0.8 | Annual ground water extraction for domestic use | `draftData.domestic.total` | 6079.01, 7912.55, 9515.72 |
+| `extraction_industrial_ham` | REAL | ham | 0.9 | Annual ground water extraction for industrial use | `draftData.industry.total` | 771.72, 1694.99, 1526.35 |
+| `stage_of_extraction_pct` | REAL | % | 3.0 | Stage of ground water extraction = extraction / extractable resource x 100 | `stageOfExtraction.total` | 64.01, 21.96, 78.63 |
+| `domestic_allocation_ham` | REAL | ham | 0.7 | Projected allocation for domestic use (projection year **UNCERTAIN**) | `gwallocation.domestic.total` | 9992.63, 1304.98, 4416.03 |
+| `future_availability_ham` | REAL | ham | 0.0 | Net annual ground water availability for future use | `availabilityForFutureUse.total` | 9181.4, 25263.21, 14494.79 |
+| `recharge_poor_quality_ham` | REAL | ham | 1.8 | Portion of annual recharge in poor-quality (saline) zones; 0 when the source reports none. Fresh recharge = annual_recharge_ham - this | `rechargeData.total.poor_quality` | 147.22, 80.05, 1679.42 |
+| `extractable_poor_quality_ham` | REAL | ham | 0.1 | Portion of extractable resource in poor-quality zones; 0 when the source reports none | `currentAvailabilityForAllPurposes.poor_quality` | 2879.31, 4867.51, 141912.89 |
+| `extraction_poor_quality_ham` | REAL | ham | 3.0 | Portion of extraction in poor-quality zones; 0 when the source reports none | `draftData.total.poor_quality` | 1324.0, 3380.71, 81.57 |
+| `rainfall_mm` | REAL | mm | 2.3 | Rainfall used in the assessment (averaging method **UNCERTAIN**) | `rainfall.total` | 2515.14, 1922.3, 721.8 |
+| `total_area_ha` | REAL | ha | 0.1 | Total geographical area | `area.total.totalArea` | 659000.0, 502400.0, 323954.94 |
+| `recharge_worthy_area_ha` | REAL | ha | 0.1 | Recharge-worthy area | `area.recharge_worthy.totalArea` | 391534.96, 437729.0, 381942.0 |
 
-## `unit_assessments` (13,288 rows)
+## `unit_assessments` (34,565 rows)
 
 Assessment-unit results per cycle, incl. official category. district_id is the district the unit was reported under in that cycle.
 
@@ -149,38 +149,53 @@ Assessment-unit results per cycle, incl. official category. district_id is the d
 
 | column | type | unit | null % | description | raw INGRES field | examples |
 |---|---|---|---:|---|---|---|
-| `unit_id` | TEXT |  | 0.0 | Canonical cross-year assessment-unit id (INGRES UUID in the latest cycle it appears in); join years on this |  | 23048053-2427-4470-9ba3-db7336782f5f, 49f961fe-2cfe-4449-adf8-7933027cea81, 2e1e399d-1056-4183-a196-1b34135e063a |
-| `assessment_year` | TEXT |  | 0.0 | Assessment cycle label, e.g. '2024-2025' |  | 2024-2025, 2023-2024 |
-| `district_id` | TEXT |  | 0.0 | Canonical cross-year district id (the district's INGRES UUID in the latest cycle it appears in) |  | 024ef6fb-e4cb-4b45-b5e9-79f1f542b183, fec27e38-7577-42d9-bf4b-97ac2bf88f61, 7d4600a9-9fe4-458a-99a8-83b10f4bf679 |
-| `ingres_uuid` | TEXT |  | 0.2 | The year-specific INGRES location UUID as returned by the API |  | 5055ca22-3311-4096-8b7c-6f6e9153d696, c69ad605-5e73-422b-b016-9c9c5521c0c6, 83469f34-fed0-4148-94c5-9010e758a983 |
-| `category` | TEXT |  | 0.0 | Official categorisation: Safe (SoE<=70%), Semi-Critical (70-90%), Critical (90-100%), Over-Exploited (>100%), Saline, Hilly Area |  | Hilly Area, Semi-Critical, Critical |
+| `unit_id` | TEXT |  | 0.0 | Canonical cross-year assessment-unit id (INGRES UUID in the latest cycle it appears in); join years on this |  | 5bffc45e-4358-44ab-8146-9fae51c3b91b, ee3ca1ef-38a8-418d-949a-c45d39ed1fd5, 76cc7690-c13b-471c-8bf4-3a1f34f1c70a |
+| `assessment_year` | TEXT |  | 0.0 | Assessment cycle label, e.g. '2024-2025' |  | 2023-2024, 2019-2020, 2021-2022 |
+| `district_id` | TEXT |  | 0.0 | Canonical cross-year district id (the district's INGRES UUID in the latest cycle it appears in) |  | e4504719-c91f-4b4a-b99f-09f66727debd, 4738a413-b193-4334-b83a-005bdc6e7c38, c6113202-e8c6-4226-8c2f-df7febe80f4a |
+| `ingres_uuid` | TEXT |  | 0.1 | The year-specific INGRES location UUID as returned by the API |  | 6cf76d32-bfe3-4ad7-825e-bf77563c6ebe, f905f370-efbb-4111-a08f-4dbcad85a589, 55c171bb-f17a-4ba2-98dd-5633aae8e39e |
+| `category` | TEXT |  | 0.0 | Official categorisation: Safe (SoE<=70%), Semi-Critical (70-90%), Critical (90-100%), Over-Exploited (>100%), Saline, Hilly Area |  | Safe, Critical, Saline |
 | `is_district_as_unit` | INTEGER |  | 0.0 | 1 if the district itself is the assessment unit and the unit row was derived from the district record (Lakshadweep islands); 0 for units returned by the API |  | 1, 0 |
-| `annual_recharge_ham` | REAL | ham | 0.0 | Total annual ground water recharge (all sources) | `rechargeData.total.total` | 5062.65, 21003.7, 2605.57 |
-| `recharge_rainfall_ham` | REAL | ham | 0.0 | Recharge from rainfall | `rechargeData.rainfall.total` | 4461.73, 1897.46, 1921.94 |
-| `recharge_canal_ham` | REAL | ham | 19.3 | Recharge from canal seepage | `rechargeData.canal.total` | 84.42, 6693.9, 344.51 |
-| `recharge_surface_irrigation_ham` | REAL | ham | 3.5 | Recharge from return flow of surface-water irrigation | `rechargeData.surface_irrigation.total` | 167.09, 1692.5, 1099.01 |
-| `recharge_gw_irrigation_ham` | REAL | ham | 0.0 | Recharge from return flow of groundwater irrigation | `rechargeData.gw_irrigation.total` | 1148.07, 264.12, 384.15 |
-| `recharge_water_bodies_ham` | REAL | ham | 7.6 | Recharge from tanks, ponds and other water bodies | `rechargeData.water_body.total` | 13.15, 144.22, 178.59 |
-| `recharge_artificial_structures_ham` | REAL | ham | 22.8 | Recharge from water conservation / artificial recharge structures | `rechargeData.artificial_structure.total` | 2.87, 310.44, 15.15 |
-| `recharge_pipeline_ham` | REAL | ham | 98.9 | Recharge from pipeline leakage (**UNCERTAIN**: inferred from field name) | `rechargeData.pipeline.total` | 766.5, 227.16, 667.7 |
-| `recharge_sewage_ham` | REAL | ham | 98.9 | Recharge from sewage (**UNCERTAIN**: inferred from field name) | `rechargeData.sewage.total` | 8.45, 0.0, 500.0 |
-| `natural_discharge_ham` | REAL | ham | 0.0 | Total natural discharges (portal field `loss`) | `loss.total` | 158.51, 30.36, 1578.31 |
-| `extractable_resource_ham` | REAL | ham | 0.0 | Annual extractable ground water resource | `currentAvailabilityForAllPurposes.total` | 2209.95, 6268.34, 1761.94 |
-| `extraction_total_ham` | REAL | ham | 3.9 | Annual ground water extraction for all uses | `draftData.total.total` | 6413.05, 2678.66, 1364.98 |
-| `extraction_irrigation_ham` | REAL | ham | 0.0 | Annual ground water extraction for irrigation | `draftData.agriculture.total` | 3596.64, 5192.1, 3964.37 |
-| `extraction_domestic_ham` | REAL | ham | 0.0 | Annual ground water extraction for domestic use | `draftData.domestic.total` | 315.89, 1709.09, 621.93 |
-| `extraction_industrial_ham` | REAL | ham | 0.0 | Annual ground water extraction for industrial use | `draftData.industry.total` | 35.59, 263.2, 45.9 |
-| `stage_of_extraction_pct` | REAL | % | 3.9 | Stage of ground water extraction = extraction / extractable resource x 100 | `stageOfExtraction.total` | 17.27, 55.1, 52.69 |
-| `domestic_allocation_ham` | REAL | ham | 0.0 | Projected allocation for domestic use (projection year **UNCERTAIN**) | `gwallocation.domestic.total` | 104.38, 1027.96, 194.44 |
-| `future_availability_ham` | REAL | ham | 0.0 | Net annual ground water availability for future use | `availabilityForFutureUse.total` | 1830.89, 4130.13, 7968.7 |
-| `recharge_poor_quality_ham` | REAL | ham | 14.4 | Portion of annual recharge in poor-quality (saline) groundwater zones | `rechargeData.total.poor_quality` | 8771.59, 1447.86, 1574.92 |
-| `extractable_poor_quality_ham` | REAL | ham | 5.2 | Portion of extractable resource in poor-quality zones | `currentAvailabilityForAllPurposes.poor_quality` | 704.95, 134.58, 3545.44 |
-| `extraction_poor_quality_ham` | REAL | ham | 93.8 | Portion of extraction in poor-quality zones | `draftData.total.poor_quality` | 906.0, 27.3, 3698.37 |
-| `rainfall_mm` | REAL | mm | 0.0 | Rainfall used in the assessment (averaging method **UNCERTAIN**) | `rainfall.total` | 901.72, 1062.79, 1011.82 |
-| `total_area_ha` | REAL | ha | 0.0 | Total geographical area | `area.total.totalArea` | 14837.0, 11705.41, 69319.0 |
-| `recharge_worthy_area_ha` | REAL | ha | 0.0 | Recharge-worthy area | `area.recharge_worthy.totalArea` | 20801.0, 10553.66, 148690.7 |
+| `annual_recharge_ham` | REAL | ham | 1.0 | Total annual ground water recharge (all sources) | `rechargeData.total.total` | 7844.13, 23281.59, 999.2 |
+| `recharge_rainfall_ham` | REAL | ham | 1.0 | Recharge from rainfall | `rechargeData.rainfall.total` | 1822.88, 6303.0, 510.52 |
+| `recharge_canal_ham` | REAL | ham | 19.3 | Recharge from canal seepage | `rechargeData.canal.total` | 1689.45, 223.98, 2.63 |
+| `recharge_surface_irrigation_ham` | REAL | ham | 5.1 | Recharge from return flow of surface-water irrigation | `rechargeData.surface_irrigation.total` | 9.33, 203.5, 1268.75 |
+| `recharge_gw_irrigation_ham` | REAL | ham | 1.8 | Recharge from return flow of groundwater irrigation | `rechargeData.gw_irrigation.total` | 637.84, 766.59, 9143.52 |
+| `recharge_water_bodies_ham` | REAL | ham | 6.2 | Recharge from tanks, ponds and other water bodies | `rechargeData.water_body.total` | 252.29, 141.05, 422.05 |
+| `recharge_artificial_structures_ham` | REAL | ham | 21.5 | Recharge from water conservation / artificial recharge structures | `rechargeData.artificial_structure.total` | 65.96, 32.45, 16.84 |
+| `recharge_pipeline_ham` | REAL | ham | 98.9 | Recharge from pipeline leakage (**UNCERTAIN**: inferred from field name) | `rechargeData.pipeline.total` | 166.69, 0.01, 2212.45 |
+| `recharge_sewage_ham` | REAL | ham | 98.9 | Recharge from sewage (**UNCERTAIN**: inferred from field name) | `rechargeData.sewage.total` | 1200.66, 825.0, 13.2 |
+| `natural_discharge_ham` | REAL | ham | 0.0 | Total natural discharges (portal field `loss`) | `loss.total` | 1196.22, 502.11, 990.33 |
+| `extractable_resource_ham` | REAL | ham | 0.0 | Annual extractable ground water resource | `currentAvailabilityForAllPurposes.total` | 2213.71, 10558.85, 10954.18 |
+| `extraction_total_ham` | REAL | ham | 2.7 | Annual ground water extraction for all uses | `draftData.total.total` | 3035.89, 5090.67, 3272.3 |
+| `extraction_irrigation_ham` | REAL | ham | 0.5 | Annual ground water extraction for irrigation | `draftData.agriculture.total` | 8.09, 7862.4, 4951.52 |
+| `extraction_domestic_ham` | REAL | ham | 0.5 | Annual ground water extraction for domestic use | `draftData.domestic.total` | 1096.37, 294.09, 77.56 |
+| `extraction_industrial_ham` | REAL | ham | 0.5 | Annual ground water extraction for industrial use | `draftData.industry.total` | 13.05, 20.22, 10.54 |
+| `stage_of_extraction_pct` | REAL | % | 2.7 | Stage of ground water extraction = extraction / extractable resource x 100 | `stageOfExtraction.total` | 32.54, 53.18, 35.51 |
+| `domestic_allocation_ham` | REAL | ham | 0.3 | Projected allocation for domestic use (projection year **UNCERTAIN**) | `gwallocation.domestic.total` | 141.88, 710.81, 137.01 |
+| `future_availability_ham` | REAL | ham | 0.0 | Net annual ground water availability for future use | `availabilityForFutureUse.total` | 211.47, 1917.12, 21.77 |
+| `recharge_poor_quality_ham` | REAL | ham | 1.0 | Portion of annual recharge in poor-quality (saline) zones; 0 when the source reports none. Fresh recharge = annual_recharge_ham - this | `rechargeData.total.poor_quality` | 19525.77, 8935.89, 2394.6 |
+| `extractable_poor_quality_ham` | REAL | ham | 0.0 | Portion of extractable resource in poor-quality zones; 0 when the source reports none | `currentAvailabilityForAllPurposes.poor_quality` | 4856.31, 556.46, 146.29 |
+| `extraction_poor_quality_ham` | REAL | ham | 2.7 | Portion of extraction in poor-quality zones; 0 when the source reports none | `draftData.total.poor_quality` | 2390.45, 1303.5, 84.08 |
+| `rainfall_mm` | REAL | mm | 1.8 | Rainfall used in the assessment (averaging method **UNCERTAIN**) | `rainfall.total` | 657.44, 723.01, 545.41 |
+| `total_area_ha` | REAL | ha | 0.0 | Total geographical area | `area.total.totalArea` | 15374.0, 15323.66, 122300.0 |
+| `recharge_worthy_area_ha` | REAL | ha | 0.0 | Recharge-worthy area | `area.recharge_worthy.totalArea` | 23873.0, 13575.0, 43802.0 |
 
-## `location_crosswalk` (14,660 rows)
+## `state_unit_granularity` (187 rows)
+
+Number of assessment units of each type per state and cycle. Several states changed granularity between cycles (e.g. Tamil Nadu firka -> taluk, J&K district -> block); compare units across years only where the type is unchanged.
+
+- Primary key: `state_id, assessment_year, unit_type`
+- Foreign keys: `assessment_year` -> `assessment_years(assessment_year)`, `state_id` -> `states(state_id)`
+- Geography: state; Year: per assessment_year
+
+| column | type | unit | null % | description | raw INGRES field | examples |
+|---|---|---|---:|---|---|---|
+| `state_id` | TEXT |  | 0.0 | INGRES location UUID of the state (stable across cycles) |  | 5ff5533e-36c5-4c24-abff-1cbbea6f2bdf, 7f615d2f-0be6-42bf-891f-7239e101e487, 12f0823e-2c16-4765-8137-585b3d5123ac |
+| `assessment_year` | TEXT |  | 0.0 | Assessment cycle label, e.g. '2024-2025' |  | 2019-2020, 2024-2025, 2023-2024 |
+| `unit_type` | TEXT |  | 0.0 | Type of assessment unit as labelled by INGRES (BLOCK, TALUK, TEHSIL, MANDAL, FIRKA, VALLEY, ISLAND, DISTRICT, ...); MANDAL and BLOCK both denote AP/Telangana mandals |  | MANDAL, FIRKA, DISTRICT |
+| `n_units` | INTEGER |  | 0.0 | Number of assessment units of this type in the state in this cycle |  | 534, 12, 327 |
+
+## `location_crosswalk` (38,190 rows)
 
 Maps each year-specific INGRES UUID to the canonical cross-year id used in all other tables, with how the match was made (uuid / name / name_state / fuzzy / first_seen). Some states re-issue all UUIDs in a new cycle, so cross-year joins must use the canonical ids.
 
@@ -191,7 +206,7 @@ Maps each year-specific INGRES UUID to the canonical cross-year id used in all o
 | column | type | unit | null % | description | raw INGRES field | examples |
 |---|---|---|---:|---|---|---|
 | `level` | TEXT |  | 0.0 | Location level: district or unit |  | unit, district |
-| `assessment_year` | TEXT |  | 0.0 | Assessment cycle label, e.g. '2024-2025' |  | 2024-2025, 2023-2024 |
-| `ingres_uuid` | TEXT |  | 0.0 | The year-specific INGRES location UUID as returned by the API |  | 8c10ce97-08ab-4d86-b5d8-620f0b59b4d4, 0403bc1c-193a-43e3-9702-af427d9d3794, 0ee6669f-7d36-4503-ab98-e5008655eaa8 |
-| `canonical_id` | TEXT |  | 0.0 | Canonical cross-year id (see unit_id / district_id) |  | e7991b50-173a-4d80-99b1-21560f47cfbb, 7808fbca-c96a-41b7-9f81-9979e786f656, e9a227d2-5603-4c07-86d7-39f7e05b6c95 |
-| `match_method` | TEXT |  | 0.0 | uuid = same INGRES UUID; name = same state+district+normalised name; name_state = name unique in state; fuzzy = mutual best string match in same district; first_seen = no counterpart in a later cycle |  | first_seen, name, name_state |
+| `assessment_year` | TEXT |  | 0.0 | Assessment cycle label, e.g. '2024-2025' |  | 2023-2024, 2021-2022, 2024-2025 |
+| `ingres_uuid` | TEXT |  | 0.0 | The year-specific INGRES location UUID as returned by the API |  | 69525aac-2cb9-4002-9b37-08d5406defa8, 558859b4-c77a-4797-9531-c10f471a846c, efa9f9aa-76e9-45d1-b8db-b2138053543f |
+| `canonical_id` | TEXT |  | 0.0 | Canonical cross-year id (see unit_id / district_id) |  | 172f7939-2030-4ac6-8096-e35524cc2486, 98a02852-170a-4213-9edf-723cd92c07ad, 07edc941-79d8-41cc-9624-4b4a1f7b3885 |
+| `match_method` | TEXT |  | 0.0 | uuid = same INGRES UUID; name = same state+district+normalised name; name_state = name unique in state; fuzzy = mutual best string match in same district; first_seen = no counterpart in a later cycle |  | first_seen, uuid, fuzzy |

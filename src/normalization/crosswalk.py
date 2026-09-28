@@ -6,9 +6,9 @@ West Bengal, Himachal Pradesh between 2023-2024 and 2024-2025), and some keep th
 spellings. A canonical id is assigned per location, walking from the latest year backwards:
 
   1. uuid       - the same INGRES UUID already seen in a later year
-  2. name       - same state + same normalised parent-district name + same normalised name
-  3. name_state - normalised name unique within the state in both years (parent district renamed/split)
-  4. fuzzy      - same state + parent, mutual unique best SequenceMatcher ratio >= 0.75
+  2. name       - same state + unit type + normalised parent-district name + normalised name
+  3. name_state - normalised name unique within (state, unit type) in both years (parent district renamed/split)
+  4. fuzzy      - same state + unit type + parent, mutual unique best SequenceMatcher ratio >= 0.75
   otherwise first_seen (no counterpart in any later year; the location gets its own canonical id). Ambiguous candidates are never matched.
 The canonical id is the UUID the location has in the latest year it appears in.
 """
@@ -33,11 +33,31 @@ def _sim(a: str, b: str) -> float:
     return SequenceMatcher(None, a.replace(" ", ""), b.replace(" ", "")).ratio()
 
 
+def _is_extension(a: str, b: str) -> bool:
+    """One name is the other plus a qualifier (SANGANER -> SANGANER_RURAL, JABALPUR -> JABALPUR URBAN):
+    signals a boundary split, not a respelling, so it must not be linked."""
+    a, b = a.replace(" ", ""), b.replace(" ", "")
+    short, long_ = sorted((a, b), key=len)
+    return short in long_ and len(long_) - len(short) >= 3
+
+
+# only I-IV as roman numerals: single letters like the "(V)"/"(E)" district initials on Tamil Nadu firkas are not ordinals
+_ORDINAL = re.compile(r"\b(\d+|i{1,3}|iv)\b")
+_ROMAN = {"i": 1, "ii": 2, "iii": 3, "iv": 4}
+
+
+def _ordinals_differ(a: str, b: str) -> bool:
+    """MYLAPORE-III vs MYLAPORE-II, LUDHIANA 1 vs LUDHIANA 2: numbered siblings, never the same unit.
+    HOSHIARPUR-II vs Hoshiarpur-2 is the same ordinal."""
+    val = lambda s: [_ROMAN.get(t) or int(t) for t in _ORDINAL.findall(s)]  # noqa: E731
+    return val(a) != val(b)
+
+
 def _mutual_best(rest: pd.DataFrame, pool: pd.DataFrame, threshold: float = FUZZY_THRESHOLD):
     """Pairs (uuid, canonical_id) that are each other's unique best match above threshold."""
     if rest.empty or pool.empty:
         return []
-    s = [[_sim(a, b) for b in pool.n] for a in rest.n]
+    s = [[0.0 if _is_extension(a, b) or _ordinals_differ(a, b) else _sim(a, b) for b in pool.n] for a in rest.n]
     pairs = []
     for i, row in enumerate(s):
         j = max(range(len(row)), key=row.__getitem__)
@@ -54,6 +74,10 @@ def crosswalk(locs: pd.DataFrame, level: str, district_canon: dict | None = None
     Returns (year, uuid, canonical_id, match_method)."""
     df = locs[locs.level == level].copy()
     df["n"] = df.name.map(norm_name)
+    # name-based steps only compare locations of the same state AND unit type, so a Tamil Nadu firka is
+    # never linked to a same-named taluk after the state switched granularity (MANDAL == BLOCK relabel).
+    utype = df["unit_type"].fillna("").replace({"MANDAL": "BLOCK"}) if "unit_type" in df else ""
+    df["scope"] = df.state_uuid.astype(str) + "|" + utype
     # parent key: for units, the *canonical* district if known, else the normalised district name
     if level == "unit":
         dnames = locs[locs.level == "district"].set_index(["year", "uuid"]).name.map(norm_name).to_dict()
@@ -63,7 +87,7 @@ def crosswalk(locs: pd.DataFrame, level: str, district_canon: dict | None = None
         df["parent"] = ""
     out = []
     known: dict[str, str] = {}        # uuid -> canonical
-    seen = pd.DataFrame(columns=["canonical_id", "state_uuid", "parent", "n"])  # canonical locations so far
+    seen = pd.DataFrame(columns=["canonical_id", "scope", "parent", "n"])  # canonical locations so far
     for year in sorted(df.year.unique(), reverse=True):
         cur = df[df.year == year]
         taken: set[str] = set()
@@ -76,7 +100,7 @@ def crosswalk(locs: pd.DataFrame, level: str, district_canon: dict | None = None
         rest = cur[~cur.uuid.isin(assigned)]
         pool = seen[~seen.canonical_id.isin(taken)]
         # 2. same state + parent + name, unique on both sides
-        for keys, method in ((["state_uuid", "parent", "n"], "name"), (["state_uuid", "n"], "name_state")):
+        for keys, method in ((["scope", "parent", "n"], "name"), (["scope", "n"], "name_state")):
             if rest.empty or pool.empty:
                 break
             pc = pool.groupby(keys).canonical_id.agg(list)
@@ -90,8 +114,8 @@ def crosswalk(locs: pd.DataFrame, level: str, district_canon: dict | None = None
             pool = pool[~pool.canonical_id.isin(taken)]
         # 4. fuzzy: same state + parent, mutual unique best string match (transliteration respellings,
         #    e.g. NOWGAON -> NOWGONG). Tagged so every such link can be audited.
-        for key, grp in rest.groupby(["state_uuid", "parent"]):
-            cand = pool[(pool.state_uuid == key[0]) & (pool.parent == key[1])]
+        for key, grp in rest.groupby(["scope", "parent"]):
+            cand = pool[(pool.scope == key[0]) & (pool.parent == key[1])]
             for u, cid in _mutual_best(grp, cand):
                 assigned[u] = (cid, "fuzzy")
                 taken.add(cid)
@@ -102,6 +126,6 @@ def crosswalk(locs: pd.DataFrame, level: str, district_canon: dict | None = None
             cid, how = assigned[r.uuid]
             known[r.uuid] = cid
             out.append((year, r.uuid, cid, how))
-        latest_rows = cur.assign(canonical_id=[assigned[u][0] for u in cur.uuid])[["canonical_id", "state_uuid", "parent", "n"]]
+        latest_rows = cur.assign(canonical_id=[assigned[u][0] for u in cur.uuid])[["canonical_id", "scope", "parent", "n"]]
         seen = pd.concat([seen[~seen.canonical_id.isin(latest_rows.canonical_id)], latest_rows], ignore_index=True)
     return pd.DataFrame(out, columns=["year", "uuid", "canonical_id", "match_method"])

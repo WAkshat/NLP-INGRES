@@ -28,6 +28,9 @@ TABLE_DOC = {
     "district_assessments": ("Official district-level aggregates reported by INGRES for each cycle.", "district", "per assessment_year"),
     "unit_assessments": ("Assessment-unit results per cycle, incl. official category. district_id is the district the unit "
                          "was reported under in that cycle.", "assessment unit", "per assessment_year"),
+    "state_unit_granularity": ("Number of assessment units of each type per state and cycle. Several states changed "
+                               "granularity between cycles (e.g. Tamil Nadu firka -> taluk, J&K district -> block); compare "
+                               "units across years only where the type is unchanged.", "state", "per assessment_year"),
     "location_crosswalk": ("Maps each year-specific INGRES UUID to the canonical cross-year id used in all other tables, "
                            "with how the match was made (uuid / name / name_state / fuzzy / first_seen). Some states re-issue all UUIDs "
                            "in a new cycle, so cross-year joins must use the canonical ids.", "district, unit", "per assessment_year"),
@@ -48,7 +51,8 @@ COL_DOC = {
     "level": "Location level: district or unit",
     "match_method": "uuid = same INGRES UUID; name = same state+district+normalised name; name_state = name unique in state; fuzzy = mutual best string match in same district; first_seen = no counterpart in a later cycle",
     "unit_name": "Assessment unit name as spelled in INGRES",
-    "unit_type": "Type of assessment unit (BLOCK, TALUK, MANDAL, FIRKA, ...)",
+    "unit_type": "Type of assessment unit as labelled by INGRES (BLOCK, TALUK, TEHSIL, MANDAL, FIRKA, VALLEY, ISLAND, DISTRICT, ...); MANDAL and BLOCK both denote AP/Telangana mandals",
+    "n_units": "Number of assessment units of this type in the state in this cycle",
     "is_district_as_unit": "1 if the district itself is the assessment unit and the unit row was derived from "
                            "the district record (Lakshadweep islands); 0 for units returned by the API",
     "category": "Official categorisation: Safe (SoE<=70%), Semi-Critical (70-90%), Critical (90-100%), "
