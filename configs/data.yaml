@@ -1,0 +1,23 @@
+# Data ingestion configuration. See docs/DATA_ACCESS_REPORT.md for how these were determined.
+raw_dir: data/raw/ingres_api
+interim_dir: data/interim
+processed_db: data/processed/ingres.db
+
+# Assessment-year labels exactly as the INGRES API expects them.
+# Verified complete (38 states/UTs each) on 2026-09-28:
+years:
+  - "2019-2020"
+  - "2021-2022"
+  - "2022-2023"
+  - "2023-2024"
+  - "2024-2025"
+# Respond but flagged (see report): 2016-2017 (34 states, national recharge ~2x later years),
+# 2025-2026 (36 states; may be an in-progress cycle). Crawl with --years to include them.
+flagged_years:
+  - "2016-2017"
+  - "2025-2026"
+
+crawl:
+  sleep_s: 0.5      # politeness delay between uncached requests
+  retries: 4
+  timeout_s: 180

@@ -1,0 +1,6 @@
+# Phase 1 (data layer). Later phases append their deps here as they are actually used.
+pandas==2.3.3
+numpy==1.26.4
+pyarrow==25.0.1
+PyYAML==6.0.3
+pytest==9.1.1

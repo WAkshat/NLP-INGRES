@@ -1,0 +1,12 @@
+[project]
+name = "ingres-text2sql"
+version = "0.1.0"
+description = "Multilingual Text-to-SQL research over India's INGRES groundwater assessment data"
+requires-python = ">=3.11"
+
+[tool.setuptools.packages.find]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

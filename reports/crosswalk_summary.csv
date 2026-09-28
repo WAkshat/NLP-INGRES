@@ -1,0 +1,10 @@
+level,assessment_year,match_method,n
+district,2023-2024,first_seen,7
+district,2023-2024,uuid,654
+district,2024-2025,first_seen,735
+unit,2023-2024,first_seen,13
+unit,2023-2024,fuzzy,25
+unit,2023-2024,name,1223
+unit,2023-2024,name_state,7
+unit,2023-2024,uuid,5012
+unit,2024-2025,first_seen,6984

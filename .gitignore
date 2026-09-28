@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+*.egg-info/
+.pytest_cache/
+*.tmp
+# regenerable artefacts (rebuild with scripts/crawl_ingres.py + scripts/audit_data.py + scripts/build_schema.py)
+data/raw/ingres_api/
+data/interim/*.parquet
+data/processed/*.db
+experiments/**/checkpoints/
+cache/
+*.log
+dist/

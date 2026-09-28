@@ -1,0 +1,770 @@
+{
+  "raw_files": 775,
+  "fact_rows": 2152056,
+  "distinct_raw_fields": 210,
+  "rows_by_year_level": {
+    "2022-2023|district": 125,
+    "2022-2023|state": 37,
+    "2022-2023|unit": 548,
+    "2023-2024|district": 730,
+    "2023-2024|state": 37,
+    "2023-2024|unit": 6965,
+    "2024-2025|district": 735,
+    "2024-2025|state": 37,
+    "2024-2025|unit": 6984
+  },
+  "unit_types_by_year": {
+    "2022-2023": {
+      "BLOCK": 548
+    },
+    "2023-2024": {
+      "BLOCK": 5737,
+      "TALUK": 1175,
+      "TEHSIL": 34,
+      "VALLEY": 10,
+      "DISTRICT": 4,
+      "ISLAND": 2,
+      "REGION": 2,
+      "null": 1
+    },
+    "2024-2025": {
+      "BLOCK": 5766,
+      "TALUK": 1176,
+      "TEHSIL": 34,
+      "DISTRICT": 4,
+      "ISLAND": 2,
+      "REGION": 2
+    }
+  },
+  "unit_types_by_state": {
+    "ANDAMAN AND NICOBAR ISLANDS": [
+      "BLOCK",
+      "ISLAND"
+    ],
+    "ANDHRA PRADESH": [
+      "BLOCK"
+    ],
+    "ARUNACHAL PRADESH": [
+      "BLOCK"
+    ],
+    "ASSAM": [
+      "BLOCK"
+    ],
+    "BIHAR": [
+      "BLOCK"
+    ],
+    "CHANDIGARH": [
+      "DISTRICT"
+    ],
+    "CHHATTISGARH": [
+      "BLOCK"
+    ],
+    "DADRA AND NAGAR HAVELI": [
+      "DISTRICT"
+    ],
+    "DAMAN AND DIU": [
+      "DISTRICT"
+    ],
+    "DELHI": [
+      "TEHSIL"
+    ],
+    "GOA": [
+      "TALUK"
+    ],
+    "GUJARAT": [
+      "TALUK"
+    ],
+    "HARYANA": [
+      "BLOCK"
+    ],
+    "HIMACHAL PRADESH": [
+      "BLOCK",
+      "VALLEY"
+    ],
+    "JAMMU AND KASHMIR": [
+      "BLOCK"
+    ],
+    "JHARKHAND": [
+      "BLOCK"
+    ],
+    "KARNATAKA": [
+      "TALUK"
+    ],
+    "KERALA": [
+      "BLOCK"
+    ],
+    "LADAKH": [
+      "BLOCK"
+    ],
+    "MADHYA PRADESH": [
+      "BLOCK"
+    ],
+    "MAHARASHTRA": [
+      "TALUK"
+    ],
+    "MANIPUR": [
+      "BLOCK"
+    ],
+    "MEGHALAYA": [
+      "BLOCK"
+    ],
+    "MIZORAM": [
+      "BLOCK"
+    ],
+    "NAGALAND": [
+      "BLOCK"
+    ],
+    "ODISHA": [
+      "BLOCK"
+    ],
+    "PUDUCHERRY": [
+      "REGION",
+      "TALUK"
+    ],
+    "PUNJAB": [
+      "BLOCK"
+    ],
+    "RAJASTHAN": [
+      "BLOCK"
+    ],
+    "SIKKIM": [
+      "BLOCK"
+    ],
+    "TAMILNADU": [
+      "TALUK"
+    ],
+    "TELANGANA": [
+      "BLOCK"
+    ],
+    "TRIPURA": [
+      "BLOCK"
+    ],
+    "UTTAR PRADESH": [
+      "BLOCK"
+    ],
+    "UTTARAKHAND": [
+      "BLOCK"
+    ],
+    "WEST BENGAL": [
+      "BLOCK"
+    ]
+  },
+  "states_missing_by_year": {
+    "2022-2023": [],
+    "2023-2024": [],
+    "2024-2025": []
+  },
+  "districts_without_metrics": {
+    "2023-2024": [
+      "RANA AND KUTCH (GUJARAT)"
+    ],
+    "2024-2025": [
+      "BLS (HIMACHAL PRADESH)",
+      "CHM (HIMACHAL PRADESH)",
+      "HMP (HIMACHAL PRADESH)",
+      "KIN (HIMACHAL PRADESH)",
+      "KUL (HIMACHAL PRADESH)",
+      "LAS (HIMACHAL PRADESH)",
+      "RANA AND KUTCH (GUJARAT)",
+      "SHM (HIMACHAL PRADESH)"
+    ]
+  },
+  "districts_without_child_units": {
+    "2022-2023": [
+      "ARARIA (BIHAR)",
+      "ARWAL (BIHAR)",
+      "AURANGABAD (BIHAR)",
+      "BHAGALPUR (BIHAR)",
+      "BHOJPUR (BIHAR)",
+      "BUXAR (BIHAR)",
+      "DARBHANGA (BIHAR)",
+      "EAST CHAMPARAN (BIHAR)",
+      "GAYA (BIHAR)",
+      "GOPALGANJ (BIHAR)",
+      "JAMUI (BIHAR)",
+      "JEHANABAD (BIHAR)",
+      "KAIMUR (BIHAR)",
+      "KATIHAR (BIHAR)",
+      "KHAGARIA (BIHAR)",
+      "KISHANGANJ (BIHAR)",
+      "LAKHISARAI (BIHAR)",
+      "MADHEPURA (BIHAR)",
+      "MADHUBANI (BIHAR)",
+      "MUNGER (BIHAR)",
+      "MUZAFFARPUR (BIHAR)",
+      "NALANDA (BIHAR)",
+      "PATNA (BIHAR)",
+      "PURNEA (BIHAR)",
+      "ROHTAS (BIHAR)",
+      "SAHARSA (BIHAR)",
+      "SAMASTIPUR (BIHAR)",
+      "SARAN (BIHAR)",
+      "SHEIKHPURA (BIHAR)",
+      "SHEOHAR (BIHAR)",
+      "SITAMARHI (BIHAR)",
+      "SIWAN (BIHAR)",
+      "VAISHALI (BIHAR)",
+      "WEST CHAMPARAN (BIHAR)"
+    ],
+    "2023-2024": [
+      "AMINI (LAKSHDWEEP)",
+      "ANDROTH (LAKSHDWEEP)",
+      "KAVARATTI (LAKSHDWEEP)",
+      "KILTAN (LAKSHDWEEP)",
+      "MINICOY (LAKSHDWEEP)"
+    ],
+    "2024-2025": [
+      "AMINI (LAKSHDWEEP)",
+      "ANDROTH (LAKSHDWEEP)",
+      "BLS (HIMACHAL PRADESH)",
+      "CHM (HIMACHAL PRADESH)",
+      "HMP (HIMACHAL PRADESH)",
+      "KAVARATTI (LAKSHDWEEP)",
+      "KILTAN (LAKSHDWEEP)",
+      "KIN (HIMACHAL PRADESH)",
+      "KUL (HIMACHAL PRADESH)",
+      "LAS (HIMACHAL PRADESH)",
+      "MINICOY (LAKSHDWEEP)",
+      "SHM (HIMACHAL PRADESH)"
+    ]
+  },
+  "missing_rate_unit_fields": {
+    "recharge_total": {
+      "2022-2023": 0.0,
+      "2023-2024": 0.0003,
+      "2024-2025": 0.0004
+    },
+    "extractable_total": {
+      "2022-2023": 0.0,
+      "2023-2024": 0.0001,
+      "2024-2025": 0.0
+    },
+    "extraction_total": {
+      "2022-2023": 0.104,
+      "2023-2024": 0.0373,
+      "2024-2025": 0.0372
+    },
+    "extraction_irrigation": {
+      "2022-2023": 0.0,
+      "2023-2024": 0.0001,
+      "2024-2025": 0.0001
+    },
+    "extraction_domestic": {
+      "2022-2023": 0.0,
+      "2023-2024": 0.0,
+      "2024-2025": 0.0
+    },
+    "extraction_industrial": {
+      "2022-2023": 0.0,
+      "2023-2024": 0.0001,
+      "2024-2025": 0.0001
+    },
+    "stage_of_extraction": {
+      "2022-2023": 0.104,
+      "2023-2024": 0.0373,
+      "2024-2025": 0.0372
+    },
+    "future_availability": {
+      "2022-2023": 0.0,
+      "2023-2024": 0.0,
+      "2024-2025": 0.0
+    },
+    "natural_discharge": {
+      "2022-2023": 0.0,
+      "2023-2024": 0.0001,
+      "2024-2025": 0.0
+    },
+    "rainfall_mm": {
+      "2022-2023": 0.0,
+      "2023-2024": 0.0003,
+      "2024-2025": 0.0004
+    },
+    "total_area": {
+      "2022-2023": 0.0,
+      "2023-2024": 0.0001,
+      "2024-2025": 0.0
+    },
+    "category": {
+      "2022-2023": 0.0,
+      "2023-2024": 0.0001,
+      "2024-2025": 0.0
+    }
+  },
+  "zero_rate_unit_fields": {
+    "area.total.totalArea": {
+      "2022-2023": 0.0,
+      "2023-2024": 0.0068,
+      "2024-2025": 0.007
+    },
+    "availabilityForFutureUse.total": {
+      "2022-2023": 0.1252,
+      "2023-2024": 0.1148,
+      "2024-2025": 0.1102
+    },
+    "currentAvailabilityForAllPurposes.total": {
+      "2022-2023": 0.097,
+      "2023-2024": 0.0445,
+      "2024-2025": 0.044
+    },
+    "draftData.agriculture.total": {
+      "2022-2023": 0.2551,
+      "2023-2024": 0.0809,
+      "2024-2025": 0.0807
+    },
+    "draftData.domestic.total": {
+      "2022-2023": 0.097,
+      "2023-2024": 0.0534,
+      "2024-2025": 0.0542
+    },
+    "draftData.industry.total": {
+      "2022-2023": 0.5806,
+      "2023-2024": 0.3536,
+      "2024-2025": 0.3336
+    },
+    "draftData.total.total": {
+      "2022-2023": 0.0,
+      "2023-2024": 0.01,
+      "2024-2025": 0.0096
+    },
+    "loss.total": {
+      "2022-2023": 0.097,
+      "2023-2024": 0.0445,
+      "2024-2025": 0.044
+    },
+    "rainfall.total": {
+      "2022-2023": 0.097,
+      "2023-2024": 0.0364,
+      "2024-2025": 0.0353
+    },
+    "rechargeData.total.total": {
+      "2022-2023": 0.097,
+      "2023-2024": 0.0443,
+      "2024-2025": 0.0435
+    },
+    "stageOfExtraction.total": {
+      "2022-2023": 0.0078,
+      "2023-2024": 0.0038,
+      "2024-2025": 0.0031
+    }
+  },
+  "duplicate_uuid_within_year_level": 0,
+  "duplicate_uuid_rows_sample": [],
+  "ambiguous_unit_names_latest_year": {
+    "unit_names_shared_by_>1_unit": 235,
+    "shared_across_districts": 232,
+    "shared_across_states": 169,
+    "examples": {
+      "ramnagar": 10,
+      "kalyanpur": 6,
+      "patan": 6,
+      "maharajganj": 5,
+      "ramgarh": 5,
+      "mohanpur": 5,
+      "lalganj": 5,
+      "rajpur": 5,
+      "narayanpur": 5,
+      "rajnagar": 5,
+      "rajgarh": 5,
+      "khanpur": 5,
+      "bhagwanpur": 4,
+      "sangrampur": 4,
+      "fatehpur": 4
+    }
+  },
+  "district_names_in_multiple_states_latest_year": {
+    "balrampur": 2,
+    "pratapgarh": 2
+  },
+  "units_named_like_their_district_latest_year": 360,
+  "name_issues": {
+    "unusual punctuation": 145,
+    "double space": 3
+  },
+  "name_issue_examples": [
+    {
+      "level": "unit",
+      "name": "Lekang_Mahadevpur",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Ganpur_stn",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Namchi_ROA",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "GURGAON_URBAN",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Naga_Reddipet",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "NANDYAL_RURAL",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Vemulawada_Rural",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "BIKANER_RURAL",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "BIKANER_URBAN",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Shankarampet_A",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Shankarampet_R",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Atmakur_S",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "ONGOLE_RURAL",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Gyalsingh_ROA",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "AJMER_URBAN",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "PEESANGAN_RURAL",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "SHRINAGAR_RURAL",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "DHARAMSHALA  VALLEY",
+      "issues": [
+        "double space"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "LADPURA_RURAL",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "KOTA_URBAN",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Tirumalagiri_Sagar",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Anumula_Haliya",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Pedda_adiserlapalle",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Narsapur_G",
+      "issues": [
+        "unusual punctuation"
+      ]
+    },
+    {
+      "level": "unit",
+      "name": "Nirmal_Rural",
+      "issues": [
+        "unusual punctuation"
+      ]
+    }
+  ],
+  "uuids_with_multiple_name_spellings_across_years": {
+    "district": 0,
+    "state": 0,
+    "unit": 0
+  },
+  "name_change_examples": {},
+  "uuid_overlap_consecutive_years": {
+    "state": {
+      "2022-2023->2023-2024": {
+        "a": 37,
+        "b": 37,
+        "common": 37,
+        "jaccard": 1.0
+      },
+      "2023-2024->2024-2025": {
+        "a": 37,
+        "b": 37,
+        "common": 37,
+        "jaccard": 1.0
+      }
+    },
+    "district": {
+      "2022-2023->2023-2024": {
+        "a": 125,
+        "b": 730,
+        "common": 125,
+        "jaccard": 0.1712
+      },
+      "2023-2024->2024-2025": {
+        "a": 730,
+        "b": 735,
+        "common": 723,
+        "jaccard": 0.9744
+      }
+    },
+    "unit": {
+      "2022-2023->2023-2024": {
+        "a": 548,
+        "b": 6965,
+        "common": 548,
+        "jaccard": 0.0787
+      },
+      "2023-2024->2024-2025": {
+        "a": 6965,
+        "b": 6984,
+        "common": 5697,
+        "jaccard": 0.6904
+      }
+    }
+  },
+  "units_that_changed_parent_district": 0,
+  "units_changed_parent_examples": [],
+  "units_present_in_all_years": 231,
+  "units_total_distinct": 8252,
+  "national_reconciliation": {
+    "2022-2023": {
+      "recharge_total_bcm": 470.22,
+      "recharge_fresh_bcm": 449.05,
+      "extractable_fresh_bcm": 407.19,
+      "extraction_fresh_bcm": 241.31,
+      "soe_api": 59.26,
+      "units_api": 548,
+      "units_api_excl_hilly": 491,
+      "published": {
+        "gwra": 2023,
+        "recharge": 449.08,
+        "extraction": 241.34,
+        "soe": 59.23,
+        "units": 6553,
+        "src": "https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=1981600"
+      }
+    },
+    "2023-2024": {
+      "recharge_total_bcm": 467.68,
+      "recharge_fresh_bcm": 446.58,
+      "extractable_fresh_bcm": 406.18,
+      "extraction_fresh_bcm": 245.65,
+      "soe_api": 60.48,
+      "units_api": 6965,
+      "units_api_excl_hilly": 6705,
+      "published": {
+        "gwra": 2024,
+        "recharge": 446.9,
+        "extractable": 406.19,
+        "extraction": 245.64,
+        "soe": 60.47,
+        "src": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2089039"
+      }
+    },
+    "2024-2025": {
+      "recharge_total_bcm": 473.19,
+      "recharge_fresh_bcm": 448.51,
+      "extractable_fresh_bcm": 407.76,
+      "extraction_fresh_bcm": 247.22,
+      "soe_api": 60.63,
+      "units_api": 6984,
+      "units_api_excl_hilly": 6724,
+      "published": {
+        "gwra": 2025,
+        "recharge": 448.52,
+        "extractable": 407.75,
+        "extraction": 247.22,
+        "soe": 60.63,
+        "src": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2220203"
+      }
+    }
+  },
+  "unit_sum_vs_district": {
+    "rechargeData.total.total": {
+      "2022-2023": {
+        "parents": 91,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
+      "2023-2024": {
+        "parents": 724,
+        "within_0.1pct": 0.9876,
+        "max_rel_diff": 0.406
+      },
+      "2024-2025": {
+        "parents": 722,
+        "within_0.1pct": 0.9861,
+        "max_rel_diff": 0.5763
+      }
+    },
+    "draftData.total.total": {
+      "2022-2023": {
+        "parents": 86,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
+      "2023-2024": {
+        "parents": 710,
+        "within_0.1pct": 0.9859,
+        "max_rel_diff": 0.5489
+      },
+      "2024-2025": {
+        "parents": 708,
+        "within_0.1pct": 0.9859,
+        "max_rel_diff": 0.5609
+      }
+    }
+  },
+  "district_sum_vs_state": {
+    "rechargeData.total.total": {
+      "2022-2023": {
+        "parents": 5,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
+      "2023-2024": {
+        "parents": 37,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
+      "2024-2025": {
+        "parents": 37,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      }
+    },
+    "draftData.total.total": {
+      "2022-2023": {
+        "parents": 5,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
+      "2023-2024": {
+        "parents": 37,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      },
+      "2024-2025": {
+        "parents": 37,
+        "within_0.1pct": 1.0,
+        "max_rel_diff": 0.0
+      }
+    }
+  },
+  "unit_category_values": {
+    "2022-2023": {
+      "safe": 391,
+      "semi_critical": 69,
+      "Hilly Area": 57,
+      "over_exploited": 26,
+      "critical": 5
+    },
+    "2023-2024": {
+      "safe": 4922,
+      "over_exploited": 747,
+      "semi_critical": 703,
+      "Hilly Area": 259,
+      "critical": 206,
+      "salinity": 127
+    },
+    "2024-2025": {
+      "safe": 4920,
+      "semi_critical": 750,
+      "over_exploited": 726,
+      "Hilly Area": 260,
+      "critical": 201,
+      "salinity": 127
+    }
+  },
+  "category_matches_soe_threshold": {
+    "2022-2023": 1.0,
+    "2023-2024": 1.0,
+    "2024-2025": 1.0
+  },
+  "category_mismatch_examples": []
+}
