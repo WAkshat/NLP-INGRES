@@ -1,0 +1,481 @@
+{
+ "experiment_id": "A_keyword_template-20260928T154425Z",
+ "baseline": "A_keyword_template",
+ "git_commit": "1ecf807",
+ "benchmark": "ingres_bench_v1.jsonl",
+ "splits": [
+  "dev",
+  "test",
+  "hard_test"
+ ],
+ "n": 872,
+ "execution_accuracy": 0.3876,
+ "exact_match_sql": 0.3555,
+ "exec_error_rate": 0.0,
+ "latency_mean_s": 0.3244,
+ "wall_time_s": 291.1,
+ "hardware": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
+ "python": "3.12.10",
+ "config": {},
+ "usage": {},
+ "breakdowns": {
+  "split": [
+   {
+    "split": "dev",
+    "n": 228,
+    "correct": 0.5833,
+    "ci95_lo": 0.5175,
+    "ci95_hi": 0.6447
+   },
+   {
+    "split": "hard_test",
+    "n": 260,
+    "correct": 0.3077,
+    "ci95_lo": 0.25,
+    "ci95_hi": 0.3615
+   },
+   {
+    "split": "test",
+    "n": 384,
+    "correct": 0.3255,
+    "ci95_lo": 0.2786,
+    "ci95_hi": 0.375
+   }
+  ],
+  "language": [
+   {
+    "language": "english",
+    "n": 218,
+    "correct": 0.4679,
+    "ci95_lo": 0.4037,
+    "ci95_hi": 0.5321
+   },
+   {
+    "language": "hindi",
+    "n": 218,
+    "correct": 0.3486,
+    "ci95_lo": 0.2844,
+    "ci95_hi": 0.4083
+   },
+   {
+    "language": "hinglish",
+    "n": 218,
+    "correct": 0.445,
+    "ci95_lo": 0.3807,
+    "ci95_hi": 0.5093
+   },
+   {
+    "language": "tamil",
+    "n": 218,
+    "correct": 0.289,
+    "ci95_lo": 0.2294,
+    "ci95_hi": 0.3486
+   }
+  ],
+  "difficulty": [
+   {
+    "difficulty": "cross_year",
+    "n": 184,
+    "correct": 0.2826,
+    "ci95_lo": 0.2228,
+    "ci95_hi": 0.3478
+   },
+   {
+    "difficulty": "filtered_aggregate",
+    "n": 296,
+    "correct": 0.4595,
+    "ci95_lo": 0.402,
+    "ci95_hi": 0.5169
+   },
+   {
+    "difficulty": "multi_hop",
+    "n": 152,
+    "correct": 0.6053,
+    "ci95_lo": 0.5263,
+    "ci95_hi": 0.6842
+   },
+   {
+    "difficulty": "simple_lookup",
+    "n": 240,
+    "correct": 0.2417,
+    "ci95_lo": 0.1917,
+    "ci95_hi": 0.2958
+   }
+  ],
+  "length_bin": [
+   {
+    "length_bin": "11-15",
+    "n": 449,
+    "correct": 0.3675,
+    "ci95_lo": 0.3252,
+    "ci95_hi": 0.4098
+   },
+   {
+    "length_bin": "16-20",
+    "n": 172,
+    "correct": 0.4884,
+    "ci95_lo": 0.4186,
+    "ci95_hi": 0.564
+   },
+   {
+    "length_bin": "<=10",
+    "n": 210,
+    "correct": 0.281,
+    "ci95_lo": 0.219,
+    "ci95_hi": 0.3429
+   },
+   {
+    "length_bin": ">20",
+    "n": 41,
+    "correct": 0.7317,
+    "ci95_lo": 0.5854,
+    "ci95_hi": 0.8537
+   }
+  ],
+  "code_mix_bin": [
+   {
+    "code_mix_bin": "high(>=0.25)",
+    "n": 183,
+    "correct": 0.4645,
+    "ci95_lo": 0.3934,
+    "ci95_hi": 0.5355
+   },
+   {
+    "code_mix_bin": "low(<0.25)",
+    "n": 183,
+    "correct": 0.3552,
+    "ci95_lo": 0.2896,
+    "ci95_hi": 0.4262
+   },
+   {
+    "code_mix_bin": "none",
+    "n": 506,
+    "correct": 0.3715,
+    "ci95_lo": 0.33,
+    "ci95_hi": 0.413
+   }
+  ],
+  "ambiguous_entity": [
+   {
+    "ambiguous_entity": false,
+    "n": 840,
+    "correct": 0.3988,
+    "ci95_lo": 0.3655,
+    "ci95_hi": 0.431
+   },
+   {
+    "ambiguous_entity": true,
+    "n": 32,
+    "correct": 0.0938,
+    "ci95_lo": 0.0,
+    "ci95_hi": 0.1875
+   }
+  ],
+  "noisy": [
+   {
+    "noisy": false,
+    "n": 671,
+    "correct": 0.4069,
+    "ci95_lo": 0.3696,
+    "ci95_hi": 0.4427
+   },
+   {
+    "noisy": true,
+    "n": 201,
+    "correct": 0.3234,
+    "ci95_lo": 0.2587,
+    "ci95_hi": 0.3881
+   }
+  ],
+  "intent": [
+   {
+    "intent": "avg_unit_soe_state",
+    "n": 24,
+    "correct": 0.7083,
+    "ci95_lo": 0.5,
+    "ci95_hi": 0.875
+   },
+   {
+    "intent": "category_transition_state",
+    "n": 32,
+    "correct": 0.4062,
+    "ci95_lo": 0.25,
+    "ci95_hi": 0.5938
+   },
+   {
+    "intent": "compare_two_states_stress",
+    "n": 12,
+    "correct": 0.6667,
+    "ci95_lo": 0.4167,
+    "ci95_hi": 0.9167
+   },
+   {
+    "intent": "count_category_district",
+    "n": 16,
+    "correct": 0.125,
+    "ci95_lo": 0.0,
+    "ci95_hi": 0.3125
+   },
+   {
+    "intent": "count_category_state",
+    "n": 28,
+    "correct": 0.3929,
+    "ci95_lo": 0.2143,
+    "ci95_hi": 0.5714
+   },
+   {
+    "intent": "count_category_two_years",
+    "n": 16,
+    "correct": 0.4375,
+    "ci95_lo": 0.1875,
+    "ci95_hi": 0.6875
+   },
+   {
+    "intent": "count_districts_soe_above",
+    "n": 16,
+    "correct": 0.5625,
+    "ci95_lo": 0.3125,
+    "ci95_hi": 0.8125
+   },
+   {
+    "intent": "count_improved_state",
+    "n": 16,
+    "correct": 0.1875,
+    "ci95_lo": 0.0,
+    "ci95_hi": 0.375
+   },
+   {
+    "intent": "count_soe_between_state",
+    "n": 20,
+    "correct": 0.8,
+    "ci95_lo": 0.6,
+    "ci95_hi": 0.95
+   },
+   {
+    "intent": "district_largest_increase",
+    "n": 12,
+    "correct": 0.5833,
+    "ci95_lo": 0.3333,
+    "ci95_hi": 0.8333
+   },
+   {
+    "intent": "district_metric",
+    "n": 28,
+    "correct": 0.3571,
+    "ci95_lo": 0.1786,
+    "ci95_hi": 0.5357
+   },
+   {
+    "intent": "district_min_soe_state",
+    "n": 24,
+    "correct": 0.625,
+    "ci95_lo": 0.4167,
+    "ci95_hi": 0.7917
+   },
+   {
+    "intent": "districts_majority_oe",
+    "n": 28,
+    "correct": 0.6429,
+    "ci95_lo": 0.4643,
+    "ci95_hi": 0.8214
+   },
+   {
+    "intent": "irrigation_share_state",
+    "n": 32,
+    "correct": 0.0312,
+    "ci95_lo": 0.0,
+    "ci95_hi": 0.0938
+   },
+   {
+    "intent": "list_category_district",
+    "n": 28,
+    "correct": 0.2857,
+    "ci95_lo": 0.1071,
+    "ci95_hi": 0.4643
+   },
+   {
+    "intent": "national_category_by_year",
+    "n": 12,
+    "correct": 0.25,
+    "ci95_lo": 0.0,
+    "ci95_hi": 0.5
+   },
+   {
+    "intent": "national_category_count",
+    "n": 16,
+    "correct": 0.5625,
+    "ci95_lo": 0.3125,
+    "ci95_hi": 0.8125
+   },
+   {
+    "intent": "pct_category_state",
+    "n": 24,
+    "correct": 0.4583,
+    "ci95_lo": 0.25,
+    "ci95_hi": 0.6667
+   },
+   {
+    "intent": "state_extreme_metric",
+    "n": 12,
+    "correct": 0.5833,
+    "ci95_lo": 0.3333,
+    "ci95_hi": 0.8333
+   },
+   {
+    "intent": "state_largest_oe_decrease_stable",
+    "n": 4,
+    "correct": 1.0,
+    "ci95_lo": 1.0,
+    "ci95_hi": 1.0
+   },
+   {
+    "intent": "state_metric",
+    "n": 20,
+    "correct": 0.25,
+    "ci95_lo": 0.1,
+    "ci95_hi": 0.45
+   },
+   {
+    "intent": "state_soe_change",
+    "n": 20,
+    "correct": 0.35,
+    "ci95_lo": 0.15,
+    "ci95_hi": 0.55
+   },
+   {
+    "intent": "state_unit_type",
+    "n": 8,
+    "correct": 0.375,
+    "ci95_lo": 0.125,
+    "ci95_hi": 0.75
+   },
+   {
+    "intent": "state_volume_bcm",
+    "n": 20,
+    "correct": 0.55,
+    "ci95_lo": 0.35,
+    "ci95_hi": 0.75
+   },
+   {
+    "intent": "top_k_units_state",
+    "n": 40,
+    "correct": 0.475,
+    "ci95_lo": 0.325,
+    "ci95_hi": 0.625
+   },
+   {
+    "intent": "top_oe_districts_irrigation",
+    "n": 16,
+    "correct": 0.9375,
+    "ci95_lo": 0.8125,
+    "ci95_hi": 1.0
+   },
+   {
+    "intent": "top_states_by_category",
+    "n": 16,
+    "correct": 0.6875,
+    "ci95_lo": 0.4375,
+    "ci95_hi": 0.875
+   },
+   {
+    "intent": "transition_vs_state",
+    "n": 8,
+    "correct": 0.125,
+    "ci95_lo": 0.0,
+    "ci95_hi": 0.375
+   },
+   {
+    "intent": "unit_category",
+    "n": 52,
+    "correct": 0.1154,
+    "ci95_lo": 0.0385,
+    "ci95_hi": 0.2115
+   },
+   {
+    "intent": "unit_category_two_years",
+    "n": 28,
+    "correct": 0.1786,
+    "ci95_lo": 0.0357,
+    "ci95_hi": 0.3214
+   },
+   {
+    "intent": "unit_district_lookup",
+    "n": 8,
+    "correct": 0.25,
+    "ci95_lo": 0.0,
+    "ci95_hi": 0.5
+   },
+   {
+    "intent": "unit_first_year_category",
+    "n": 20,
+    "correct": 0.1,
+    "ci95_lo": 0.0,
+    "ci95_hi": 0.25
+   },
+   {
+    "intent": "unit_metric",
+    "n": 104,
+    "correct": 0.2019,
+    "ci95_lo": 0.1346,
+    "ci95_hi": 0.2788
+   },
+   {
+    "intent": "unit_metric_change",
+    "n": 28,
+    "correct": 0.1786,
+    "ci95_lo": 0.0357,
+    "ci95_hi": 0.3214
+   },
+   {
+    "intent": "units_above_district_soe",
+    "n": 24,
+    "correct": 0.2917,
+    "ci95_lo": 0.125,
+    "ci95_hi": 0.5
+   },
+   {
+    "intent": "units_above_state_low_recharge",
+    "n": 20,
+    "correct": 0.9,
+    "ci95_lo": 0.75,
+    "ci95_hi": 1.0
+   },
+   {
+    "intent": "units_oe_all_years",
+    "n": 20,
+    "correct": 0.45,
+    "ci95_lo": 0.25,
+    "ci95_hi": 0.65
+   },
+   {
+    "intent": "worsened_extraction_rise",
+    "n": 20,
+    "correct": 0.6,
+    "ci95_lo": 0.4,
+    "ci95_hi": 0.8
+   }
+  ]
+ },
+ "split_x_language": {
+  "english": {
+   "dev": 0.7018,
+   "hard_test": 0.3231,
+   "test": 0.4271
+  },
+  "hindi": {
+   "dev": 0.5789,
+   "hard_test": 0.2769,
+   "test": 0.2604
+  },
+  "hinglish": {
+   "dev": 0.7193,
+   "hard_test": 0.2923,
+   "test": 0.3854
+  },
+  "tamil": {
+   "dev": 0.3333,
+   "hard_test": 0.3385,
+   "test": 0.2292
+  }
+ }
+}

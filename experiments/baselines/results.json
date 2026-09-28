@@ -1,0 +1,40 @@
+{
+ "A_keyword_template": {
+  "experiment_id": "A_keyword_template-20260928T154425Z",
+  "git_commit": "1ecf807",
+  "n": 872,
+  "splits": [
+   "dev",
+   "test",
+   "hard_test"
+  ],
+  "execution_accuracy": 0.3876,
+  "exact_match_sql": 0.3555,
+  "exec_error_rate": 0.0,
+  "latency_mean_s": 0.3244,
+  "config": {},
+  "usage": {},
+  "by_split_x_language": {
+   "english": {
+    "dev": 0.7018,
+    "hard_test": 0.3231,
+    "test": 0.4271
+   },
+   "hindi": {
+    "dev": 0.5789,
+    "hard_test": 0.2769,
+    "test": 0.2604
+   },
+   "hinglish": {
+    "dev": 0.7193,
+    "hard_test": 0.2923,
+    "test": 0.3854
+   },
+   "tamil": {
+    "dev": 0.3333,
+    "hard_test": 0.3385,
+    "test": 0.2292
+   }
+  }
+ }
+}

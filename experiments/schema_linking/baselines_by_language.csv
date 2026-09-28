@@ -1,0 +1,4 @@
+method,english,hindi,hinglish,tamil,overall
+B_bm25,0.447,0.009,0.603,0.009,0.267
+C_multilingual_e5_small,0.6,0.339,0.421,0.276,0.409
+random (no linking),0.025,0.033,0.041,0.012,0.028

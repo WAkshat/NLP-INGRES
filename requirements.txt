@@ -5,3 +5,5 @@ pyarrow==25.0.1
 PyYAML==6.0.3
 pytest==9.1.1
 indic_transliteration==2.3.69   # Phase 3: back-transliteration check of benchmark names
+scikit-learn==1.9.1              # Phase 4: TF-IDF retrieval (baseline A)
+sentence-transformers==3.1.0     # Phase 4: multilingual embedding baseline (C)
