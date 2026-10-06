@@ -7,10 +7,10 @@ _Last updated: 2026-09-28_
 | 1. Data-access audit + ingestion | **Done, validated** | `docs/DATA_ACCESS_REPORT.md`, `reports/data_audit.json` |
 | 2. Schema extraction + canonical DB | **Done, validated** | `data/processed/ingres.db`, `docs/INGRES_SCHEMA.md`, `tests/test_db_against_published.py` |
 | 3. INGRES-Bench | **Done, validated** (LLM-authored, not native-speaker verified) | `docs/INGRES_BENCH.md`, `reports/benchmark_qc.json` |
-| 4. Baselines (keyword, BM25, embeddings, frontier LLM) | **A, B, C done; D (Gemini) running** (free tier overloaded, resumable) | `docs/BASELINES.md` |
-| 5. Learned schema linking | Not started | — |
-| 6. Geographic entity resolution | Not started (raw material collected: 445 real respellings, 169 names shared across states, HP district codes) | `reports/crosswalk_renames.csv` |
-| 7. Tokenizer / code-mixing study | Not started | — |
+| 4. Baselines (keyword, BM25, embeddings, frontier LLM) | **Done** (Gemini free tier = 20 req/day, so D = local qwen3:8b; few-shot variant pending) | `docs/BASELINES.md` |
+| 5. Learned schema linking | **Done, validated** (incl. leave-intents-out) | `docs/SCHEMA_LINKING.md` |
+| 6. Geographic entity resolution | **Done, validated** | `docs/ENTITY_RESOLUTION.md` |
+| 7. Tokenizer / code-mixing study | **Next** (paused at user request) | — |
 | 8. Numeric grounding verifier | Not started | — |
 | 9. Agentic decomposition | Not started | — |
 | 10. Minimal UI | Not started | — |

@@ -88,7 +88,33 @@ Free-tier facts established while setting this up (2026-09-28):
 - Free-tier prompts and responses may be used by Google to improve its products (pricing page). Only public
   INGRES data is sent.
 
-**Results: TODO — requires experiment (run in progress).**
+**Gemini result: not obtainable on the free tier.** The API reported the actual quota on 2026-09-28:
+`GenerateRequestsPerDayPerProjectPerModel-FreeTier` = **20 requests/day** for `gemini-3.6-flash`
+(`experiments/baselines/gemini_quota_log.jsonl`). 872 evaluation questions would take ~44 days, so the frontier baseline
+is replaced by a local open model (below). Gemini remains available in the code (`--backend gemini`).
 
-**Same-family caveat:** the benchmark text was authored by Claude. Gemini is a different model family, so D does not share
-that authorship bias.
+### Baseline D (local): `qwen3:8b` via Ollama, zero-shot
+Served locally by Ollama (Q4 quantisation, RTX 5060 8 GB, thinking disabled, temperature 0, seed 0). The full schema dump
+(~9k tokens) overflowed the 8k context, so local runs use a compact schema rendering (`compact_schema_prompt`: one line
+per table, shared metric columns described once, exact INGRES state spellings) with the conventions and explicit rules
+(full year labels, column locations, standard join path) placed next to the question. On a 24-question dev pilot,
+`qwen2.5-coder:7b` scored 3/24 and `qwen3:8b` 8/24, so `qwen3:8b` was selected (pilot questions are dev, not test).
+
+**Execution accuracy 18.2%** (872; CI by split below), execution errors 6.3%, mean latency 2.5 s, 1.50 M prompt tokens,
+0 truncated prompts.
+
+| Split | EX | 95% CI | | Language | EX | 95% CI |
+|---|---:|---|---|---|---:|---|
+| dev | 24.6% | 19.3-29.8 | | English | 22.5% | 17.0-28.0 |
+| test | 18.0% | 14.3-21.9 | | Hindi | 16.5% | 11.9-21.6 |
+| hard_test | 13.1% | 8.9-16.9 | | Hinglish | 19.7% | 14.7-25.2 |
+| | | | | Tamil | 14.2% | 10.1-18.8 |
+
+By difficulty: simple lookup 10.0%, filtered aggregate 38.9%, cross-year 7.6%, multi-hop 4.0%.
+Ambiguous place names 3.1% (n=32) vs 18.8%; noisy hard-test questions 12.4% vs 20.0% clean.
+
+Observations: the 8B model **scores below the keyword/template baseline A (38.8%)**. Its typical errors (inspected on the
+pilot) are exactly the targets of the later components: misapplied year convention ("the 2023 assessment" -> 2023-2024),
+wrong metric column (schema linking), unresolved or mis-cased place names (entity resolution), unit-level rows where a
+state aggregate is asked (level confusion), and failing multi-step joins. A few-shot variant (4 fixed English train
+examples) is run with `--few-shot 4`.

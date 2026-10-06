@@ -1,0 +1,61 @@
+set,mention,gold,gold_level,gold_state,pred,pred_state,pred_level,top1,top3,noise,context,error_category
+synthetic,தோந்க்,TONK,district,RAJASTHAN,DHONE,ANDHRA PRADESH,unit,0,0,auto_tamil,False,wrong administrative level
+hand_script,சத்தீஸ்கர்,CHHATTISGARH,state,CHHATTISGARH,JAISINAGAR,MADHYA PRADESH,unit,0,0,hand_ta,False,wrong administrative level
+synthetic,Chandigarh,CHANDIGARH,district,CHANDIGARH,CHANDIGARH,CHANDIGARH,state,0,1,exact,True,"right name, wrong place (homonym)"
+synthetic,रैचुर्,RAICHUR,unit,KARNATAKA,Raichur,KARNATAKA,district,0,1,auto_devanagari,False,"right name, wrong place (homonym)"
+synthetic,Ar.uppukottai,ARUPPUKOTTAI,unit,TAMILNADU,ARUPPUKOTTAI,TAMILNADU,unit,0,1,punct_space,True,"right name, wrong place (homonym)"
+synthetic,Kadayampattti,KADAYAMPATTI,unit,TAMILNADU,KADAYAMPATTI,TAMILNADU,unit,0,1,typo,True,"right name, wrong place (homonym)"
+synthetic,Nellikup-pam,NELLIKUPPAM,unit,TAMILNADU,NELLIKUPPAM,TAMILNADU,unit,0,1,punct_space,True,"right name, wrong place (homonym)"
+synthetic,simla,SHM,district,HIMACHAL PRADESH,SHIMLA,HIMACHAL PRADESH,district,0,1,translit_variant,True,"similar name, same state"
+hand_script,सांकड़ा,SANKRA,unit,RAJASTHAN,SAMBHAR,RAJASTHAN,unit,0,0,hand_hi,False,"similar name, same state"
+synthetic,தோகபல்,TOKAPAL,unit,CHHATTISGARH,AMBALA,HARYANA,district,0,0,auto_tamil,False,wrong administrative level
+synthetic,Gurau,GURARU,unit,BIHAR,GURUA,BIHAR,unit,0,1,typo,True,"similar name, same state"
+synthetic,Maharajganj,MAHARAJGANJ,unit,UTTAR PRADESH,MAHRAJGANJ,UTTAR PRADESH,district,0,1,exact,True,wrong administrative level
+synthetic,Gokaak,Gokak,unit,KARNATAKA,GOKAK,KARNATAKA,unit,0,1,translit_variant,False,"right name, wrong place (homonym)"
+synthetic,amethi,AMETHI,unit,UTTAR PRADESH,AMETHI,UTTAR PRADESH,district,0,1,lowercase,False,"right name, wrong place (homonym)"
+synthetic,dhemaji,DHEMAJI,unit,ASSAM,DHEMAJI,ASSAM,district,0,1,lowercase,True,"right name, wrong place (homonym)"
+synthetic,Shaator,Shamator,unit,NAGALAND,SALTORA,WEST BENGAL,unit,0,0,typo,False,"similar name, other state"
+synthetic,அத்மகுர்,ATMAKUR,unit,ANDHRA PRADESH,AMADAGUR,ANDHRA PRADESH,unit,0,0,auto_tamil,False,"similar name, same state"
+synthetic,मलेर्कोत्ल,Malerkotla-1,unit,PUNJAB,Malerkotla,PUNJAB,district,0,1,auto_devanagari,False,wrong administrative level
+synthetic,bikaner,BIKANER,unit,RAJASTHAN,BIKANER,RAJASTHAN,district,0,1,lowercase,False,"right name, wrong place (homonym)"
+synthetic,Hisar-Iee,HISAR-II,unit,HARYANA,HISAR-I,HARYANA,unit,0,1,translit_variant,False,"right name, wrong place (homonym)"
+synthetic,dhemaji,DHEMAJI,unit,ASSAM,DHEMAJI,ASSAM,district,0,1,lowercase,False,"right name, wrong place (homonym)"
+synthetic,சௌகுதிய,CHAUKHUTIYA,unit,UTTARAKHAND,JHARSUGUDA,ODISHA,district,0,0,auto_tamil,False,wrong administrative level
+hand_script,கோவா,GOA,state,GOA,GODDA,JHARKHAND,district,0,0,hand_ta,False,wrong administrative level
+synthetic,சப்ர,CHAPRA,unit,BIHAR,JABERA,MADHYA PRADESH,unit,0,0,auto_tamil,False,"similar name, other state"
+synthetic,பல்வந்ச,Palvancha,unit,TELANGANA,Malwan,MAHARASHTRA,unit,0,0,auto_tamil,False,"similar name, other state"
+hand_script,கோட் ஈசே கான் அட் தரம்கோட்,Kot Ise Khan At Dharamkot,unit,PUNJAB,Gundi Dharam,JAMMU AND KASHMIR,unit,0,0,hand_ta,False,"similar name, other state"
+synthetic,அகோல,Akola,unit,MAHARASHTRA,Akola,MAHARASHTRA,district,0,0,auto_tamil,False,"right name, wrong place (homonym)"
+ambiguous,Rajpura,RAJPURA,unit,UTTAR PRADESH,RAJPUR,MADHYA PRADESH,unit,0,0,shared_by_3,False,"right name, wrong place (homonym)"
+hand_script,वानियमबाडी,VANIYAMBADI,unit,TAMILNADU,VANIYAMBADI,TAMILNADU,unit,0,1,hand_hi,True,"right name, wrong place (homonym)"
+hand_script,அசாம்,ASSAM,state,ASSAM,RAJAM,ANDHRA PRADESH,unit,0,0,hand_ta,True,wrong administrative level
+synthetic,Kalaigaon(part),KALAIGAON (PART),unit,ASSAM,KALAIGAON (PART),ASSAM,unit,0,1,punct_space,False,"right name, wrong place (homonym)"
+synthetic,போதத்,BOTAD,unit,GUJARAT,Bodwad,MAHARASHTRA,unit,0,1,auto_tamil,False,"similar name, other state"
+hand_script,லாத்தூர்,Latur,district,MAHARASHTRA,LADAKH,LADAKH,state,0,0,hand_ta,True,wrong administrative level
+historical,PALAIYUR,PALAIYUR(T),unit,TAMILNADU,PALAIYUR,TAMILNADU,unit,0,1,history_fuzzy,False,"similar name, same state"
+historical,BHAGWANPUR,Bhagawanpur,unit,BIHAR,BHAGWANPUR,BIHAR,unit,0,0,history_fuzzy,False,"similar name, same state"
+hand_script,கிஷ்த்வார்,Kishtwar,unit,JAMMU AND KASHMIR,Handwara,JAMMU AND KASHMIR,unit,0,0,hand_ta,True,"similar name, same state"
+synthetic,oothamapalayam,UTHAMAPALAYAM,unit,TAMILNADU,UTHAMAPALAYAM,TAMILNADU,unit,0,1,translit_variant,True,"right name, wrong place (homonym)"
+synthetic,Koder.ma,KODERMA,unit,JHARKHAND,KODERMA,JHARKHAND,district,0,1,punct_space,True,"right name, wrong place (homonym)"
+synthetic,அத்ரி,ATRI,unit,BIHAR,DADRI,UTTAR PRADESH,unit,0,0,auto_tamil,True,"similar name, other state"
+synthetic,Ka-ra,KARA,unit,UTTAR PRADESH,KASYA,UTTAR PRADESH,unit,0,0,punct_space,True,"similar name, same state"
+synthetic,Nellikupam,NELLIKUPPAM,unit,TAMILNADU,NELLIKUPPAM,TAMILNADU,unit,0,1,typo,False,"right name, wrong place (homonym)"
+historical,PUDUKOTTAI,PUDUKOTTAI(T),unit,TAMILNADU,PUDUKKOTTAI,TAMILNADU,district,0,0,history_fuzzy,True,wrong administrative level
+hand_script,சாகர்,SAGAR,district,MADHYA PRADESH,AGAR,MADHYA PRADESH,unit,0,0,hand_ta,False,wrong administrative level
+synthetic,Kadayampathti,KADAYAMPATTI,unit,TAMILNADU,KADAYAMPATTI,TAMILNADU,unit,0,1,translit_variant,False,"right name, wrong place (homonym)"
+synthetic,veppur,VEPPUR,unit,TAMILNADU,Veppur,TAMILNADU,unit,0,1,lowercase,True,"right name, wrong place (homonym)"
+synthetic,pakyong,PAKYONG,district,SIKKIM,PAKYONG,SIKKIM,district,0,1,lowercase,True,"right name, wrong place (homonym)"
+synthetic,चिरन्ग्,CHIRANG,unit,ASSAM,CHIRANG,ASSAM,district,0,1,auto_devanagari,True,"right name, wrong place (homonym)"
+synthetic,Channn,Channan,unit,BIHAR,UCHANA,HARYANA,unit,0,0,typo,False,"similar name, other state"
+synthetic,Upper Siaang,UPPER SIANG,unit,ARUNACHAL PRADESH,UPPER SIANG,ARUNACHAL PRADESH,district,0,1,translit_variant,True,"right name, wrong place (homonym)"
+synthetic,rohtas,Rohtas,unit,BIHAR,ROHTAS,BIHAR,district,0,1,lowercase,True,"right name, wrong place (homonym)"
+synthetic,Bargarh,BARGARH,unit,ODISHA,BARGARH,ODISHA,district,0,1,exact,False,"right name, wrong place (homonym)"
+synthetic,கேதேபல்லே,Kethepalle,unit,TELANGANA,Peddapalle,TELANGANA,district,0,0,auto_tamil,True,wrong administrative level
+synthetic,அநந்த்புர்,ANANDPUR,unit,JHARKHAND,Aanandhur,TAMILNADU,unit,0,1,auto_tamil,False,"similar name, other state"
+synthetic,கபிலி பர்த்,KAPILI (PART),unit,ASSAM,GARUGUBILLI,ANDHRA PRADESH,unit,0,0,auto_tamil,False,"similar name, other state"
+synthetic,Krish-na,Krishna,district,ANDHRA PRADESH,KRISHNAI,ASSAM,unit,0,1,punct_space,False,wrong administrative level
+synthetic,பபத்ல,Bapatla,district,ANDHRA PRADESH,BADLI,HARYANA,unit,0,0,auto_tamil,True,wrong administrative level
+synthetic,நோத் அச்சேஸ்ஸேத்,Not Accessed,unit,JAMMU AND KASHMIR,Not Accessed,JAMMU AND KASHMIR,unit,0,0,auto_tamil,True,"right name, wrong place (homonym)"
+synthetic,नोत् अच्चेस्सेद्,Not Accessed,unit,JAMMU AND KASHMIR,Not Accessed,JAMMU AND KASHMIR,unit,0,0,auto_devanagari,False,"right name, wrong place (homonym)"
+synthetic,தலிஹ,Taliha,unit,ARUNACHAL PRADESH,DHALAI,TRIPURA,district,0,1,auto_tamil,False,wrong administrative level
+colloquial,Bangalore,Bengaluru (Urban),district,KARNATAKA,Mangalore,KARNATAKA,unit,0,0,no_alias_table,False,wrong administrative level

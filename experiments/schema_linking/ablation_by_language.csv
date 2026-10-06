@@ -1,0 +1,5 @@
+method,english,hindi,hinglish,tamil,overall
+1 no schema linking (random),0.025,0.033,0.041,0.012,0.028
+2 BM25,0.447,0.009,0.603,0.009,0.267
+3 off-the-shelf mE5-small,0.6,0.339,0.421,0.276,0.409
+4 fine-tuned mE5-small (ours),0.954,0.913,0.872,0.846,0.896

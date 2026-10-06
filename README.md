@@ -3,7 +3,7 @@
 Multilingual (English / Hindi / Hinglish / a Dravidian language) Text-to-SQL research over
 India's official groundwater assessment data (**INGRES**, CGWB + IIT Hyderabad).
 
-> Status: **Phases 1-3 done and validated** (data layer, canonical DB, INGRES-Bench v1). See [`PROJECT_STATUS.md`](PROJECT_STATUS.md) for what is
+> Status: **Phases 1-6 done** (data layer, INGRES-Bench v1, baselines, learned schema linking, entity resolution). See [`PROJECT_STATUS.md`](PROJECT_STATUS.md) for what is
 > done, validated, and pending. No model results exist yet; every result slot below is
 > `TODO — requires experiment` until the corresponding experiment has been run.
 
@@ -31,9 +31,15 @@ Schema: [`docs/INGRES_SCHEMA.md`](docs/INGRES_SCHEMA.md) / `data/schema/schema.j
 4 difficulty levels, train/dev/test/hard-test splits. Construction protocol, QC and limitations:
 [`docs/INGRES_BENCH.md`](docs/INGRES_BENCH.md).
 
-## 5-11. Architecture, components, baselines
-TODO — later phases (baselines, schema linking, entity resolution, tokenization study,
-numeric grounding, agentic system).
+## 5. Baselines, schema linking, entity resolution
+- Baselines (keyword/template EX 38.8%, local qwen3:8b zero-shot EX 18.2%, BM25 / embedding schema retrieval):
+  [`docs/BASELINES.md`](docs/BASELINES.md)
+- Learned schema linker (column recall@3 0.409 -> 0.896; 0.851 on unseen question types): [`docs/SCHEMA_LINKING.md`](docs/SCHEMA_LINKING.md)
+- Geographic entity resolver (top-1 0.84-0.89 on noisy names, 0.45 -> 0.97 on ambiguous names with context):
+  [`docs/ENTITY_RESOLUTION.md`](docs/ENTITY_RESOLUTION.md)
+
+## 6-11. Tokenization study, numeric grounding, agentic system, UI
+TODO — later phases.
 
 ## 12. Evaluation methodology
 Primary metric: execution accuracy (Spider/BIRD style result-set comparison). TODO.
@@ -52,6 +58,11 @@ python scripts/audit_data.py        # interim parquet + reports/data_audit.json
 python scripts/build_schema.py      # data/processed/ingres.db + data/schema/schema.json + docs/INGRES_SCHEMA.md
 python scripts/build_benchmark.py   # data/benchmark/*.jsonl (INGRES-Bench v1)
 python scripts/qc_benchmark.py      # benchmark quality control
+python scripts/run_baselines.py --baseline A
+python scripts/run_baselines.py --baseline D --backend ollama --model qwen3:8b   # needs Ollama running
+python scripts/run_schema_linking_baselines.py
+python scripts/train_schema_linker.py
+python scripts/train_entity_resolver.py
 python -m pytest
 ```
 

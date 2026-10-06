@@ -1,0 +1,114 @@
+{
+ "experiment_id": "D_gemini-3_6-flash_zeroshot-20260928T162027Z",
+ "baseline": "D_gemini-3_6-flash_zeroshot",
+ "git_commit": "42151dd",
+ "benchmark": "ingres_bench_v1.jsonl",
+ "splits": [
+  "test",
+  "hard_test",
+  "dev"
+ ],
+ "n": 1,
+ "partial": "stopped at 2/872: QuotaExhausted: daily quota exhausted for gemini-3.6-flash: [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'q",
+ "execution_accuracy": 1.0,
+ "exact_match_sql": 0.0,
+ "exec_error_rate": 0.0,
+ "latency_mean_s": 797.7361,
+ "wall_time_s": 959.1,
+ "hardware": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
+ "python": "3.12.10",
+ "config": {
+  "model": "gemini-3.6-flash",
+  "temperature": 0.0,
+  "few_shot": 0,
+  "prompt": "schema+conventions",
+  "min_interval_s": 7.0
+ },
+ "usage": {
+  "api_calls": 1,
+  "cache_hits": 0,
+  "prompt_tokens": 8461,
+  "output_tokens": 1219,
+  "retries": 11,
+  "overloaded_503": 9
+ },
+ "breakdowns": {
+  "split": [
+   {
+    "split": "test",
+    "n": 1,
+    "correct": 1.0,
+    "ci95_lo": 1.0,
+    "ci95_hi": 1.0
+   }
+  ],
+  "language": [
+   {
+    "language": "english",
+    "n": 1,
+    "correct": 1.0,
+    "ci95_lo": 1.0,
+    "ci95_hi": 1.0
+   }
+  ],
+  "difficulty": [
+   {
+    "difficulty": "filtered_aggregate",
+    "n": 1,
+    "correct": 1.0,
+    "ci95_lo": 1.0,
+    "ci95_hi": 1.0
+   }
+  ],
+  "length_bin": [
+   {
+    "length_bin": "16-20",
+    "n": 1,
+    "correct": 1.0,
+    "ci95_lo": 1.0,
+    "ci95_hi": 1.0
+   }
+  ],
+  "code_mix_bin": [
+   {
+    "code_mix_bin": "none",
+    "n": 1,
+    "correct": 1.0,
+    "ci95_lo": 1.0,
+    "ci95_hi": 1.0
+   }
+  ],
+  "ambiguous_entity": [
+   {
+    "ambiguous_entity": false,
+    "n": 1,
+    "correct": 1.0,
+    "ci95_lo": 1.0,
+    "ci95_hi": 1.0
+   }
+  ],
+  "noisy": [
+   {
+    "noisy": false,
+    "n": 1,
+    "correct": 1.0,
+    "ci95_lo": 1.0,
+    "ci95_hi": 1.0
+   }
+  ],
+  "intent": [
+   {
+    "intent": "avg_unit_soe_state",
+    "n": 1,
+    "correct": 1.0,
+    "ci95_lo": 1.0,
+    "ci95_hi": 1.0
+   }
+  ]
+ },
+ "split_x_language": {
+  "english": {
+   "test": 1.0
+  }
+ }
+}

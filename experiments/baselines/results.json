@@ -36,5 +36,91 @@
     "test": 0.2292
    }
   }
+ },
+ "D_gemini-3_6-flash_zeroshot": {
+  "experiment_id": "D_gemini-3_6-flash_zeroshot-20260928T162027Z",
+  "git_commit": "42151dd",
+  "n": 1,
+  "partial": "stopped at 2/872: QuotaExhausted: daily quota exhausted for gemini-3.6-flash: [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'q",
+  "splits": [
+   "test",
+   "hard_test",
+   "dev"
+  ],
+  "execution_accuracy": 1.0,
+  "exact_match_sql": 0.0,
+  "exec_error_rate": 0.0,
+  "latency_mean_s": 797.7361,
+  "config": {
+   "model": "gemini-3.6-flash",
+   "temperature": 0.0,
+   "few_shot": 0,
+   "prompt": "schema+conventions",
+   "min_interval_s": 7.0
+  },
+  "usage": {
+   "api_calls": 1,
+   "cache_hits": 0,
+   "prompt_tokens": 8461,
+   "output_tokens": 1219,
+   "retries": 11,
+   "overloaded_503": 9
+  },
+  "by_split_x_language": {
+   "english": {
+    "test": 1.0
+   }
+  }
+ },
+ "D_qwen3_8b_zeroshot": {
+  "experiment_id": "D_qwen3_8b_zeroshot-20261006T200248Z",
+  "git_commit": "42151dd",
+  "n": 872,
+  "partial": null,
+  "splits": [
+   "dev",
+   "test",
+   "hard_test"
+  ],
+  "execution_accuracy": 0.1823,
+  "exact_match_sql": 0.0,
+  "exec_error_rate": 0.0631,
+  "latency_mean_s": 2.4974,
+  "config": {
+   "backend": "ollama",
+   "model": "qwen3:8b",
+   "temperature": 0.0,
+   "few_shot": 0,
+   "prompt": "compact_schema+conventions"
+  },
+  "usage": {
+   "api_calls": 848,
+   "cache_hits": 24,
+   "prompt_tokens": 1500901,
+   "output_tokens": 132032,
+   "truncated_prompts": 0
+  },
+  "by_split_x_language": {
+   "english": {
+    "dev": 0.2807,
+    "hard_test": 0.1692,
+    "test": 0.2292
+   },
+   "hindi": {
+    "dev": 0.1579,
+    "hard_test": 0.1538,
+    "test": 0.1771
+   },
+   "hinglish": {
+    "dev": 0.3333,
+    "hard_test": 0.0923,
+    "test": 0.1875
+   },
+   "tamil": {
+    "dev": 0.2105,
+    "hard_test": 0.1077,
+    "test": 0.125
+   }
+  }
  }
 }

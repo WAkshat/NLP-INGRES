@@ -1,0 +1,107 @@
+[
+ {
+  "seed": 0,
+  "held_out_intents": [
+   "compare_two_states_stress",
+   "national_category_count",
+   "top_k_units_state",
+   "top_oe_districts_irrigation",
+   "top_states_by_category",
+   "unit_category_two_years",
+   "unit_first_year_category",
+   "unit_metric",
+   "unit_metric_change",
+   "units_oe_all_years"
+  ],
+  "n_eval": 300,
+  "steps": 102,
+  "final_loss": 2.048,
+  "train_time_s": 289.6,
+  "R@3": {
+   "3 off-the-shelf mE5-small": {
+    "english": 0.5511,
+    "hindi": 0.36,
+    "hinglish": 0.3778,
+    "tamil": 0.2756,
+    "overall": 0.3911
+   },
+   "4 fine-tuned (unseen intents)": {
+    "english": 0.8222,
+    "hindi": 0.7378,
+    "hinglish": 0.8178,
+    "tamil": 0.6222,
+    "overall": 0.75
+   }
+  }
+ },
+ {
+  "seed": 1,
+  "held_out_intents": [
+   "count_category_state",
+   "count_improved_state",
+   "count_soe_between_state",
+   "districts_majority_oe",
+   "national_category_by_year",
+   "national_category_count",
+   "state_metric",
+   "unit_category",
+   "unit_first_year_category",
+   "units_oe_all_years"
+  ],
+  "n_eval": 232,
+  "steps": 108,
+  "final_loss": 2.093,
+  "train_time_s": 302.7,
+  "R@3": {
+   "3 off-the-shelf mE5-small": {
+    "english": 0.6638,
+    "hindi": 0.4655,
+    "hinglish": 0.5345,
+    "tamil": 0.4138,
+    "overall": 0.5194
+   },
+   "4 fine-tuned (unseen intents)": {
+    "english": 0.9828,
+    "hindi": 0.9224,
+    "hinglish": 0.931,
+    "tamil": 0.819,
+    "overall": 0.9138
+   }
+  }
+ },
+ {
+  "seed": 2,
+  "held_out_intents": [
+   "count_category_district",
+   "count_category_two_years",
+   "count_districts_soe_above",
+   "district_metric",
+   "national_category_count",
+   "state_largest_oe_decrease_stable",
+   "state_volume_bcm",
+   "unit_district_lookup",
+   "unit_metric",
+   "units_oe_all_years"
+  ],
+  "n_eval": 248,
+  "steps": 96,
+  "final_loss": 2.2566,
+  "train_time_s": 273.4,
+  "R@3": {
+   "3 off-the-shelf mE5-small": {
+    "english": 0.6,
+    "hindi": 0.3833,
+    "hinglish": 0.4167,
+    "tamil": 0.4,
+    "overall": 0.45
+   },
+   "4 fine-tuned (unseen intents)": {
+    "english": 0.9917,
+    "hindi": 0.875,
+    "hinglish": 0.8667,
+    "tamil": 0.825,
+    "overall": 0.8896
+   }
+  }
+ }
+]

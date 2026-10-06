@@ -39,8 +39,8 @@ def load_system(name: str, con, rows, args):
         from src.baselines.keyword import KeywordBaseline
         return KeywordBaseline(con, train)
     if name == "D":
-        from src.baselines.llm import GeminiBaseline
-        return GeminiBaseline(con, train, model=args.model, few_shot=args.few_shot, patient=args.patient)
+        from src.baselines.llm import LLMBaseline
+        return LLMBaseline(con, train, model=args.model, few_shot=args.few_shot, patient=args.patient, backend=args.backend)
     raise SystemExit(f"unknown baseline {name}")
 
 
@@ -49,6 +49,7 @@ def main():
     ap.add_argument("--baseline", required=True)
     ap.add_argument("--splits", nargs="*", default=["dev", "test", "hard_test"])
     ap.add_argument("--model", default=None)
+    ap.add_argument("--backend", default="gemini", choices=["gemini", "ollama"])
     ap.add_argument("--few-shot", type=int, default=0)
     ap.add_argument("--limit", type=int, default=None, help="evaluate only the first N instances (smoke test)")
     ap.add_argument("--patient", action="store_true", help="LLM: many retries with long backoff (free-tier overload)")
