@@ -7,3 +7,9 @@ pytest==9.1.1
 indic_transliteration==2.3.69   # Phase 3: back-transliteration check of benchmark names
 scikit-learn==1.9.1              # Phase 4: TF-IDF retrieval (baseline A)
 sentence-transformers==3.1.0     # Phase 4: multilingual embedding baseline (C)
+transformers==4.57.6             # Phase 5/7: tokenizers, encoder fine-tuning
+torch==2.14.0                    # Phase 5-7 (CPU build is enough; the LLM runs in Ollama)
+scipy==1.17.1                    # Phase 7: Spearman correlations, McNemar tests
+matplotlib==3.11.2               # Phase 7: figures
+streamlit==1.38.0                # Phase 10: UI
+# LLM: Ollama 0.35.1 (https://ollama.com) with `ollama pull qwen3:8b`; not a pip package

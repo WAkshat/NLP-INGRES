@@ -1,0 +1,77 @@
+{
+ "by_tau": {
+  "0.5": {
+   "precision": 0.6734,
+   "recall": 0.8514,
+   "f1": 0.752,
+   "f1_by_language": {
+    "english": 0.8447,
+    "hindi": 0.6784,
+    "hinglish": 0.8313,
+    "tamil": 0.6299
+   },
+   "s_per_question": 0.118
+  },
+  "0.7": {
+   "precision": 0.78,
+   "recall": 0.8478,
+   "f1": 0.8125,
+   "f1_by_language": {
+    "english": 0.9128,
+    "hindi": 0.7355,
+    "hinglish": 0.8846,
+    "tamil": 0.6897
+   },
+   "s_per_question": 0.0
+  },
+  "0.8": {
+   "precision": 0.8419,
+   "recall": 0.8297,
+   "f1": 0.8358,
+   "f1_by_language": {
+    "english": 0.9714,
+    "hindi": 0.7333,
+    "hinglish": 0.9452,
+    "tamil": 0.6607
+   },
+   "s_per_question": 0.0
+  },
+  "0.9": {
+   "precision": 0.9061,
+   "recall": 0.8043,
+   "f1": 0.8522,
+   "f1_by_language": {
+    "english": 0.9635,
+    "hindi": 0.7794,
+    "hinglish": 0.9583,
+    "tamil": 0.6538
+   },
+   "s_per_question": 0.0
+  },
+  "0.95": {
+   "precision": 0.967,
+   "recall": 0.7428,
+   "f1": 0.8402,
+   "f1_by_language": {
+    "english": 0.9466,
+    "hindi": 0.7769,
+    "hinglish": 0.9855,
+    "tamil": 0.5714
+   },
+   "s_per_question": 0.0
+  },
+  "0.98": {
+   "precision": 0.9944,
+   "recall": 0.6413,
+   "f1": 0.7797,
+   "f1_by_language": {
+    "english": 0.8871,
+    "hindi": 0.7455,
+    "hinglish": 0.9394,
+    "tamil": 0.4318
+   },
+   "s_per_question": 0.0
+  }
+ },
+ "chosen_tau": 0.9
+}

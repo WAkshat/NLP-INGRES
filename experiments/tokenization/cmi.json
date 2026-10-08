@@ -1,0 +1,146 @@
+{
+ "cmi_by_language": {
+  "english": {
+   "mean": 0.676,
+   "median": 0.0,
+   "share_mixed": 0.078
+  },
+  "hindi": {
+   "mean": 0.631,
+   "median": 0.0,
+   "share_mixed": 0.065
+  },
+  "hinglish": {
+   "mean": 32.999,
+   "median": 33.333,
+   "share_mixed": 0.962
+  },
+  "tamil": {
+   "mean": 1.398,
+   "median": 0.0,
+   "share_mixed": 0.129
+  }
+ },
+ "fertility_vs_cmi_spearman": {
+  "hinglish|XLM-R (schema linker)": {
+   "rho": -0.234,
+   "ci95": [
+    -0.3332,
+    -0.1289
+   ],
+   "n": 371
+  },
+  "hinglish|Qwen3 (LLM)": {
+   "rho": -0.3503,
+   "ci95": [
+    -0.444,
+    -0.2508
+   ],
+   "n": 371
+  },
+  "hinglish|mBERT": {
+   "rho": -0.2659,
+   "ci95": [
+    -0.3623,
+    -0.1647
+   ],
+   "n": 371
+  },
+  "hinglish|MuRIL (Indic)": {
+   "rho": -0.2865,
+   "ci95": [
+    -0.3834,
+    -0.1824
+   ],
+   "n": 371
+  },
+  "hinglish|GPT-4o o200k": {
+   "rho": -0.3456,
+   "ci95": [
+    -0.4416,
+    -0.2473
+   ],
+   "n": 371
+  },
+  "hindi|XLM-R (schema linker)": {
+   "rho": 0.09,
+   "ci95": [
+    0.0004,
+    0.1761
+   ],
+   "n": 371
+  },
+  "hindi|Qwen3 (LLM)": {
+   "rho": -0.1124,
+   "ci95": [
+    -0.2094,
+    -0.0052
+   ],
+   "n": 371
+  },
+  "hindi|mBERT": {
+   "rho": 0.1654,
+   "ci95": [
+    0.0899,
+    0.2386
+   ],
+   "n": 371
+  },
+  "hindi|MuRIL (Indic)": {
+   "rho": 0.146,
+   "ci95": [
+    0.0463,
+    0.235
+   ],
+   "n": 371
+  },
+  "hindi|GPT-4o o200k": {
+   "rho": 0.1372,
+   "ci95": [
+    0.0575,
+    0.2137
+   ],
+   "n": 371
+  },
+  "tamil|XLM-R (schema linker)": {
+   "rho": -0.1747,
+   "ci95": [
+    -0.2748,
+    -0.0744
+   ],
+   "n": 371
+  },
+  "tamil|Qwen3 (LLM)": {
+   "rho": -0.3482,
+   "ci95": [
+    -0.4452,
+    -0.2385
+   ],
+   "n": 371
+  },
+  "tamil|mBERT": {
+   "rho": -0.2522,
+   "ci95": [
+    -0.3385,
+    -0.1542
+   ],
+   "n": 371
+  },
+  "tamil|MuRIL (Indic)": {
+   "rho": 0.0597,
+   "ci95": [
+    -0.0339,
+    0.1522
+   ],
+   "n": 371
+  },
+  "tamil|GPT-4o o200k": {
+   "rho": -0.1922,
+   "ci95": [
+    -0.2952,
+    -0.0844
+   ],
+   "n": 371
+  }
+ }
+}

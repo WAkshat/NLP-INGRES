@@ -10,9 +10,10 @@ Evaluation sets:
   historical : 445 real INGRES respellings across cycles (old name -> canonical location); history aliases removed
   ambiguous  : unit names shared by units in different states, without vs with state context
   colloquial : renamed / colloquial names (Gurgaon -> Gurugram), without vs with the curated alias table
-Writes experiments/entity_resolution/{results.json, per_mention.csv, errors_sample.csv}.
+Writes experiments/entity_resolution/{results.json, per_mention.csv, errors_sample.csv, ranker.pkl}.
 """
 import json
+import pickle
 import random
 import sys
 import time
@@ -65,6 +66,9 @@ def main():
             train_mentions.append((NOISE[noise](e.display, rng), i, ctx_for(e, rng.random() < 0.6)))
     print(f"training ranker on {len(train_mentions)} mentions ...", flush=True)
     coefs = res.fit(train_mentions)
+    OUT.mkdir(parents=True, exist_ok=True)
+    with open(OUT / "ranker.pkl", "wb") as f:      # reused by the Phase 9 pipeline (src/pipeline/agent.py)
+        pickle.dump(res.ranker, f)
 
     recs = []
 

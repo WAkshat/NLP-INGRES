@@ -1,0 +1,192 @@
+{
+ "Method 2: direct (baseline D)": {
+  "n": 872,
+  "EX": 0.1823,
+  "EX_ci95": [
+   0.156,
+   0.2076
+  ],
+  "EX_by_language": {
+   "english": 0.2248,
+   "hindi": 0.1651,
+   "hinglish": 0.1972,
+   "tamil": 0.1422
+  },
+  "latency_mean_s": 2.497,
+  "prompt_tokens_mean": 1770.1,
+  "output_tokens_mean": 155.5
+ },
+ "Method 1: translate -> English -> SQL": {
+  "n": 872,
+  "EX": 0.164,
+  "EX_ci95": [
+   0.1399,
+   0.1892
+  ],
+  "EX_by_language": {
+   "english": 0.2248,
+   "hindi": 0.1284,
+   "hinglish": 0.1651,
+   "tamil": 0.1376
+  },
+  "latency_mean_s": 3.028,
+  "prompt_tokens_mean": 1846.5,
+  "output_tokens_mean": 176.1
+ },
+ "direct + fine-tuned linker hints": {
+  "n": 384,
+  "EX": 0.2318,
+  "EX_ci95": [
+   0.1927,
+   0.2735
+  ],
+  "EX_by_language": {
+   "english": 0.3125,
+   "hindi": 0.1979,
+   "hinglish": 0.2292,
+   "tamil": 0.1875
+  },
+  "latency_mean_s": 2.068,
+  "prompt_tokens_mean": 1828.8
+ },
+ "direct + vocabulary-adapted linker hints": {
+  "n": 384,
+  "EX": 0.2318,
+  "EX_ci95": [
+   0.1901,
+   0.2734
+  ],
+  "EX_by_language": {
+   "english": 0.2917,
+   "hindi": 0.1979,
+   "hinglish": 0.2188,
+   "tamil": 0.2188
+  },
+  "latency_mean_s": 2.162,
+  "prompt_tokens_mean": 1827.5
+ },
+ "direct (baseline D), test only": {
+  "n": 384,
+  "EX": 0.1797,
+  "EX_by_language": {
+   "english": 0.2292,
+   "hindi": 0.1771,
+   "hinglish": 0.1875,
+   "tamil": 0.125
+  }
+ },
+ "Method 3: schema linker vocabulary adaptation": {
+  "fine-tuned (Phase 5)": {
+   "vocab_size": 250002,
+   "params_M": 117.65,
+   "encode_latency_ms": 3.8,
+   "by_language": {
+    "english": {
+     "fertility": 1.667,
+     "frag_rate": 0.325,
+     "R@3": 0.9545,
+     "MRR": 0.849
+    },
+    "hindi": {
+     "fertility": 1.693,
+     "frag_rate": 0.326,
+     "R@3": 0.9128,
+     "MRR": 0.8161
+    },
+    "hinglish": {
+     "fertility": 1.717,
+     "frag_rate": 0.428,
+     "R@3": 0.8719,
+     "MRR": 0.7849
+    },
+    "tamil": {
+     "fertility": 2.295,
+     "frag_rate": 0.633,
+     "R@3": 0.8457,
+     "MRR": 0.7853
+    }
+   },
+   "overall": {
+    "fertility": 1.843,
+    "R@3": 0.8962,
+    "R@3_ci95": [
+     0.8792,
+     0.913
+    ],
+    "MRR": 0.8088
+   }
+  },
+  "fine-tuned + vocabulary adaptation": {
+   "vocab_size": 250080,
+   "params_M": 117.67,
+   "encode_latency_ms": 3.48,
+   "by_language": {
+    "english": {
+     "fertility": 1.601,
+     "frag_rate": 0.295,
+     "R@3": 0.9244,
+     "MRR": 0.8304
+    },
+    "hindi": {
+     "fertility": 1.542,
+     "frag_rate": 0.218,
+     "R@3": 0.9444,
+     "MRR": 0.8397
+    },
+    "hinglish": {
+     "fertility": 1.648,
+     "frag_rate": 0.398,
+     "R@3": 0.8711,
+     "MRR": 0.7926
+    },
+    "tamil": {
+     "fertility": 1.998,
+     "frag_rate": 0.43,
+     "R@3": 0.8495,
+     "MRR": 0.7494
+    }
+   },
+   "overall": {
+    "fertility": 1.697,
+    "R@3": 0.8974,
+    "R@3_ci95": [
+     0.879,
+     0.914
+    ],
+    "MRR": 0.803
+   }
+  },
+  "adaptation": {
+   "new_words_requested": 78,
+   "added_tokens": 78,
+   "train_time_s": 359.0,
+   "examples": [
+    "आकलन",
+    "அபாயகரமான",
+    "எடுப்பு",
+    "நிலத்தடி",
+    "अति-दोहित",
+    "சுரண்டப்பட்ட",
+    "ज़िले",
+    "மதிப்பீட்டில்",
+    "अर्ध-गंभीर",
+    "इकाइयों",
+    "इकाइयाँ",
+    "அதிகப்படியாக",
+    "அலகுகளின்",
+    "அலகுகள்",
+    "மதிப்பீட்டு",
+    "over-exploited",
+    "செறிவூட்டல்",
+    "ஒன்றியங்கள்",
+    "பாசனத்திற்கான",
+    "overexploited",
+    "तेलंगाना",
+    "semi-critical",
+    "மகாராஷ்டிரா",
+    "தெலங்கானா",
+    "சராசரி"
+   ]
+  }
+ }
+}

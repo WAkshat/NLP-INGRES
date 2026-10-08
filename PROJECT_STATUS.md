@@ -1,6 +1,6 @@
 # Project status
 
-_Last updated: 2026-09-28_
+_Last updated: 2026-10-09. Full explanation of the project, results and remaining work: [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md)._
 
 | Phase | State | Evidence |
 |---|---|---|
@@ -10,10 +10,10 @@ _Last updated: 2026-09-28_
 | 4. Baselines (keyword, BM25, embeddings, frontier LLM) | **Done** (Gemini free tier = 20 req/day, so D = local qwen3:8b; few-shot variant pending) | `docs/BASELINES.md` |
 | 5. Learned schema linking | **Done, validated** (incl. leave-intents-out) | `docs/SCHEMA_LINKING.md` |
 | 6. Geographic entity resolution | **Done, validated** | `docs/ENTITY_RESOLUTION.md` |
-| 7. Tokenizer / code-mixing study | **Next** (paused at user request) | — |
-| 8. Numeric grounding verifier | Not started | — |
-| 9. Agentic decomposition | Not started | — |
-| 10. Minimal UI | Not started | — |
+| 7. Tokenizer / code-mixing study | **Done** (placebo-controlled; linker hints +5.2 EX, p = 0.008) | `docs/TOKENIZATION.md` |
+| 8. Numeric grounding verifier | **Done, validated** (98.1% of planted errors caught, 0% false alarms) | `docs/GROUNDING.md` |
+| 9. Full pipeline (linking + places + examples + repair) | **Built, smoke-tested; evaluation runs pending** | `src/pipeline/agent.py`, `scripts/run_pipeline.py` |
+| 10. Minimal UI | **Built** (renders; live demo pending) | `app/streamlit_app.py` |
 | 11. Ablations, error analysis, final docs | Not started | — |
 
 ## Environment (inspected 2026-09-28)

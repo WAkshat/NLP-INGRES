@@ -1,0 +1,3 @@
+id,language,answer,unsupported,n_rows,label
+IB_0018_hing,hinglish,"Madhya Pradesh ke safe se semi-critical bane blocks 2019-2020 se 2022-2023 tak 8 blocks hai: AMARPATAN, BERAIA, RAJGARH, KOTMA, CHANDERI, BURHANPUR, VIJAYPUR.",['8'],7,"real hallucination: says 8 blocks, result has 7 rows"
+IB_0129_ta,tamil,2021-22 ஆம் ஆண்டில் தாத்ரா மற்றும் நகர் ஹவேலி மாநிலத்தில் பாசனத்திற்காக எடுக்கப்பட்ட நிலத்தடி நீர் மொத்தத்தின் 82.69% ஆகும்.,['82.69'],1,"real hallucination: 82.69% stated, result is 8.27% (decimal shifted)"

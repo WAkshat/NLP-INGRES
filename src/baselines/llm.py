@@ -279,13 +279,20 @@ class LLMBaseline:
     def usage(self):
         return self.client.usage
 
-    def predict(self, question: str) -> dict:
+    def prompt(self, question: str, hints: list[str] | None = None, examples: str | None = None, places: str = "") -> str:
         # schema first; conventions/rules and examples next to the question (small models attend to recent context)
         prompt = f"SCHEMA:\n{self.schema_text}\n\n{CONVENTIONS}\n\n"
-        if self.examples:
-            prompt += f"EXAMPLES:\n{self.examples}\n\n"
-        prompt += f"Question: {question}\nSQL:"
-        out = self.client.generate(prompt, SYSTEM)
+        examples = self.examples if examples is None else examples
+        if examples:
+            prompt += f"EXAMPLES:\n{examples}\n\n"
+        if hints:   # top-k columns from a schema linker (tokenization / schema-linking ablations)
+            prompt += "Likely relevant columns (from a schema linker, may be incomplete): " + ", ".join(hints) + "\n"
+        if places:  # resolved place names (Phase 9 pipeline)
+            prompt += places + "\n"
+        return prompt + f"Question: {question}\nSQL:"
+
+    def predict(self, question: str, hints: list[str] | None = None) -> dict:
+        out = self.client.generate(self.prompt(question, hints), SYSTEM)
         return {"sql": extract_sql(out["text"]), "api_latency_s": out["latency_s"], "prompt_tokens": out["prompt_tokens"],
                 "output_tokens": out["output_tokens"], "model_version": out["model_version"]}
 

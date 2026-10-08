@@ -3,9 +3,9 @@
 Multilingual (English / Hindi / Hinglish / a Dravidian language) Text-to-SQL research over
 India's official groundwater assessment data (**INGRES**, CGWB + IIT Hyderabad).
 
-> Status: **Phases 1-6 done** (data layer, INGRES-Bench v1, baselines, learned schema linking, entity resolution). See [`PROJECT_STATUS.md`](PROJECT_STATUS.md) for what is
-> done, validated, and pending. No model results exist yet; every result slot below is
-> `TODO — requires experiment` until the corresponding experiment has been run.
+> Status: **Phases 1-8 done**; Phase 9 pipeline and Phase 10 UI built, Phase 9 evaluation pending.
+> **Start here: [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md)**, which explains the problem, tech stack, workflow, code,
+> all results and the remaining work. Status table: [`PROJECT_STATUS.md`](PROJECT_STATUS.md).
 
 ## 1. Problem
 INGRES publishes block/mandal/taluk-level groundwater assessments (recharge, extraction,
@@ -38,8 +38,12 @@ Schema: [`docs/INGRES_SCHEMA.md`](docs/INGRES_SCHEMA.md) / `data/schema/schema.j
 - Geographic entity resolver (top-1 0.84-0.89 on noisy names, 0.45 -> 0.97 on ambiguous names with context):
   [`docs/ENTITY_RESOLUTION.md`](docs/ENTITY_RESOLUTION.md)
 
-## 6-11. Tokenization study, numeric grounding, agentic system, UI
-TODO — later phases.
+## 6-11. Tokenization study, numeric grounding, pipeline, UI
+- Tokenization / code-mixing (Qwen3 fertility: English 2.04, Tamil 8.96; fragmentation does not explain accuracy;
+  linker hints +5.2 EX): [`docs/TOKENIZATION.md`](docs/TOKENIZATION.md)
+- Numeric grounding (LLM answers with unsupported numbers 0.83% → 0%; 98.1% of planted errors caught):
+  [`docs/GROUNDING.md`](docs/GROUNDING.md)
+- Full pipeline: `src/pipeline/agent.py` (evaluation: TODO — requires experiment). UI: `streamlit run app/streamlit_app.py`
 
 ## 12. Evaluation methodology
 Primary metric: execution accuracy (Spider/BIRD style result-set comparison). TODO.
