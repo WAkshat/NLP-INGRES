@@ -15,9 +15,9 @@ _Snapshot as of **2026-10-09**. Every number in this document is read from a fil
 | **Benchmark built** | **INGRES-Bench v1**: 371 questions × 4 languages = **1,484** question→SQL→answer instances, 4 difficulty levels, leakage-controlled splits, 0 QC failures |
 | **Main metric** | Execution accuracy (**EX**): does the predicted SQL return the same result as the gold SQL? |
 | **Best learned component** | Schema linker: column recall@3 **0.409 → 0.896** (Tamil 0.276 → 0.846); still 0.851 on question types never seen in training |
-| **Best end-to-end result so far** | qwen3:8b + schema-linker hints: **23.2% EX** on test, against 18.0% without hints (+5.2 points, p = 0.008) |
-| **Strongest baseline** | Keyword/template retrieval: 32.6% EX on test (38.8% on all eval splits). Not beaten yet |
-| **Status** | Phases 1–8 done. Phase 9 (full pipeline) built and smoke-tested but **not yet evaluated**. Phase 10 (UI) built. Phase 11 (final evaluation and docs) open |
+| **Best end-to-end result** | Full pipeline (qwen3:8b + schema hints + place hints + retrieved examples + repair): **71.9% EX on test, 57.7% on hard_test** |
+| **Baselines it beats** | Keyword/template 32.6% (test) / 30.8% (hard); qwen3:8b zero-shot 18.0% / 13.1%. All differences p < 1e-6 (paired) |
+| **Status** | **All 11 phases done.** Optional extras (native-speaker check, frontier-model comparison, GPU re-timing) listed in §9 |
 | **Tests** | 61 automated tests, all passing (`python -m pytest`) |
 
 ---
@@ -112,7 +112,7 @@ each training took about 6 minutes on the CPU. The GPU-heavy part of the project
 | Vocabulary-adapted linker (Phase 7) | same + 78 new tokens | CPU | **359 s** |
 | Entity-resolver ranker (Phase 6) | logistic regression over 12 features + e5 embeddings of 9,558 entities | CPU | **~6–7 min** including evaluation (364–406 s per run) |
 | **All LLM experiments** (Phases 4, 7, 8, smoke tests) | **qwen3:8b** via Ollama | **RTX 5060** | **3,674 LLM calls, ≈2.1 GPU-hours** of generation; 5.18 M prompt tokens + 0.42 M output tokens; ≈2.5 s per SQL question, ≈2.4 s per answer sentence |
-| Phase 9 evaluation (pending) | qwen3:8b | RTX 5060 | ≈1.5 h estimated |
+| Phase 9 evaluation (full + 2 ablations, 1,412 questions) | qwen3:8b | RTX 5060 | ≈2.4–3.0 s LLM time per question; ≈1.5 h in total |
 
 ### 3.3 The models
 | | **qwen3:8b** (the LLM) | **multilingual-e5-small** (the encoder we fine-tune) |
@@ -389,7 +389,7 @@ Findings:
   regression tests before the final numbers.
 - Limitation: it checks that a number *exists* in the result, not that it is attached to the right entity.
 
-### Phase 9: Full pipeline (`src/pipeline/agent.py`, `scripts/run_pipeline.py`): **built, not yet evaluated**
+### Phase 9: Full pipeline (`src/pipeline/agent.py`, `scripts/run_pipeline.py`, `docs/PIPELINE.md`): **done**
 - Components, each switchable for ablation:
   1. schema-linker hints (top-5 columns);
   2. **place linker**: scans 1–3-word spans, resolves them with the Phase 6 resolver, keeps confident non-overlapping
@@ -403,16 +403,43 @@ Findings:
   if they are frequent *and* not tied to one specific place.
 - Smoke test on 2 test questions (English, Hindi): correct SQL first time, place resolved, grounded answer in the
   question's language.
-- **Evaluation: TODO — requires experiment** (see §9).
+- **Results:**
 
-### Phase 10: UI (`app/streamlit_app.py`): **built**
+| System | test EX (n=384) | hard_test EX (n=260) |
+|---|---|---|
+| A keyword/template | 32.6% | 30.8% |
+| D qwen3:8b zero-shot | 18.0% | 13.1% |
+| **Full pipeline** | **71.9%** [67.4, 76.0] | **57.7%** [51.9, 63.8] |
+
+  - By language (test): English 78.1, Hindi 69.8, Hinglish 77.1, Tamil 62.5.
+  - By difficulty (test): simple lookup 55.8, filtered aggregate 84.6, cross-year 76.7, multi-hop 64.6. Zero-shot D scored
+    0.0 on multi-hop.
+  - Cost: ~2.4 s of LLM time per question, 0.2 repair turns on average.
+
+### Phase 11: Ablations and error analysis (`docs/PIPELINE.md`): **done**
+- **Cumulative ladder (test):** zero-shot 18.0 → + schema hints 23.2 (p = 0.008) → + place hints + repair 35.4 (p = 2e-8)
+  → + 3 retrieved examples **71.9** (p = 2e-30).
+- **Leave-one-out:** without examples 35.4 (−36.5); without place hints 67.4 (−4.4, p = 0.019); without repair 70.3
+  (−1.6; repair fixed 6 questions and broke none).
+- **Caveat:** 376 of the 384 test instances use question types that also appear in training (with different places, years
+  and wording). Retrieved examples therefore often show a structurally similar query, so part of their +36.5 comes from the
+  benchmark being template-based. The keyword baseline has the same advantage and is still beaten by 39 points.
+- **Error analysis** (218 errors, test + hard_test):
+  - place not linked 41%, other logic 33%, wrong year 13%, wrong column 8%, wrong aggregation 2%, execution error 2%.
+  - Place errors are worst in Tamil (35 errors vs 14–24 in the other languages), matching Phase 6.
+
+### Phase 10: UI (`app/streamlit_app.py`): **done**
 - One page with a text box and 4 example questions (one per language). It shows the answer, a warning when the verifier
   replaced the model's wording, the SQL, the result table, and an expander with schema hints, resolved places, repair
-  attempts and latency. The render test passes (Streamlit AppTest). A live end-to-end click-through and screenshots are still to do.
+  attempts and latency.
+- **End-to-end test (2026-10-10, Streamlit AppTest):** the Hindi question "2024-25 में लुधियाना जिले में कुल भूजल निकासी
+  कितनी थी?" produced a Hindi answer (240136.75 हेक्टेयर-मीटर), the correct SQL and a 1-row table, with no exceptions and
+  no verifier warning.
+- Start it with `ollama serve`, then `streamlit run app/streamlit_app.py` (opens http://localhost:8501). The first question
+  takes ~1 min while the encoders and gazetteer load, then ~5–8 s per question.
+- Screenshots of the live app: `reports/screenshots/ui_answer_hindi.jpg` (answer, SQL, table) and
+  `reports/screenshots/ui_how_it_got_there.jpg` (schema hints, resolved places, attempts).
 
-### Phase 11: Ablations, error analysis, final docs: **open**
-- The error-analysis code is written (rule-based failure categories: execution error, place not linked, wrong year, wrong
-  metric, wrong aggregation, other). It runs once Phase 9 results exist.
 
 ---
 
@@ -427,8 +454,10 @@ Findings:
 | D: translate first | — | 16.4% | `experiments/tokenization/mitigation.json` |
 | D + schema-linker hints | **23.2%** | — | same |
 | D + vocabulary-adapted hints | 23.2% | — | same |
-| Full pipeline (hints + places + examples + repair) | TODO — requires experiment | — | `experiments/pipeline/` |
-| Full pipeline ablations (− examples, − places, − repair) | TODO — requires experiment | — | same |
+| D + schema hints + place hints + repair (no examples) | 35.4% | — | `experiments/pipeline/results.json` |
+| Full pipeline without place hints | 67.4% | — | same |
+| Full pipeline, first attempt only (no repair) | 70.3% | — | same |
+| **Full pipeline (hints + places + examples + repair)** | **71.9%** | hard_test: 57.7% | same |
 | A frontier model (Gemini / Claude / GPT) | TODO — requires experiment (needs a paid API) | — | |
 
 Note: an unfinished run of D with 4 fixed English examples stopped at 300/872 instances with 45% EX
@@ -458,8 +487,9 @@ Note: an unfinished run of D with 4 fixed English examples stopped at 300/872 in
 | Translating to English first helps | **Not supported** for an 8B model | −1.8 EX (n.s.); domain terms mistranslated |
 | Vocabulary adaptation helps | **Not supported** | fragmentation down, accuracy unchanged |
 | Numeric grounding reduces unsupported numbers | **Supported** (from a low base) | 0.83% → 0%; the 2 real hallucinations were both caught |
-| Entity resolution improves EX | TODO — requires experiment | Phase 9 ablation (− places) |
-| Agentic repair helps mainly on hard questions and costs extra calls | TODO — requires experiment | Phase 9 (first attempt vs final) |
+| Entity resolution improves EX | **Supported** | removing place hints costs 4.4 points (32 / 15, p = 0.019); without examples it is part of a +12.2 gain |
+| Execution-guided repair helps | **Weakly supported** | +1.6 points (test) and +1.5 (hard_test); 6 fixed, 0 broken; runs on ~20% of questions |
+| Retrieved examples help | **Strongly supported**, with a caveat | +36.5 points, but test question types also occur in training |
 
 ---
 
@@ -474,9 +504,9 @@ Note: an unfinished run of D with 4 fixed English examples stopped at 300/872 in
 | 6 Entity resolution | ✅ Done |
 | 7 Tokenization study | ✅ Done |
 | 8 Numeric grounding | ✅ Done |
-| 9 Full pipeline | 🟡 Built, unit-tested, smoke-tested, place linker tuned; **evaluation runs not done** |
-| 10 UI | 🟡 Built, renders; live demo and screenshots pending |
-| 11 Ablations, error analysis, final docs | 🔴 Not started (analysis code ready) |
+| 9 Full pipeline | ✅ Done: 71.9% EX on test, 57.7% on hard_test |
+| 10 UI | ✅ Done, tested end to end, screenshots in `reports/screenshots/` |
+| 11 Ablations, error analysis, final docs | ✅ Done (`docs/PIPELINE.md`) |
 
 **Repository layout**
 ```
@@ -504,18 +534,21 @@ tests/                61 tests
 
 | # | Task | Effort | Impact |
 |---|---|---|---|
-| 1 | **Run the Phase 9 evaluation**: full pipeline on test + hard_test (644), plus ablations without examples and without places on test (384 each). The no-repair numbers come free from the first attempt | ~1.5 h unattended GPU (commands below) | **The most important remaining result.** It answers the research question (which components help, and by how much) and decides whether the system beats the 32.6% template baseline. Without it the project has strong components but no end-to-end claim |
-| 2 | Phase 11 ablation table, error analysis and final docs (README, status, this file) | ~1 h | Turns the results into the thesis's results chapter. Error categories show what to fix next |
-| 3 | Phase 10 live demo and screenshots | ~10 min | Needed for the final presentation |
-| 4 | Finish the D few-shot baseline (4 fixed examples) | ~40 min GPU (300/872 cached) | A fair "cheap prompting" baseline. Shows how much of the pipeline gain is just from showing examples |
-| 5 | **Native-speaker check** of a stratified sample (e.g. 50 Hindi + 50 Tamil questions) | ~half a day of a speaker's time | Validates the Hindi and Tamil results. This is the most likely examiner question |
-| 6 | **Frontier-model comparison** (Claude / GPT / Gemini paid tier) on test | a few dollars of API cost; ~30 min | Shows whether the 8B model is the bottleneck, and gives an upper reference point |
-| 7 | IndicTrans2 back-translation check of benchmark text | ~1 h + model download | An independent quality check of the generated translations |
-| 8 | Install a CUDA build of torch for the RTX 5060 | ~20 min | Faster re-training. Results are unaffected |
-| 9 | Multiple seeds for the schema linker and resolver | ~1 h CPU | Variance estimates for the component results |
+All 11 planned phases are done. The items below are optional improvements, ordered by value.
 
-Commands for item 1. The place threshold is already tuned. 172 of the 644 full-pipeline questions already ran and sit in
-`experiments/pipeline/full.jsonl` (not committed, not analysed). The script skips finished questions, so it resumes there.
+| # | Task | Effort | Impact |
+|---|---|---|---|
+| 1 | **Leave-intents-out evaluation of the pipeline** (retrieve examples only from question types unseen in the test question) | ~1 h GPU | Measures how much of the +36.5 from retrieved examples survives on new question types. This answers the main caveat of the headline result |
+| 2 | **Improve Tamil place resolution** (Tamil-script aliases in the gazetteer, Tamil-specific romanisation) | ~2–3 h | Place misses are the largest error class (41%), worst in Tamil |
+| 3 | Deterministic year normaliser ("2025 assessment" → '2024-2025') before the LLM | ~1 h | Targets 13% of errors |
+| 3b | Finish the D few-shot baseline (4 fixed examples) | ~40 min GPU (300/872 cached) | A "cheap prompting" baseline |
+| 4 | **Native-speaker check** of a stratified sample (e.g. 50 Hindi + 50 Tamil questions) | ~half a day of a speaker's time | Validates the Hindi and Tamil results. This is the most likely examiner question |
+| 5 | **Frontier-model comparison** (Claude / GPT / Gemini paid tier) on test | a few dollars of API cost; ~30 min | Shows whether the 8B model is the bottleneck, and gives an upper reference point |
+| 6 | IndicTrans2 back-translation check of benchmark text | ~1 h + model download | An independent quality check of the generated translations |
+| 7 | Install a CUDA build of torch (cu128+) for the RTX 5060 and re-time the schema-linker training on the GPU | ~20 min install + ~1 min training | Faster training: an estimated 10–20× for this 118 M-parameter encoder (386 s → roughly 20–40 s; **estimate, not measured**). Gives a measured CPU-vs-GPU number for the report. Accuracy should stay within run-to-run noise. Can't run while Ollama holds 6.2 of the 8 GB VRAM |
+| 8 | Multiple seeds for the schema linker and resolver | ~1 h CPU | Variance estimates for the component results |
+
+Commands that reproduce the Phase 9 results:
 ```bash
 ollama serve
 python scripts/run_pipeline.py --stage run --config full --splits test hard_test
@@ -558,13 +591,12 @@ listed as TODO (§9).
 **"Your simple keyword baseline beats the LLM. Isn't that bad?"**
 It's an honest finding with a clear cause. The benchmark is built from templates, so copying the nearest train question's
 SQL works well (38.8%). A small 8B model zero-shot makes systematic errors: years, columns, place spellings. Each later
-component targets one of these, and the first one tested (schema hints) already adds +5.2 points with p = 0.008. Whether
-the full pipeline beats the baseline is the open Phase 9 result.
+component targets one of these. The full pipeline reaches 71.9% on test, beating the baseline by 39 points (p < 1e-6).
 
 **"An AI wrote your benchmark questions. Is it valid?"**
 The SQL and answers come from the real database, and all 4 languages share the same slots, so the meaning cannot drift.
 Automatic QC found 0 failures, and the slot checker catches 97% of deliberately corrupted questions. The limitation is real:
-the wording is template-like, and no native speaker has verified it yet (§9, item 5).
+the wording is template-like, and no native speaker has verified it yet (§9, item 4).
 
 **"How do you know your database is correct?"**
 Our national totals match the government's published figures (PIB releases) to within 0.07% for four assessment cycles,
@@ -586,8 +618,13 @@ Two models. (1) The schema linker: multilingual-e5-small fine-tuned with hard ne
 - A numeric verifier that understands Indian number formats.
 
 **"What's the biggest weakness?"**
-End-to-end accuracy is still low (best measured: 23.2% on test), and the full pipeline hasn't been evaluated yet.
-Second, the Hindi and Tamil text has no native-speaker verification.
+Most of the gain comes from retrieved examples, and test question types also appear in training, so accuracy on truly
+new question types is probably lower than 71.9% (a leave-intents-out run would measure it). Second, the Hindi and Tamil
+text has no native-speaker verification. Third, Tamil place names are still the biggest single error source.
+
+**"Which component mattered most?"**
+Retrieved examples (+36.5 points), then place hints (+4.4 on top of everything else) and schema hints (+5.2 over zero-shot).
+Repair is small (+1.6) but never broke a correct answer. Translation and vocabulary adaptation did not help.
 
 ---
 

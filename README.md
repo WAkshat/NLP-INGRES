@@ -3,7 +3,7 @@
 Multilingual (English / Hindi / Hinglish / a Dravidian language) Text-to-SQL research over
 India's official groundwater assessment data (**INGRES**, CGWB + IIT Hyderabad).
 
-> Status: **Phases 1-8 done**; Phase 9 pipeline and Phase 10 UI built, Phase 9 evaluation pending.
+> Status: **All 11 phases done.** Full pipeline: 71.9% execution accuracy on test (keyword baseline 32.6%, LLM zero-shot 18.0%).
 > **Start here: [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md)**, which explains the problem, tech stack, workflow, code,
 > all results and the remaining work. Status table: [`PROJECT_STATUS.md`](PROJECT_STATUS.md).
 
@@ -43,13 +43,20 @@ Schema: [`docs/INGRES_SCHEMA.md`](docs/INGRES_SCHEMA.md) / `data/schema/schema.j
   linker hints +5.2 EX): [`docs/TOKENIZATION.md`](docs/TOKENIZATION.md)
 - Numeric grounding (LLM answers with unsupported numbers 0.83% → 0%; 98.1% of planted errors caught):
   [`docs/GROUNDING.md`](docs/GROUNDING.md)
-- Full pipeline: `src/pipeline/agent.py` (evaluation: TODO — requires experiment). UI: `streamlit run app/streamlit_app.py`
+- Full pipeline + ablations + error analysis (71.9% EX on test, 57.7% on hard_test; retrieved examples +36.5, place hints +4.4,
+  repair +1.6): [`docs/PIPELINE.md`](docs/PIPELINE.md). UI: `streamlit run app/streamlit_app.py`
 
 ## 12. Evaluation methodology
-Primary metric: execution accuracy (Spider/BIRD style result-set comparison). TODO.
+Primary metric: execution accuracy (Spider/BIRD style result-set comparison), 95% bootstrap CIs, paired McNemar tests.
 
 ## 13. Results
-TODO — requires experiment.
+| System | test EX | hard_test EX |
+|---|---|---|
+| Keyword/template baseline | 32.6% | 30.8% |
+| qwen3:8b zero-shot | 18.0% | 13.1% |
+| Full pipeline | **71.9%** | **57.7%** |
+
+All results: [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md) section 7.
 
 ## 14. Limitations
 See `docs/DATA_ACCESS_REPORT.md` §Limitations for data-level limitations.

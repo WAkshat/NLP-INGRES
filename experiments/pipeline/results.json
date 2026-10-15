@@ -1,0 +1,327 @@
+{
+ "test": {
+  "A keyword/template": {
+   "n": 384,
+   "EX": 0.3255,
+   "EX_ci95": [
+    0.2786,
+    0.375
+   ],
+   "by_language": {
+    "english": 0.4271,
+    "hindi": 0.2604,
+    "hinglish": 0.3854,
+    "tamil": 0.2292
+   },
+   "by_difficulty": {
+    "cross_year": 0.25,
+    "filtered_aggregate": 0.391,
+    "multi_hop": 0.4792,
+    "simple_lookup": 0.2167
+   }
+  },
+  "D qwen3:8b zero-shot": {
+   "n": 384,
+   "EX": 0.1797,
+   "EX_ci95": [
+    0.1432,
+    0.2188
+   ],
+   "by_language": {
+    "english": 0.2292,
+    "hindi": 0.1771,
+    "hinglish": 0.1875,
+    "tamil": 0.125
+   },
+   "by_difficulty": {
+    "cross_year": 0.05,
+    "filtered_aggregate": 0.359,
+    "multi_hop": 0.0,
+    "simple_lookup": 0.0833
+   }
+  },
+  "D + schema hints": {
+   "n": 384,
+   "EX": 0.2318,
+   "EX_ci95": [
+    0.1927,
+    0.2735
+   ],
+   "by_language": {
+    "english": 0.3125,
+    "hindi": 0.1979,
+    "hinglish": 0.2292,
+    "tamil": 0.1875
+   },
+   "by_difficulty": {
+    "cross_year": 0.0667,
+    "filtered_aggregate": 0.3974,
+    "multi_hop": 0.0417,
+    "simple_lookup": 0.175
+   }
+  },
+  "pipeline full": {
+   "n": 384,
+   "EX": 0.7188,
+   "EX_ci95": [
+    0.6745,
+    0.7604
+   ],
+   "by_language": {
+    "english": 0.7812,
+    "hindi": 0.6979,
+    "hinglish": 0.7708,
+    "tamil": 0.625
+   },
+   "by_difficulty": {
+    "cross_year": 0.7667,
+    "filtered_aggregate": 0.8462,
+    "multi_hop": 0.6458,
+    "simple_lookup": 0.5583
+   },
+   "latency_mean_s": 2.429,
+   "prompt_tokens_mean": 2891.7,
+   "repair_turns_mean": 0.201,
+   "places_all_found": 0.6823
+  },
+  "pipeline full, first attempt (no repair)": {
+   "n": 384,
+   "EX": 0.7031,
+   "EX_ci95": [
+    0.6562,
+    0.7474
+   ],
+   "by_language": {
+    "english": 0.7708,
+    "hindi": 0.6562,
+    "hinglish": 0.7708,
+    "tamil": 0.6146
+   },
+   "by_difficulty": {
+    "cross_year": 0.75,
+    "filtered_aggregate": 0.8462,
+    "multi_hop": 0.625,
+    "simple_lookup": 0.525
+   }
+  },
+  "pipeline no_fewshot": {
+   "n": 384,
+   "EX": 0.3542,
+   "EX_ci95": [
+    0.3073,
+    0.401
+   ],
+   "by_language": {
+    "english": 0.4688,
+    "hindi": 0.3438,
+    "hinglish": 0.3854,
+    "tamil": 0.2188
+   },
+   "by_difficulty": {
+    "cross_year": 0.25,
+    "filtered_aggregate": 0.4872,
+    "multi_hop": 0.0625,
+    "simple_lookup": 0.35
+   },
+   "latency_mean_s": 3.027,
+   "prompt_tokens_mean": 2678.7,
+   "repair_turns_mean": 0.383,
+   "places_all_found": 0.6823
+  },
+  "pipeline no_fewshot, first attempt (no repair)": {
+   "n": 384,
+   "EX": 0.3281,
+   "EX_ci95": [
+    0.2839,
+    0.3724
+   ],
+   "by_language": {
+    "english": 0.4583,
+    "hindi": 0.3125,
+    "hinglish": 0.3438,
+    "tamil": 0.1979
+   },
+   "by_difficulty": {
+    "cross_year": 0.2333,
+    "filtered_aggregate": 0.4744,
+    "multi_hop": 0.0625,
+    "simple_lookup": 0.2917
+   }
+  },
+  "pipeline no_places": {
+   "n": 384,
+   "EX": 0.6745,
+   "EX_ci95": [
+    0.6276,
+    0.7188
+   ],
+   "by_language": {
+    "english": 0.7396,
+    "hindi": 0.6458,
+    "hinglish": 0.6979,
+    "tamil": 0.6146
+   },
+   "by_difficulty": {
+    "cross_year": 0.6167,
+    "filtered_aggregate": 0.8526,
+    "multi_hop": 0.6875,
+    "simple_lookup": 0.4667
+   },
+   "latency_mean_s": 2.533,
+   "prompt_tokens_mean": 3172.4,
+   "repair_turns_mean": 0.328,
+   "places_all_found": null
+  },
+  "pipeline no_places, first attempt (no repair)": {
+   "n": 384,
+   "EX": 0.6406,
+   "EX_ci95": [
+    0.5937,
+    0.6875
+   ],
+   "by_language": {
+    "english": 0.6979,
+    "hindi": 0.6042,
+    "hinglish": 0.6667,
+    "tamil": 0.5938
+   },
+   "by_difficulty": {
+    "cross_year": 0.5833,
+    "filtered_aggregate": 0.8526,
+    "multi_hop": 0.6458,
+    "simple_lookup": 0.3917
+   }
+  }
+ },
+ "hard_test": {
+  "A keyword/template": {
+   "n": 260,
+   "EX": 0.3077,
+   "EX_ci95": [
+    0.25,
+    0.3615
+   ],
+   "by_language": {
+    "english": 0.3231,
+    "hindi": 0.2769,
+    "hinglish": 0.2923,
+    "tamil": 0.3385
+   },
+   "by_difficulty": {
+    "cross_year": 0.21,
+    "filtered_aggregate": 0.525,
+    "multi_hop": 0.5682,
+    "simple_lookup": 0.1711
+   }
+  },
+  "D qwen3:8b zero-shot": {
+   "n": 260,
+   "EX": 0.1308,
+   "EX_ci95": [
+    0.0885,
+    0.1692
+   ],
+   "by_language": {
+    "english": 0.1692,
+    "hindi": 0.1538,
+    "hinglish": 0.0923,
+    "tamil": 0.1077
+   },
+   "by_difficulty": {
+    "cross_year": 0.09,
+    "filtered_aggregate": 0.35,
+    "multi_hop": 0.0682,
+    "simple_lookup": 0.1053
+   }
+  },
+  "pipeline full": {
+   "n": 260,
+   "EX": 0.5769,
+   "EX_ci95": [
+    0.5191,
+    0.6385
+   ],
+   "by_language": {
+    "english": 0.6462,
+    "hindi": 0.5231,
+    "hinglish": 0.6308,
+    "tamil": 0.5077
+   },
+   "by_difficulty": {
+    "cross_year": 0.55,
+    "filtered_aggregate": 0.725,
+    "multi_hop": 0.6364,
+    "simple_lookup": 0.5
+   },
+   "latency_mean_s": 2.884,
+   "prompt_tokens_mean": 3283.6,
+   "repair_turns_mean": 0.327,
+   "places_all_found": 0.8077
+  },
+  "pipeline full, first attempt (no repair)": {
+   "n": 260,
+   "EX": 0.5615,
+   "EX_ci95": [
+    0.5,
+    0.6192
+   ],
+   "by_language": {
+    "english": 0.6462,
+    "hindi": 0.5077,
+    "hinglish": 0.6,
+    "tamil": 0.4923
+   },
+   "by_difficulty": {
+    "cross_year": 0.52,
+    "filtered_aggregate": 0.725,
+    "multi_hop": 0.6364,
+    "simple_lookup": 0.4868
+   }
+  }
+ },
+ "error_analysis_full": {
+  "n_errors": 218,
+  "share_of_errors": {
+   "place not linked (resolver miss)": 0.4128,
+   "other (filters, joins, output shape)": 0.3303,
+   "wrong assessment year": 0.133,
+   "wrong metric / column": 0.0826,
+   "wrong aggregation": 0.0229,
+   "no SQL / execution error": 0.0183
+  },
+  "by_language": {
+   "english": {
+    "no SQL / execution error": 0,
+    "other (filters, joins, output shape)": 21,
+    "place not linked (resolver miss)": 17,
+    "wrong aggregation": 0,
+    "wrong assessment year": 6,
+    "wrong metric / column": 0
+   },
+   "hindi": {
+    "no SQL / execution error": 1,
+    "other (filters, joins, output shape)": 16,
+    "place not linked (resolver miss)": 24,
+    "wrong aggregation": 4,
+    "wrong assessment year": 9,
+    "wrong metric / column": 6
+   },
+   "hinglish": {
+    "no SQL / execution error": 0,
+    "other (filters, joins, output shape)": 21,
+    "place not linked (resolver miss)": 14,
+    "wrong aggregation": 1,
+    "wrong assessment year": 6,
+    "wrong metric / column": 4
+   },
+   "tamil": {
+    "no SQL / execution error": 3,
+    "other (filters, joins, output shape)": 14,
+    "place not linked (resolver miss)": 35,
+    "wrong aggregation": 0,
+    "wrong assessment year": 8,
+    "wrong metric / column": 8
+   }
+  }
+ }
+}

@@ -12,9 +12,9 @@ _Last updated: 2026-10-09. Full explanation of the project, results and remainin
 | 6. Geographic entity resolution | **Done, validated** | `docs/ENTITY_RESOLUTION.md` |
 | 7. Tokenizer / code-mixing study | **Done** (placebo-controlled; linker hints +5.2 EX, p = 0.008) | `docs/TOKENIZATION.md` |
 | 8. Numeric grounding verifier | **Done, validated** (98.1% of planted errors caught, 0% false alarms) | `docs/GROUNDING.md` |
-| 9. Full pipeline (linking + places + examples + repair) | **Built, smoke-tested; evaluation runs pending** | `src/pipeline/agent.py`, `scripts/run_pipeline.py` |
-| 10. Minimal UI | **Built** (renders; live demo pending) | `app/streamlit_app.py` |
-| 11. Ablations, error analysis, final docs | Not started | — |
+| 9. Full pipeline (linking + places + examples + repair) | **Done** (71.9% EX test, 57.7% hard_test) | `docs/PIPELINE.md` |
+| 10. Minimal UI | **Done**, tested end to end | `app/streamlit_app.py`, `reports/screenshots/` |
+| 11. Ablations, error analysis, final docs | **Done** | `docs/PIPELINE.md`, `PROJECT_OVERVIEW.md` |
 
 ## Environment (inspected 2026-09-28)
 - Windows 11, Python 3.12.10, git 2.52, GitHub CLI 2.101 (not authenticated; releases skipped at user's request)
