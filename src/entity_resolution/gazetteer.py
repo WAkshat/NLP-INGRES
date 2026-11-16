@@ -25,12 +25,41 @@ COLLOQUIAL = {
 }
 
 
+# Tamil script -> Latin. indic_transliteration's TAMIL scheme maps the stops to voiced aspirates (க -> "gha",
+# so கர்நாடகா came out as "gharnadhagha"); Tamil writes k/g, t/d, p/b, c/j/s with one letter each, so the
+# neutral reading is the unvoiced one and voicing is ignored when comparing (see devoice()).
+_TA_CONS = {"க": "k", "ங": "ng", "ச": "s", "ஞ": "nj", "ட": "t", "ண": "n", "த": "t", "ந": "n", "ப": "p", "ம": "m",
+            "ய": "y", "ர": "r", "ல": "l", "வ": "v", "ழ": "l", "ள": "l", "ற": "r", "ன": "n", "ஜ": "j", "ஷ": "sh",
+            "ஸ": "s", "ஹ": "h"}
+_TA_VOWEL = {"அ": "a", "ஆ": "aa", "இ": "i", "ஈ": "ee", "உ": "u", "ஊ": "oo", "எ": "e", "ஏ": "e", "ஐ": "ai", "ஒ": "o",
+             "ஓ": "o", "ஔ": "au"}
+_TA_SIGN = {"ா": "aa", "ி": "i", "ீ": "ee", "ு": "u", "ூ": "oo", "ெ": "e", "ே": "e", "ை": "ai", "ொ": "o", "ோ": "o",
+            "ௌ": "au", "்": ""}
+TAMIL = re.compile(r"[஀-௿]")
+
+
+def romanise_tamil(text: str) -> str:
+    out, i = [], 0
+    while i < len(text):
+        ch = text[i]
+        if ch in _TA_CONS:
+            nxt = text[i + 1] if i + 1 < len(text) else ""
+            out.append(_TA_CONS[ch] + (_TA_SIGN[nxt] if nxt in _TA_SIGN else "a"))
+            i += 2 if nxt in _TA_SIGN else 1
+        else:
+            out.append(_TA_VOWEL.get(ch, "" if ch == "ஃ" else ch))
+            i += 1
+    return "".join(out)
+
+
 def romanise(text: str) -> str:
     out = text
     if re.search(r"[ऀ-ॿ]", out):
         out = sanscript.transliterate(out, sanscript.DEVANAGARI, sanscript.ISO)
-    if re.search(r"[஀-௿]", out):
-        out = sanscript.transliterate(out, sanscript.TAMIL, sanscript.ISO)
+        # anusvara is a homorganic nasal: 'm' only before labials (बंगाल -> bangala, not bamgala)
+        out = re.sub("ṁ(?=[pbm])", "m", unicodedata.normalize("NFC", out)).replace("ṁ", "n")
+    if TAMIL.search(out):
+        out = romanise_tamil(out)
     return unicodedata.normalize("NFKD", out).encode("ascii", "ignore").decode()
 
 
@@ -51,6 +80,14 @@ def fold(s: str) -> str:
             w = w[:-1]                        # 'pamjaba' (Devanagari inherent a) ~ 'punjab'
         out.append(w)
     return " ".join(out)
+
+
+_DEVOICE = str.maketrans({"g": "k", "d": "t", "b": "p", "j": "c", "s": "c", "f": "p", "h": None})
+
+
+def devoice(folded: str) -> str:
+    """Voicing-neutral form of a folded name; used on both sides when the mention is in Tamil script."""
+    return re.sub(r"(.)\1+", r"\1", folded.translate(_DEVOICE))
 
 
 def skeleton(s: str) -> str:

@@ -150,6 +150,8 @@ class OllamaClient:
                 with urllib.request.urlopen(req, timeout=900) as r:
                     d = json.load(r)
                 break
+            except urllib.error.HTTPError as e:      # the server answered: retrying will not help (e.g. model not pulled)
+                raise RuntimeError(f"Ollama returned HTTP {e.code}: {e.read().decode('utf-8', 'replace')[:300]}") from e
             except (urllib.error.URLError, TimeoutError, ConnectionError):
                 time.sleep(5 * (attempt + 1))
         else:

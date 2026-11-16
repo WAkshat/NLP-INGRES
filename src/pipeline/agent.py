@@ -21,6 +21,7 @@ from src.baselines.llm import SYSTEM, LLMBaseline, extract_sql
 from src.entity_resolution.gazetteer import build_gazetteer
 from src.entity_resolution.resolver import Resolver
 from src.grounding.verifier import grounded_answer
+from src.pipeline import years
 from src.schema_linking.retrieval import EmbeddingRetriever, init_elements
 from src.tokenization.metrics import PUNCT, words
 from src.utils.safe_sql import UnsafeSQL, execute
@@ -28,6 +29,7 @@ from src.utils.safe_sql import UnsafeSQL, execute
 ROOT = Path(__file__).resolve().parents[2]
 FT_CKPT = ROOT / "experiments/schema_linking/checkpoints/finetuned_e5"
 RANKER = ROOT / "experiments/entity_resolution/ranker.pkl"
+ALIAS_CACHE = ROOT / "cache/alias_emb"       # alias embeddings of the base encoder (git-ignored, rebuilt if missing)
 
 
 class PlaceLinker:
@@ -35,7 +37,7 @@ class PlaceLinker:
     Spans made only of frequent, place-unspecific TRAIN-question words (function / domain words) are skipped."""
 
     def __init__(self, con, embedder, train_rows: list[dict], tau: float = 0.9, min_freq: int = 5):
-        self.res = Resolver(build_gazetteer(con), embedder=embedder)
+        self.res = Resolver(build_gazetteer(con), embedder=embedder, emb_cache=ALIAS_CACHE)
         with open(RANKER, "rb") as f:
             self.res.ranker = pickle.load(f)
         # stopword = frequent in TRAIN questions AND not tied to one place (place names co-occur with their gold entity)
@@ -52,9 +54,11 @@ class PlaceLinker:
         ws = [w for w in words(question) if not any(ch.isdigit() for ch in w)]
         spans = [(i, n) for n in (3, 2, 1) for i in range(len(ws) - n + 1)
                  if not all(w.lower() in self.stop for w in ws[i:i + n])]
+        texts = [" ".join(ws[i:i + n]).strip(PUNCT) for i, n in spans]
+        embs = self.res.embed(texts) if texts else []          # one batched forward pass for all spans
         found = []
-        for i, n in spans:
-            out = self.res.resolve(" ".join(ws[i:i + n]).strip(PUNCT), k=1)
+        for (i, n), text, emb in zip(spans, texts, embs):
+            out = self.res.resolve(text, k=1, m_emb=emb)
             if out and out[0][1] >= self.tau:
                 found.append((out[0][1], n, i, out[0][0]))
         used, picked = set(), []
@@ -87,11 +91,12 @@ class PlaceLinker:
 class Pipeline:
     def __init__(self, con, train_rows: list[dict], model: str = "qwen3:8b", schema_hints: bool = True,
                  places: bool = True, fewshot: bool = True, max_repairs: int = 2, k_cols: int = 5, k_shots: int = 3,
-                 encoder=None, place_linker: PlaceLinker | None = None):
+                 encoder=None, place_linker: PlaceLinker | None = None, year_hints: bool = True):
         from sentence_transformers import SentenceTransformer
         self.con, self.train = con, train_rows
         self.cfg = {"model": model, "schema_hints": schema_hints, "places": places, "fewshot": fewshot,
-                    "max_repairs": max_repairs, "k_cols": k_cols, "k_shots": k_shots}
+                    "max_repairs": max_repairs, "k_cols": k_cols, "k_shots": k_shots, "year_hints": year_hints}
+        self.intents = np.array([r.get("intent", "") for r in train_rows])
         self.llm = LLMBaseline(con, train_rows, model=model, backend="ollama")
         self.enc = encoder or SentenceTransformer(str(FT_CKPT), device="cpu")
         self.els = init_elements(json.loads((ROOT / "data/schema/schema.json").read_text(encoding="utf-8")))
@@ -102,8 +107,11 @@ class Pipeline:
         self.places = (place_linker or PlaceLinker(con, SentenceTransformer(EmbeddingRetriever.model_id, device="cpu"),
                                                    train_rows)) if places else None
 
-    def _examples(self, q_emb) -> str:
-        idx = np.argsort(-(self.TQ @ q_emb))[: self.cfg["k_shots"]]
+    def _examples(self, q_emb, exclude_intent: str | None = None) -> str:
+        sims = self.TQ @ q_emb
+        if exclude_intent:                    # evaluation only: hide TRAIN examples of the question's own type
+            sims = np.where(self.intents == exclude_intent, -np.inf, sims)
+        idx = np.argsort(-sims)[: self.cfg["k_shots"]]
         return "\n\n".join(f"Question: {self.train[i]['question']}\nSQL:\n```sql\n{self.train[i]['sql']}\n```" for i in idx[::-1])
 
     def _run(self, sql):
@@ -119,16 +127,18 @@ class Pipeline:
             return r, "the query returned no rows (or only NULL)"
         return r, None
 
-    def sql(self, question: str) -> dict:
+    def sql(self, question: str, exclude_intent: str | None = None) -> dict:
         q_emb = self.enc.encode([f"query: {question}"], normalize_embeddings=True)[0]
         hints = None
         if self.linker is not None:
             sc = q_emb @ self.linker.E.T
             hints = [self.els[i].key for i in sorted(self.cols, key=lambda i: -sc[i])[: self.cfg["k_cols"]]]
         places = self.places.link(question) if self.places else []
-        examples = self._examples(q_emb) if self.TQ is not None else ""
+        examples = self._examples(q_emb, exclude_intent) if self.TQ is not None else ""
+        yrs = years.year_labels(question) if self.cfg.get("year_hints") else []
+        extra = "\n".join(x for x in (PlaceLinker.render(places), years.render(yrs)) if x)
         msgs = [{"role": "system", "content": SYSTEM},
-                {"role": "user", "content": self.llm.prompt(question, hints, examples, PlaceLinker.render(places))}]
+                {"role": "user", "content": self.llm.prompt(question, hints, examples, extra)}]
         attempts, lat, ptok, otok = [], 0.0, 0, 0
         for turn in range(self.cfg["max_repairs"] + 1):
             out = self.llm.client.generate(messages=msgs)
@@ -145,7 +155,7 @@ class Pipeline:
             if attempts[-1]["sql"] and len(attempts) >= 2 and attempts[-1]["sql"] == attempts[-2]["sql"]:
                 break                                   # model insists: stop
         return {"sql": attempts[-1]["sql"], "first_sql": attempts[0]["sql"], "attempts": attempts, "hints": hints,
-                "places": places, "latency_s": round(lat, 3), "prompt_tokens": ptok, "output_tokens": otok,
+                "places": places, "years": yrs, "latency_s": round(lat, 3), "prompt_tokens": ptok, "output_tokens": otok,
                 "result": res}
 
     def answer(self, question: str) -> dict:

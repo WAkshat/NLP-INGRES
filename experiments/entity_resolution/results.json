@@ -3,19 +3,20 @@
  "gazetteer_entities": 9558,
  "train_entities": 6690,
  "train_mentions": 18283,
+ "embedder": "intfloat/multilingual-e5-small",
  "ranker_coefficients": {
-  "tfidf": -1.995,
-  "edit": 21.47,
-  "skeleton": 1.847,
-  "exact": -0.835,
-  "embed": 10.619,
-  "ctx_state": 0.361,
-  "ctx_district": 2.089,
-  "ctx_conflict": -8.781,
-  "lvl_state": -5.216,
-  "lvl_district": -6.065,
-  "lvl_unit": -6.975,
-  "len_diff": -4.073
+  "tfidf": -2.117,
+  "edit": 18.947,
+  "skeleton": 7.909,
+  "exact": -0.334,
+  "embed": 13.785,
+  "ctx_state": 0.306,
+  "ctx_district": 1.865,
+  "ctx_conflict": -14.879,
+  "lvl_state": -6.392,
+  "lvl_district": -7.667,
+  "lvl_unit": -8.587,
+  "len_diff": -1.065
  },
  "overall": {
   "ambiguous": {
@@ -29,18 +30,18 @@
    "n": 32
   },
   "hand_script": {
-   "top1": 0.707,
-   "top3": 0.7885,
+   "top1": 0.8342,
+   "top3": 0.9258,
    "n": 1092
   },
   "historical": {
    "top1": 0.6885,
-   "top3": 0.8538,
+   "top3": 0.8731,
    "n": 520
   },
   "synthetic": {
-   "top1": 0.8627,
-   "top3": 0.9571,
+   "top1": 0.8829,
+   "top3": 0.9784,
    "n": 11970
   }
  },
@@ -208,45 +209,45 @@
     "noise": "hand_hi",
     "context": false,
     "n": 273,
-    "top1": 0.7802,
+    "top1": 0.8168,
     "top1_ci95": [
-     0.7325,
-     0.8315
+     0.7692,
+     0.8645
     ],
-    "top3": 0.8938
+    "top3": 0.9231
    },
    {
     "noise": "hand_hi",
     "context": true,
     "n": 273,
-    "top1": 0.8352,
+    "top1": 0.8571,
     "top1_ci95": [
-     0.7912,
-     0.8791
+     0.8168,
+     0.8975
     ],
-    "top3": 0.9084
+    "top3": 0.9341
    },
    {
     "noise": "hand_ta",
     "context": false,
     "n": 273,
-    "top1": 0.5678,
+    "top1": 0.8059,
     "top1_ci95": [
-     0.5127,
-     0.6264
+     0.7582,
+     0.8498
     ],
-    "top3": 0.6667
+    "top3": 0.9158
    },
    {
     "noise": "hand_ta",
     "context": true,
     "n": 273,
-    "top1": 0.6447,
+    "top1": 0.8571,
     "top1_ci95": [
-     0.5861,
-     0.6996
+     0.8132,
+     0.8974
     ],
-    "top3": 0.685
+    "top3": 0.9304
    }
   ],
   "historical": [
@@ -254,23 +255,23 @@
     "noise": "history_fuzzy",
     "context": false,
     "n": 252,
-    "top1": 0.619,
+    "top1": 0.627,
     "top1_ci95": [
-     0.5595,
-     0.6786
+     0.5675,
+     0.6865
     ],
-    "top3": 0.8095
+    "top3": 0.8373
    },
    {
     "noise": "history_fuzzy",
     "context": true,
     "n": 252,
-    "top1": 0.746,
+    "top1": 0.7381,
     "top1_ci95": [
-     0.6905,
-     0.7976
+     0.6825,
+     0.7897
     ],
-    "top3": 0.8929
+    "top3": 0.9048
    },
    {
     "noise": "history_name",
@@ -305,7 +306,7 @@
      0.8503,
      0.8924
     ],
-    "top3": 0.9848
+    "top3": 0.986
    },
    {
     "noise": "auto_devanagari",
@@ -313,7 +314,7 @@
     "n": 855,
     "top1": 0.9029,
     "top1_ci95": [
-     0.883,
+     0.8842,
      0.9228
     ],
     "top3": 0.9942
@@ -322,23 +323,23 @@
     "noise": "auto_tamil",
     "context": false,
     "n": 855,
-    "top1": 0.6877,
+    "top1": 0.8409,
     "top1_ci95": [
-     0.6561,
-     0.717
+     0.8164,
+     0.8643
     ],
-    "top3": 0.8222
+    "top3": 0.9743
    },
    {
     "noise": "auto_tamil",
     "context": true,
     "n": 855,
-    "top1": 0.7684,
+    "top1": 0.9018,
     "top1_ci95": [
-     0.7404,
-     0.7965
+     0.883,
+     0.9205
     ],
-    "top3": 0.8515
+    "top3": 0.9918
    },
    {
     "noise": "exact",
@@ -366,15 +367,59 @@
     "noise": "lowercase",
     "context": false,
     "n": 855,
-    "top1": 0.8877,
+    "top1": 0.8865,
     "top1_ci95": [
-     0.8678,
+     0.8655,
      0.9076
     ],
     "top3": 0.9895
    },
    {
     "noise": "lowercase",
+    "context": true,
+    "n": 855,
+    "top1": 0.9158,
+    "top1_ci95": [
+     0.8982,
+     0.9334
+    ],
+    "top3": 0.9953
+   },
+   {
+    "noise": "punct_space",
+    "context": false,
+    "n": 855,
+    "top1": 0.8678,
+    "top1_ci95": [
+     0.8456,
+     0.8889
+    ],
+    "top3": 0.9789
+   },
+   {
+    "noise": "punct_space",
+    "context": true,
+    "n": 855,
+    "top1": 0.9099,
+    "top1_ci95": [
+     0.8901,
+     0.9287
+    ],
+    "top3": 0.9871
+   },
+   {
+    "noise": "translit_variant",
+    "context": false,
+    "n": 855,
+    "top1": 0.8795,
+    "top1_ci95": [
+     0.8585,
+     0.9006
+    ],
+    "top3": 0.9848
+   },
+   {
+    "noise": "translit_variant",
     "context": true,
     "n": 855,
     "top1": 0.917,
@@ -385,68 +430,24 @@
     "top3": 0.9953
    },
    {
-    "noise": "punct_space",
-    "context": false,
-    "n": 855,
-    "top1": 0.8632,
-    "top1_ci95": [
-     0.8409,
-     0.8854
-    ],
-    "top3": 0.9766
-   },
-   {
-    "noise": "punct_space",
-    "context": true,
-    "n": 855,
-    "top1": 0.9099,
-    "top1_ci95": [
-     0.8912,
-     0.9287
-    ],
-    "top3": 0.9871
-   },
-   {
-    "noise": "translit_variant",
-    "context": false,
-    "n": 855,
-    "top1": 0.8807,
-    "top1_ci95": [
-     0.8596,
-     0.9018
-    ],
-    "top3": 0.9848
-   },
-   {
-    "noise": "translit_variant",
-    "context": true,
-    "n": 855,
-    "top1": 0.9181,
-    "top1_ci95": [
-     0.9006,
-     0.9357
-    ],
-    "top3": 0.9953
-   },
-   {
     "noise": "typo",
     "context": false,
     "n": 855,
-    "top1": 0.7977,
+    "top1": 0.7953,
     "top1_ci95": [
-     0.7708,
-     0.8246
+     0.7684,
+     0.8222
     ],
-    "top3": 0.9064
+    "top3": 0.9099
    },
    {
     "noise": "typo",
     "context": true,
     "n": 855,
-    "top1": 0.855,
+    "top1": 0.8538,
     "top1_ci95": [
-     0.8316,
-     0.8772
+     0.8304,
+     0.876
     ],
     "top3": 0.9263
    }
@@ -465,24 +466,24 @@
     "wrong administrative level": 12
    },
    "hand_script": {
-    "right name, wrong place (homonym)": 60,
-    "similar name, other state": 95,
-    "similar name, same state": 38,
-    "wrong administrative level": 127
+    "right name, wrong place (homonym)": 84,
+    "similar name, other state": 24,
+    "similar name, same state": 33,
+    "wrong administrative level": 40
    },
    "historical": {
     "right name, wrong place (homonym)": 13,
-    "similar name, other state": 38,
+    "similar name, other state": 35,
     "similar name, same state": 88,
-    "wrong administrative level": 23
+    "wrong administrative level": 26
    },
    "synthetic": {
-    "right name, wrong place (homonym)": 1057,
-    "similar name, other state": 232,
-    "similar name, same state": 155,
-    "wrong administrative level": 200
+    "right name, wrong place (homonym)": 1082,
+    "similar name, other state": 116,
+    "similar name, same state": 85,
+    "wrong administrative level": 119
    }
   }
  },
- "runtime_s": 364.2
+ "runtime_s": 248.1
 }

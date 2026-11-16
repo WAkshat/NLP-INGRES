@@ -12,6 +12,7 @@ Evaluation sets:
   colloquial : renamed / colloquial names (Gurgaon -> Gurugram), without vs with the curated alias table
 Writes experiments/entity_resolution/{results.json, per_mention.csv, errors_sample.csv, ranker.pkl}.
 """
+import argparse
 import json
 import pickle
 import random
@@ -34,9 +35,15 @@ SEED = 0
 
 
 def main():
+    global OUT
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--embedder", default="intfloat/multilingual-e5-small", help="model id or checkpoint path for mention/alias embeddings")
+    ap.add_argument("--out", default=str(OUT))
+    a = ap.parse_args()
+    OUT = Path(a.out)
     t0 = time.time()
     from sentence_transformers import SentenceTransformer
-    emb = SentenceTransformer("intfloat/multilingual-e5-small", device="cpu")
+    emb = SentenceTransformer(a.embedder, device="cpu")
     con = connect_ro(ROOT / "data/processed/ingres.db")
     rng = random.Random(SEED)
     gaz = build_gazetteer(con, include_colloquial=False)
@@ -160,7 +167,7 @@ def main():
     summary["error_categories"] = err.groupby(["set", "error_category"]).size().unstack(fill_value=0).to_dict(orient="index")
     err.sample(min(60, len(err)), random_state=SEED).to_csv(OUT / "errors_sample.csv", index=False)
     (OUT / "results.json").write_text(json.dumps({"seed": SEED, "gazetteer_entities": len(gaz), "train_entities": len(train_ids),
-                                                  "train_mentions": len(train_mentions), "ranker_coefficients": coefs,
+                                                  "train_mentions": len(train_mentions), "embedder": a.embedder, "ranker_coefficients": coefs,
                                                   "overall": overall, "detail": summary,
                                                   "runtime_s": round(time.time() - t0, 1)}, indent=1, default=str), encoding="utf-8")
     print(json.dumps(overall, indent=1))

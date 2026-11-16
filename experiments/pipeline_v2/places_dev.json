@@ -1,0 +1,113 @@
+{
+ "by_tau": {
+  "0.5": {
+   "precision": 0.7186,
+   "recall": 0.9529,
+   "f1": 0.8193,
+   "f1_by_language": {
+    "english": 0.8947,
+    "hindi": 0.7303,
+    "hinglish": 0.8415,
+    "tamil": 0.8243
+   },
+   "recall_by_language": {
+    "english": 0.9855,
+    "hindi": 0.942,
+    "hinglish": 1.0,
+    "tamil": 0.8841
+   },
+   "s_per_question": 0.072
+  },
+  "0.7": {
+   "precision": 0.805,
+   "recall": 0.942,
+   "f1": 0.8681,
+   "f1_by_language": {
+    "english": 0.9444,
+    "hindi": 0.7778,
+    "hinglish": 0.8846,
+    "tamil": 0.8759
+   },
+   "recall_by_language": {
+    "english": 0.9855,
+    "hindi": 0.913,
+    "hinglish": 1.0,
+    "tamil": 0.8696
+   },
+   "s_per_question": 0.066
+  },
+  "0.8": {
+   "precision": 0.8279,
+   "recall": 0.9239,
+   "f1": 0.8733,
+   "f1_by_language": {
+    "english": 0.9577,
+    "hindi": 0.8025,
+    "hinglish": 0.8903,
+    "tamil": 0.8462
+   },
+   "recall_by_language": {
+    "english": 0.9855,
+    "hindi": 0.913,
+    "hinglish": 1.0,
+    "tamil": 0.7971
+   },
+   "s_per_question": 0.063
+  },
+  "0.9": {
+   "precision": 0.9148,
+   "recall": 0.8949,
+   "f1": 0.9048,
+   "f1_by_language": {
+    "english": 0.9784,
+    "hindi": 0.8392,
+    "hinglish": 0.9583,
+    "tamil": 0.8333
+   },
+   "recall_by_language": {
+    "english": 0.9855,
+    "hindi": 0.8696,
+    "hinglish": 1.0,
+    "tamil": 0.7246
+   },
+   "s_per_question": 0.061
+  },
+  "0.95": {
+   "precision": 0.9508,
+   "recall": 0.8406,
+   "f1": 0.8923,
+   "f1_by_language": {
+    "english": 0.9481,
+    "hindi": 0.8615,
+    "hinglish": 0.9718,
+    "tamil": 0.7611
+   },
+   "recall_by_language": {
+    "english": 0.9275,
+    "hindi": 0.8116,
+    "hinglish": 1.0,
+    "tamil": 0.6232
+   },
+   "s_per_question": 0.059
+  },
+  "0.98": {
+   "precision": 0.9952,
+   "recall": 0.7464,
+   "f1": 0.853,
+   "f1_by_language": {
+    "english": 0.8871,
+    "hindi": 0.8595,
+    "hinglish": 0.9394,
+    "tamil": 0.6981
+   },
+   "recall_by_language": {
+    "english": 0.7971,
+    "hindi": 0.7536,
+    "hinglish": 0.8986,
+    "tamil": 0.5362
+   },
+   "s_per_question": 0.058
+  }
+ },
+ "chosen_tau": 0.9
+}

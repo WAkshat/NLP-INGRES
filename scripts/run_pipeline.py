@@ -1,13 +1,18 @@
-"""Phase 9: full pipeline evaluation + component ablations.
+"""Full pipeline evaluation, ablations and error analysis.
 
-    python scripts/run_pipeline.py --stage places                       # tune / evaluate the place linker on DEV (no LLM)
-    python scripts/run_pipeline.py --stage run --config full --splits test hard_test
-    python scripts/run_pipeline.py --stage run --config no_fewshot      # (test)
-    python scripts/run_pipeline.py --stage run --config no_places       # (test)
+    python scripts/run_pipeline.py --stage places                                   # tune the place linker on DEV (no LLM)
+    python scripts/run_pipeline.py --stage run --config v2 --splits dev             # then test hard_test
+    python scripts/run_pipeline.py --stage run --config full --splits test          # v2 code without year hints
+    python scripts/run_pipeline.py --stage run --config v2_loio --splits test       # examples of the question's own type hidden
     python scripts/run_pipeline.py --stage summary
 
-Configs: full = schema hints + place hints + retrieved few-shot + repair. "no_repair" needs no run: it is the first
-attempt of each run. D (zero-shot) and D + schema hints come from Phases 4 and 7.
+Outputs go to experiments/pipeline_v2/ (--out). The original system's runs (git tag baseline-v1) are frozen in
+experiments/pipeline/ and are only read here, for paired comparisons.
+
+Configs: v2 = schema hints + place hints + retrieved examples + year hints + repair.  full / no_fewshot / no_places /
+no_schema = the baseline-v1 configurations (no year hints) under the current code.  v2_loio = v2 with every TRAIN
+example of the question's own intent hidden from retrieval ("leave own intent out").
+First-attempt (no-repair) accuracy needs no run: it is recorded for every question.
 """
 import argparse
 import json
@@ -24,13 +29,21 @@ from src.evaluation.execution import execution_match  # noqa: E402
 from src.evaluation.report import bootstrap_ci  # noqa: E402
 from src.utils.safe_sql import connect_ro  # noqa: E402
 
-OUT = ROOT / "experiments/pipeline"
-CONFIGS = {"full": {}, "no_fewshot": {"fewshot": False}, "no_places": {"places": False}, "no_schema": {"schema_hints": False}}
+BASELINE = ROOT / "experiments/pipeline"            # frozen baseline-v1 outputs
+OUT = ROOT / "experiments/pipeline_v2"
+V1 = {"year_hints": False}
+CONFIGS = {"v2": {}, "v2_loio": {}, "full": V1, "no_fewshot": {**V1, "fewshot": False}, "no_places": {**V1, "places": False},
+           "no_schema": {**V1, "schema_hints": False}}
+BENCH = ROOT / "data/benchmark/ingres_bench_v1.jsonl"
 
 
 def load():
-    rows = [json.loads(x) for x in (ROOT / "data/benchmark/ingres_bench_v1.jsonl").read_text(encoding="utf-8").splitlines()]
+    rows = [json.loads(x) for x in BENCH.read_text(encoding="utf-8").splitlines()]
     return rows, [r for r in rows if r["split"] == "train"]
+
+
+def load_jsonl(p):
+    return pd.DataFrame([json.loads(x) for x in Path(p).read_text(encoding="utf-8").splitlines()])
 
 
 def stage_places():
@@ -40,14 +53,6 @@ def stage_places():
     dev = [r for r in rows if r["split"] == "dev"]
     con = connect_ro(ROOT / "data/processed/ingres.db")
     pl = PlaceLinker(con, SentenceTransformer("intfloat/multilingual-e5-small", device="cpu"), train)
-    cache, orig = {}, pl.res.resolve
-
-    def cached(m, ctx=None, level=None, k=5):
-        key = (m, json.dumps(ctx, default=sorted, sort_keys=True), level, k)
-        if key not in cache:
-            cache[key] = orig(m, ctx, level, k)
-        return cache[key]
-    pl.res.resolve = cached
     res = {}
     for tau in (0.5, 0.7, 0.8, 0.9, 0.95, 0.98):
         pl.tau = tau
@@ -63,10 +68,11 @@ def stage_places():
             s[0], s[1], s[2] = s[0] + a, s[1] + b, s[2] + c
         f1 = lambda a, b, c: round(2 * a / max(1, 2 * a + b + c), 4)  # noqa: E731
         res[tau] = {"precision": round(tp / max(1, tp + fp), 4), "recall": round(tp / max(1, tp + fn), 4), "f1": f1(tp, fp, fn),
-                    "f1_by_language": {k: f1(*v) for k, v in by_lang.items()}, "s_per_question": round((time.perf_counter() - t0) / len(dev), 3)}
+                    "f1_by_language": {k: f1(*v) for k, v in by_lang.items()},
+                    "recall_by_language": {k: round(v[0] / max(1, v[0] + v[2]), 4) for k, v in by_lang.items()},
+                    "s_per_question": round((time.perf_counter() - t0) / len(dev), 3)}
         print(tau, res[tau], flush=True)
     best = max(res, key=lambda t: res[t]["f1"])
-    OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "places_dev.json").write_text(json.dumps({"by_tau": res, "chosen_tau": best}, indent=1), encoding="utf-8")
 
 
@@ -85,7 +91,7 @@ def stage_run(config, splits):
         for i, r in enumerate(ev, 1):
             if r["id"] in done:
                 continue
-            o = pipe.sql(r["question"])
+            o = pipe.sql(r["question"], exclude_intent=r["intent"] if config.endswith("_loio") else None)
             o.pop("result")
             ex = execution_match(con, o["sql"], r["sql"], r["gold_result"])
             ex0 = execution_match(con, o["first_sql"], r["sql"], r["gold_result"])
@@ -94,7 +100,7 @@ def stage_run(config, splits):
                                 "intent": r["intent"], "noisy": bool(r["noise"]), "correct": int(ex.correct),
                                 "correct_first_attempt": int(ex0.correct), "exec_error": ex.error,
                                 "n_attempts": len(o["attempts"]), "places_ok": int(gold_places <= {p["db_name"].lower() for p in o["places"]}),
-                                **{k: o[k] for k in ("sql", "first_sql", "hints", "places", "latency_s", "prompt_tokens", "output_tokens")}},
+                                **{k: o[k] for k in ("sql", "first_sql", "hints", "places", "years", "latency_s", "prompt_tokens", "output_tokens")}},
                                ensure_ascii=False) + "\n")
             f.flush()
             if i % 50 == 0:
@@ -106,77 +112,104 @@ YEARS = re.compile(r"'(\d{4}-\d{4})'")
 METRIC = re.compile(r"\b(?:ua|da|sa|a|b|ua2)\.(\w+)")
 
 
-def error_category(r, gold_sql):
-    """First matching rule wins (rule-based; categories overlap in reality)."""
+def sql_has_places(sql, entities) -> bool:
+    s = (sql or "").lower()
+    return all(e["db_name"].lower().replace("'", "''") in s for e in entities)
+
+
+def error_category(r, gold):
+    """Rule-based, first match wins; every rule looks at the predicted SQL itself (the baseline-v1 version used the
+    place linker's output for the place category, which over-counted place errors)."""
     pred = r["sql"] or ""
     if r["exec_error"]:
         return "no SQL / execution error"
-    if not r["places_ok"]:
-        return "place not linked (resolver miss)"
-    if set(YEARS.findall(pred)) != set(YEARS.findall(gold_sql)):
+    if not sql_has_places(pred, gold["entities"]):
+        return "gold place literal missing from SQL"
+    if set(YEARS.findall(pred)) != set(YEARS.findall(gold["sql"])):
         return "wrong assessment year"
-    if set(METRIC.findall(pred)) - {"unit_id", "assessment_year"} != set(METRIC.findall(gold_sql)) - {"unit_id", "assessment_year"}:
+    if set(METRIC.findall(pred)) - {"unit_id", "assessment_year"} != set(METRIC.findall(gold["sql"])) - {"unit_id", "assessment_year"}:
         return "wrong metric / column"
-    if sorted(m.upper() for m in AGG.findall(pred)) != sorted(m.upper() for m in AGG.findall(gold_sql)):
+    if sorted(m.upper() for m in AGG.findall(pred)) != sorted(m.upper() for m in AGG.findall(gold["sql"])):
         return "wrong aggregation"
     return "other (filters, joins, output shape)"
 
 
-def error_analysis(df):
-    gold = {json.loads(x)["id"]: json.loads(x)["sql"] for x in (ROOT / "data/benchmark/ingres_bench_v1.jsonl").read_text(encoding="utf-8").splitlines()}
+def error_analysis(df, gold, out_csv=None):
     err = df[df.correct == 0].copy()
     err["category"] = [error_category(r, gold[r["id"]]) for r in err.to_dict("records")]
-    err.to_csv(OUT / "errors_full.csv", index=False)
-    return {"n_errors": len(err), "share_of_errors": err.category.value_counts(normalize=True).round(4).to_dict(),
+    if out_csv:
+        err.to_csv(out_csv, index=False)
+    return {"n_errors": len(err), "counts": err.category.value_counts().to_dict(),
+            "share_of_errors": err.category.value_counts(normalize=True).round(4).to_dict(),
             "by_language": err.groupby(["language", "category"]).size().unstack(fill_value=0).to_dict(orient="index")}
 
 
+def mcnemar(a, b):
+    """Paired exact test on the instances both runs share. Returns wins of a, wins of b, two-sided p."""
+    from scipy.stats import binomtest
+    m = a[["id", "correct"]].merge(b[["id", "correct"]], on="id", suffixes=("_a", "_b"))
+    w = int(((m.correct_a == 1) & (m.correct_b == 0)).sum())
+    l = int(((m.correct_a == 0) & (m.correct_b == 1)).sum())
+    return {"n": len(m), "wins": w, "losses": l, "p": float(binomtest(w, w + l).pvalue) if w + l else 1.0}
+
+
 def stage_summary():
-    def load_jsonl(p):
-        return pd.DataFrame([json.loads(x) for x in Path(p).read_text(encoding="utf-8").splitlines()])
+    gold = {json.loads(x)["id"]: json.loads(x) for x in BENCH.read_text(encoding="utf-8").splitlines()}
 
     def summ(df, col="correct"):
         lo, hi = bootstrap_ci(df[col])
         return {"n": len(df), "EX": round(df[col].mean(), 4), "EX_ci95": [round(lo, 4), round(hi, 4)],
                 "by_language": df.groupby("language")[col].mean().round(4).to_dict(),
                 "by_difficulty": df.groupby("difficulty")[col].mean().round(4).to_dict()}
+    runs = {"baseline-v1 full": load_jsonl(BASELINE / "full.jsonl")}
+    for cfg in CONFIGS:
+        if (OUT / f"{cfg}.jsonl").exists():
+            runs[cfg] = load_jsonl(OUT / f"{cfg}.jsonl")
     out = {}
-    d = load_jsonl(ROOT / "experiments/baselines/D_qwen3_8b_zeroshot/predictions.jsonl")
-    a = load_jsonl(ROOT / "experiments/baselines/A_keyword_template/predictions.jsonl")
-    h = ROOT / "experiments/tokenization/hints_ft.jsonl"
-    for split in ("test", "hard_test"):
-        res = {"A keyword/template": summ(a[a.split == split]), "D qwen3:8b zero-shot": summ(d[d.split == split])}
-        if split == "test" and h.exists():
-            res["D + schema hints"] = summ(load_jsonl(h))
-        for cfg in CONFIGS:
-            p = OUT / f"{cfg}.jsonl"
-            if p.exists():
-                df = load_jsonl(p)
-                df = df[df.split == split]
-                if len(df):
-                    res[f"pipeline {cfg}"] = {**summ(df), "latency_mean_s": round(df.latency_s.mean(), 3),
-                                              "prompt_tokens_mean": round(df.prompt_tokens.mean(), 1),
-                                              "repair_turns_mean": round(df.n_attempts.mean() - 1, 3),
-                                              "places_all_found": round(df.places_ok.mean(), 4) if cfg != "no_places" else None}
-                    res[f"pipeline {cfg}, first attempt (no repair)"] = summ(df, "correct_first_attempt")
-        out[split] = res
-    if (OUT / "full.jsonl").exists():
-        out["error_analysis_full"] = error_analysis(load_jsonl(OUT / "full.jsonl"))
+    for split in ("dev", "test", "hard_test"):
+        res = {}
+        for name, df in runs.items():
+            d = df[df.split == split]
+            if not len(d):
+                continue
+            yr_ok = [set(YEARS.findall(s or "")) == set(YEARS.findall(gold[i]["sql"])) for i, s in zip(d.id, d.sql)]
+            res[name] = {**summ(d), "first_attempt_EX": round(d.correct_first_attempt.mean(), 4),
+                         "llm_latency_mean_s": round(d.latency_s.mean(), 3), "prompt_tokens_mean": round(d.prompt_tokens.mean(), 1),
+                         "repair_turns_mean": round(d.n_attempts.mean() - 1, 3),
+                         "linker_found_all_places": round(d.places_ok.mean(), 4),
+                         "sql_has_all_gold_places": round(sum(sql_has_places(s, gold[i]["entities"]) for i, s in zip(d.id, d.sql)) / len(d), 4),
+                         "sql_year_set_correct": round(sum(yr_ok) / len(d), 4)}
+        if res:
+            out[split] = res
+    pairs = {}
+    for a, b in (("v2", "baseline-v1 full"), ("full", "baseline-v1 full"), ("v2", "full"), ("v2", "v2_loio")):
+        if a in runs and b in runs:
+            for split in ("test", "hard_test"):
+                x, y = runs[a][runs[a].split == split], runs[b][runs[b].split == split]
+                if len(x) and len(y):
+                    pairs[f"{a} vs {b} [{split}]"] = mcnemar(x, y)
+    out["paired_tests"] = pairs
+    ev = lambda d: d[d.split.isin(["test", "hard_test"])]  # noqa: E731
+    out["error_analysis"] = {name: error_analysis(ev(df), gold, OUT / f"errors_{name.replace(' ', '_')}.csv")
+                             for name, df in runs.items() if name in ("baseline-v1 full", "v2") and len(ev(df))}
     (OUT / "results.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
     for split, res in out.items():
-        if split.startswith("error"):
-            print(json.dumps(res["share_of_errors"], indent=1))
+        if split in ("paired_tests", "error_analysis"):
+            print(f"== {split}\n" + json.dumps(res if split == "paired_tests" else {k: v["counts"] for k, v in res.items()}, indent=1))
             continue
         print(f"== {split}")
         for k, v in res.items():
-            print(f"  {k:55s} EX {v['EX']:.3f} {v['EX_ci95']}  n={v['n']}  {v['by_language']}")
+            print(f"  {k:18s} EX {v['EX']:.3f} {v['EX_ci95']} n={v['n']} first {v['first_attempt_EX']:.3f} places-in-SQL "
+                  f"{v['sql_has_all_gold_places']:.3f} years {v['sql_year_set_correct']:.3f} {v['by_language']}")
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage", required=True, choices=["places", "run", "summary"])
-    ap.add_argument("--config", default="full", choices=list(CONFIGS))
+    ap.add_argument("--config", default="v2", choices=list(CONFIGS))
     ap.add_argument("--splits", nargs="+", default=["test"])
+    ap.add_argument("--out", default=str(OUT))
     a = ap.parse_args()
+    OUT = Path(a.out)
     OUT.mkdir(parents=True, exist_ok=True)
     {"places": stage_places, "run": lambda: stage_run(a.config, a.splits), "summary": stage_summary}[a.stage]()

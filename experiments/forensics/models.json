@@ -1,0 +1,344 @@
+{
+ "encoders": {
+  "base_multilingual_e5_small": {
+   "source": "intfloat/multilingual-e5-small",
+   "hf_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+   "modules": [
+    "Transformer",
+    "Pooling",
+    "Normalize"
+   ],
+   "pooling": "mean",
+   "normalize_module": true,
+   "architecture": "BertModel",
+   "model_type": "bert",
+   "total_parameters": 117653760,
+   "trainable_parameters": 117653760,
+   "frozen_parameters": 0,
+   "parameters_by_group": {
+    "embeddings.word": 96014208,
+    "embeddings.position": 196608,
+    "embeddings.other": 1536,
+    "encoder.layers": 21293568,
+    "pooler": 147840
+   },
+   "n_parameter_tensors": 199,
+   "shared_tensors": 0,
+   "num_hidden_layers": 12,
+   "num_attention_heads": 12,
+   "hidden_size": 384,
+   "intermediate_size": 1536,
+   "hidden_act": "gelu",
+   "vocab_size_config": 250037,
+   "tokenizer_len": 250002,
+   "max_position_embeddings": 512,
+   "position_embedding_type": "absolute",
+   "max_seq_length_configured": 512,
+   "embedding_dim": 384,
+   "dtype": "torch.float32",
+   "weights_bytes_in_memory": 470615040,
+   "weights_file_bytes": 470641600,
+   "checkpoint_dir_bytes": 493292828,
+   "tokenizer_class": "XLMRobertaTokenizerFast",
+   "special_tokens": {
+    "bos_token": "<s>",
+    "eos_token": "</s>",
+    "unk_token": "<unk>",
+    "sep_token": "</s>",
+    "pad_token": "<pad>",
+    "cls_token": "<s>",
+    "mask_token": "<mask>"
+   },
+   "dropout": {
+    "hidden": 0.1,
+    "attention": 0.1
+   },
+   "torch_version": "2.14.0+cpu"
+  },
+  "finetuned_schema_linker": {
+   "source": "C:\\Users\\PC\\Desktop\\Claude coding\\majorproject\\experiments\\schema_linking\\checkpoints\\finetuned_e5",
+   "hf_revision": null,
+   "modules": [
+    "Transformer",
+    "Pooling",
+    "Normalize"
+   ],
+   "pooling": "mean",
+   "normalize_module": true,
+   "architecture": "BertModel",
+   "model_type": "bert",
+   "total_parameters": 117653760,
+   "trainable_parameters": 117653760,
+   "frozen_parameters": 0,
+   "parameters_by_group": {
+    "embeddings.word": 96014208,
+    "embeddings.position": 196608,
+    "embeddings.other": 1536,
+    "encoder.layers": 21293568,
+    "pooler": 147840
+   },
+   "n_parameter_tensors": 199,
+   "shared_tensors": 0,
+   "num_hidden_layers": 12,
+   "num_attention_heads": 12,
+   "hidden_size": 384,
+   "intermediate_size": 1536,
+   "hidden_act": "gelu",
+   "vocab_size_config": 250037,
+   "tokenizer_len": 250002,
+   "max_position_embeddings": 512,
+   "position_embedding_type": "absolute",
+   "max_seq_length_configured": 512,
+   "embedding_dim": 384,
+   "dtype": "torch.float32",
+   "weights_bytes_in_memory": 470615040,
+   "weights_file_bytes": 470637416,
+   "checkpoint_dir_bytes": 488240351,
+   "tokenizer_class": "XLMRobertaTokenizerFast",
+   "special_tokens": {
+    "bos_token": "<s>",
+    "eos_token": "</s>",
+    "unk_token": "<unk>",
+    "sep_token": "</s>",
+    "pad_token": "<pad>",
+    "cls_token": "<s>",
+    "mask_token": "<mask>"
+   },
+   "dropout": {
+    "hidden": 0.1,
+    "attention": 0.1
+   },
+   "torch_version": "2.14.0+cpu"
+  },
+  "vocab_adapted_schema_linker": {
+   "source": "C:\\Users\\PC\\Desktop\\Claude coding\\majorproject\\experiments\\tokenization\\checkpoints\\vocab_adapted_e5",
+   "hf_revision": null,
+   "modules": [
+    "Transformer",
+    "Pooling",
+    "Normalize"
+   ],
+   "pooling": "mean",
+   "normalize_module": true,
+   "architecture": "BertModel",
+   "model_type": "bert",
+   "total_parameters": 117670272,
+   "trainable_parameters": 117670272,
+   "frozen_parameters": 0,
+   "parameters_by_group": {
+    "embeddings.word": 96030720,
+    "embeddings.position": 196608,
+    "embeddings.other": 1536,
+    "encoder.layers": 21293568,
+    "pooler": 147840
+   },
+   "n_parameter_tensors": 199,
+   "shared_tensors": 0,
+   "num_hidden_layers": 12,
+   "num_attention_heads": 12,
+   "hidden_size": 384,
+   "intermediate_size": 1536,
+   "hidden_act": "gelu",
+   "vocab_size_config": 250080,
+   "tokenizer_len": 250080,
+   "max_position_embeddings": 512,
+   "position_embedding_type": "absolute",
+   "max_seq_length_configured": 512,
+   "embedding_dim": 384,
+   "dtype": "torch.float32",
+   "weights_bytes_in_memory": 470681088,
+   "weights_file_bytes": 470703464,
+   "checkpoint_dir_bytes": 488339903,
+   "tokenizer_class": "XLMRobertaTokenizerFast",
+   "special_tokens": {
+    "bos_token": "<s>",
+    "eos_token": "</s>",
+    "unk_token": "<unk>",
+    "sep_token": "</s>",
+    "pad_token": "<pad>",
+    "cls_token": "<s>",
+    "mask_token": "<mask>"
+   },
+   "dropout": {
+    "hidden": 0.1,
+    "attention": 0.1
+   },
+   "torch_version": "2.14.0+cpu"
+  }
+ },
+ "shape_trace_schema_linker": {
+  "question": "2024-25 में लुधियाना जिले में कुल भूजल निकासी कितनी थी?",
+  "tokens": [
+   "<s>",
+   "▁que",
+   "ry",
+   ":",
+   "▁20",
+   "24",
+   "-25",
+   "▁में",
+   "▁लु",
+   "धि",
+   "या",
+   "ना"
+  ],
+  "input_ids": [
+   1,
+   23
+  ],
+  "attention_mask": [
+   1,
+   23
+  ],
+  "token_embeddings": [
+   1,
+   23,
+   384
+  ],
+  "mean_pooled": [
+   1,
+   384
+  ],
+  "normalised_query": [
+   1,
+   384
+  ],
+  "query_l2_norm": 1.0,
+  "schema_matrix_E": [
+   115,
+   384
+  ],
+  "scores": [
+   1,
+   115
+  ],
+  "n_elements": 115,
+  "n_columns": 106,
+  "n_tables": 9
+ },
+ "llm_qwen3_8b": {
+  "ollama_tag": "qwen3:8b",
+  "blob_digest": "sha256:a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f",
+  "file_bytes": 5225374496,
+  "gguf_version": 3,
+  "n_tensors": 399,
+  "total_parameters": 8190735360,
+  "parameters_by_storage_type": {
+   "Q6_K": 1528299520,
+   "F32": 308224,
+   "Q4_K": 6511132672,
+   "F16": 150994944
+  },
+  "parameters_by_group": {
+   "output_head": 622333952,
+   "token_embedding": 622329856,
+   "transformer_blocks": 6946071552
+  },
+  "metadata": {
+   "general.architecture": "qwen3",
+   "general.type": "model",
+   "general.name": "Qwen3 8B",
+   "general.basename": "Qwen3",
+   "general.size_label": "8B",
+   "general.license": "apache-2.0",
+   "qwen3.block_count": 36,
+   "qwen3.context_length": 40960,
+   "qwen3.embedding_length": 4096,
+   "qwen3.feed_forward_length": 12288,
+   "qwen3.attention.head_count": 32,
+   "qwen3.attention.head_count_kv": 8,
+   "qwen3.rope.freq_base": 1000000.0,
+   "qwen3.attention.layer_norm_rms_epsilon": 9.999999974752427e-07,
+   "qwen3.attention.key_length": 128,
+   "qwen3.attention.value_length": 128,
+   "tokenizer.ggml.model": "gpt2",
+   "tokenizer.ggml.pre": "qwen2",
+   "tokenizer.ggml.tokens": {
+    "array_len": 151936
+   },
+   "tokenizer.ggml.token_type": {
+    "array_len": 151936
+   },
+   "tokenizer.ggml.merges": {
+    "array_len": 151387
+   },
+   "tokenizer.ggml.eos_token_id": 151645,
+   "tokenizer.ggml.padding_token_id": 151643,
+   "tokenizer.ggml.bos_token_id": 151643,
+   "tokenizer.ggml.add_bos_token": false,
+   "general.quantization_version": 2,
+   "general.file_type": 15
+  },
+  "has_separate_output_head": true,
+  "example_tensors": [
+   {
+    "name": "output.weight",
+    "shape": [
+     4096,
+     151936
+    ],
+    "type": "Q6_K"
+   },
+   {
+    "name": "output_norm.weight",
+    "shape": [
+     4096
+    ],
+    "type": "F32"
+   },
+   {
+    "name": "token_embd.weight",
+    "shape": [
+     4096,
+     151936
+    ],
+    "type": "Q4_K"
+   },
+   {
+    "name": "blk.0.attn_k.weight",
+    "shape": [
+     4096,
+     1024
+    ],
+    "type": "Q4_K"
+   },
+   {
+    "name": "blk.0.attn_k_norm.weight",
+    "shape": [
+     128
+    ],
+    "type": "F32"
+   },
+   {
+    "name": "blk.0.attn_norm.weight",
+    "shape": [
+     4096
+    ],
+    "type": "F32"
+   }
+  ]
+ },
+ "entity_ranker": {
+  "class": "LogisticRegression",
+  "n_features": 12,
+  "parameters": 13,
+  "coef": [
+   -2.1167,
+   18.9468,
+   7.9094,
+   -0.3341,
+   13.7848,
+   0.306,
+   1.8649,
+   -14.879,
+   -6.3917,
+   -7.667,
+   -8.5867,
+   -1.0652
+  ],
+  "intercept": -25.1013,
+  "C": 1.0,
+  "class_weight": "balanced",
+  "max_iter": 2000
+ }
+}

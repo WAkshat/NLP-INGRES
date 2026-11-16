@@ -1,15 +1,20 @@
 """Hierarchical geographic entity resolver: mention (+ context) -> ranked INGRES locations.
 
-Candidate generation: char 2-4-gram TF-IDF over phonetically folded aliases (+ exact folded / skeleton matches).
+Candidate generation: char 2-4-gram TF-IDF over phonetically folded aliases (+ exact folded matches).
 Ranking: logistic regression over string features (TF-IDF cosine, edit ratio on folded form, consonant-skeleton ratio,
 exact match), a learned multilingual embedding similarity (multilingual-e5-small, mention vs alias), and hierarchy
 context (does a state / district mentioned elsewhere in the question contain the candidate?).
+
+Two comparison spaces are indexed: the folded form, and a voicing-neutral ("devoiced") form used when the mention is
+written in Tamil script, which does not distinguish k/g, t/d, p/b, c/j/s.
 """
 from __future__ import annotations
 
+import hashlib
 import random
 import re
 from difflib import SequenceMatcher
+from pathlib import Path
 
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -17,77 +22,108 @@ from sklearn.linear_model import LogisticRegression
 
 from indic_transliteration import sanscript
 
-from src.entity_resolution.gazetteer import Entity, fold, romanise, skeleton
+from src.entity_resolution.gazetteer import TAMIL, Entity, devoice, fold, romanise, skeleton
 
 FEATURES = ["tfidf", "edit", "skeleton", "exact", "embed", "ctx_state", "ctx_district", "ctx_conflict",
             "lvl_state", "lvl_district", "lvl_unit", "len_diff"]
+_VOWELS = re.compile(r"[aeiou ]")
 
 
 class Resolver:
-    def __init__(self, gaz: list[Entity], embedder=None, seed: int = 0):
+    def __init__(self, gaz: list[Entity], embedder=None, seed: int = 0, emb_cache: Path | None = None):
         self.gaz = gaz
         self.alias_ent, self.alias_text = [], []
         for i, e in enumerate(gaz):
             for a in sorted(e.aliases):
                 self.alias_ent.append(i)
                 self.alias_text.append(a)
-        self.alias_fold = [fold(a) for a in self.alias_text]
-        self.alias_skel = [skeleton(a) for a in self.alias_text]
-        self.vec = TfidfVectorizer(analyzer="char_wb", ngram_range=(2, 4), sublinear_tf=True)
-        self.X = self.vec.fit_transform(self.alias_fold)
-        self.exact = {}
-        for j, f in enumerate(self.alias_fold):
-            self.exact.setdefault(f, []).append(j)
+        folded = [fold(a) for a in self.alias_text]
+        self.alias_fold = folded
+        self.spaces = {False: self._index(folded), True: self._index([devoice(f) for f in folded])}   # key: Tamil-script mention?
         self.embedder = embedder
         self.E = None
         if embedder is not None:
-            self.E = embedder.encode([f"passage: {a}" for a in self.alias_text], normalize_embeddings=True,
-                                     batch_size=128, show_progress_bar=False)
+            texts = [f"passage: {a}" for a in self.alias_text]
+            path = Path(emb_cache) / (hashlib.sha1("\n".join(texts).encode()).hexdigest()[:16] + ".npy") if emb_cache else None
+            if path is not None and path.exists():
+                self.E = np.load(path)
+            else:
+                self.E = embedder.encode(texts, normalize_embeddings=True, batch_size=128, show_progress_bar=False)
+                if path is not None:
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    np.save(path, self.E)
         self.ranker: LogisticRegression | None = None
         self.seed = seed
 
-    # ---------------------------------------------------------------- candidates + features
-    def candidates(self, mention: str, k: int = 30) -> list[int]:
-        f = fold(mention)
-        sims = (self.X @ self.vec.transform([f]).T).toarray().ravel()
-        top = list(np.argsort(-sims)[:k])
-        top += [j for j in self.exact.get(f, []) if j not in top]
-        return top
+    @staticmethod
+    def _index(forms: list[str]) -> dict:
+        vec = TfidfVectorizer(analyzer="char_wb", ngram_range=(2, 4), sublinear_tf=True)
+        X = vec.fit_transform(forms)
+        exact = {}
+        for j, f in enumerate(forms):
+            exact.setdefault(f, []).append(j)
+        return {"form": forms, "skel": [_VOWELS.sub("", f) for f in forms], "vec": vec, "X": X, "exact": exact}
 
-    def features(self, mention: str, js: list[int], context: dict | None, m_emb=None) -> np.ndarray:
-        f, sk = fold(mention), skeleton(mention)
-        qv = self.vec.transform([f])
-        tf = (self.X[js] @ qv.T).toarray().ravel()
+    def _forms(self, mention: str):
+        """(index of the comparison space, mention form, mention skeleton)."""
+        ta = bool(TAMIL.search(mention))
+        f = devoice(fold(mention)) if ta else fold(mention)
+        return self.spaces[ta], f, _VOWELS.sub("", f)
+
+    # ---------------------------------------------------------------- candidates + features
+    def _cands(self, sp: dict, f: str, k: int = 30):
+        sims = (sp["X"] @ sp["vec"].transform([f]).T).toarray().ravel()
+        top = list(np.argsort(-sims)[:k])
+        top += [j for j in sp["exact"].get(f, []) if j not in top]
+        return top, sims[top]
+
+    def candidates(self, mention: str, k: int = 30) -> list[int]:
+        sp, f, _ = self._forms(mention)
+        return self._cands(sp, f, k)[0]
+
+    def features(self, mention: str, js: list[int], context: dict | None, m_emb=None, tf=None) -> np.ndarray:
+        sp, f, sk = self._forms(mention)
+        if tf is None:
+            tf = (sp["X"][js] @ sp["vec"].transform([f]).T).toarray().ravel()
         ctx_states = (context or {}).get("states", set())
         ctx_districts = (context or {}).get("districts", set())
         rows = []
         for n, j in enumerate(js):
             e = self.gaz[self.alias_ent[j]]
+            af = sp["form"][j]
             emb = float(self.E[j] @ m_emb) if m_emb is not None else 0.0
             rows.append([
                 tf[n],
-                SequenceMatcher(None, f, self.alias_fold[j]).ratio(),
-                SequenceMatcher(None, sk, self.alias_skel[j]).ratio(),
-                float(f == self.alias_fold[j]),
+                SequenceMatcher(None, f, af).ratio(),
+                SequenceMatcher(None, sk, sp["skel"][j]).ratio(),
+                float(f == af),
                 emb,
                 float(bool(ctx_states) and e.state in ctx_states),
                 float(bool(ctx_districts) and e.district in ctx_districts),
                 float(bool(ctx_states) and e.level != "state" and e.state not in ctx_states),
                 float(e.level == "state"), float(e.level == "district"), float(e.level == "unit"),
-                abs(len(f) - len(self.alias_fold[j])) / max(1, len(f)),
+                abs(len(f) - len(af)) / max(1, len(f)),
             ])
         return np.asarray(rows, dtype=float)
 
-    def _embed(self, mention: str):
+    def embed(self, mentions: list[str]):
+        """Embeddings of several mentions in one batched forward pass (None without an embedder)."""
         if self.embedder is None:
-            return None
-        return self.embedder.encode([f"query: {mention}"], normalize_embeddings=True, show_progress_bar=False)[0]
+            return [None] * len(mentions)
+        return self.embedder.encode([f"query: {m}" for m in mentions], normalize_embeddings=True, batch_size=64,
+                                    show_progress_bar=False)
 
-    def resolve(self, mention: str, context: dict | None = None, level: str | None = None, k: int = 5) -> list[tuple[Entity, float]]:
-        js = self.candidates(mention)
+    def resolve(self, mention: str, context: dict | None = None, level: str | None = None, k: int = 5,
+                m_emb=None) -> list[tuple[Entity, float]]:
+        sp, f, _ = self._forms(mention)
+        js, tf = self._cands(sp, f)
         if level:
-            js = [j for j in js if self.gaz[self.alias_ent[j]].level == level] or js
-        F = self.features(mention, js, context, self._embed(mention))
+            keep = [n for n, j in enumerate(js) if self.gaz[self.alias_ent[j]].level == level]
+            if keep:
+                js, tf = [js[n] for n in keep], tf[keep]
+        if m_emb is None:
+            m_emb = self.embed([mention])[0]
+        F = self.features(mention, js, context, m_emb, tf)
         scores = self.ranker.predict_proba(F)[:, 1] if self.ranker is not None else F[:, 1] + F[:, 0]
         best = {}
         for j, s in zip(js, scores):                     # several aliases of one entity -> keep the best
@@ -101,12 +137,13 @@ class Resolver:
     def fit(self, mentions: list[tuple[str, int, dict | None]]):
         """mentions: (mention text, gold entity index, context). Pointwise LR over candidate features."""
         Xs, ys = [], []
-        for text, gold, ctx in mentions:
-            js = self.candidates(text)
+        embs = self.embed([m[0] for m in mentions])
+        for (text, gold, ctx), m_emb in zip(mentions, embs):
+            sp, f, _ = self._forms(text)
+            js, tf = self._cands(sp, f)
             if not any(self.alias_ent[j] == gold for j in js):
                 continue                                  # candidate generation miss: nothing to learn from
-            F = self.features(text, js, ctx, self._embed(text))
-            Xs.append(F)
+            Xs.append(self.features(text, js, ctx, m_emb, tf))
             ys.append(np.array([self.alias_ent[j] == gold for j in js], dtype=int))
         self.ranker = LogisticRegression(max_iter=2000, class_weight="balanced", random_state=self.seed)
         self.ranker.fit(np.vstack(Xs), np.concatenate(ys))
