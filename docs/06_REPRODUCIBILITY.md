@@ -113,7 +113,7 @@ was identical across the October and November installs for the requests that wer
 ## 9. Tests
 
 ```bash
-python -m pytest            # 67 tests
+python -m pytest            # 69 tests
 ```
 `tests/test_db_against_published.py` needs `data/processed/ingres.db`.
 

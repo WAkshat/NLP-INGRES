@@ -9,9 +9,10 @@
 Outputs go to experiments/pipeline_v2/ (--out). The original system's runs (git tag baseline-v1) are frozen in
 experiments/pipeline/ and are only read here, for paired comparisons.
 
-Configs: v2 = schema hints + place hints + retrieved examples + year hints + repair.  full / no_fewshot / no_places /
-no_schema = the baseline-v1 configurations (no year hints) under the current code.  v2_loio = v2 with every TRAIN
-example of the question's own intent hidden from retrieval ("leave own intent out").
+Configs: v3 = schema hints + place hints (fixed resolver) + retrieved examples + year hints + domain notes + value
+snapping + repair.  v2 = v3 without domain notes and value snapping.  full / no_fewshot / no_places / no_schema = the
+baseline-v1 configurations under the current code (fixed resolver, nothing else).  *_loio = every TRAIN example of the
+question's own intent hidden from retrieval ("leave own intent out"); v3k6_loio = the same with 6 examples instead of 3.
 First-attempt (no-repair) accuracy needs no run: it is recorded for every question.
 """
 import argparse
@@ -31,9 +32,10 @@ from src.utils.safe_sql import connect_ro  # noqa: E402
 
 BASELINE = ROOT / "experiments/pipeline"            # frozen baseline-v1 outputs
 OUT = ROOT / "experiments/pipeline_v2"
-V1 = {"year_hints": False}
-CONFIGS = {"v2": {}, "v2_loio": {}, "full": V1, "no_fewshot": {**V1, "fewshot": False}, "no_places": {**V1, "places": False},
-           "no_schema": {**V1, "schema_hints": False}}
+V1 = {"year_hints": False, "snap_values": False, "domain_notes": False}
+V2 = {"snap_values": False, "domain_notes": False}
+CONFIGS = {"v3": {}, "v3_loio": {}, "v2": V2, "v2_loio": V2, "full": V1, "no_fewshot": {**V1, "fewshot": False}, "no_places": {**V1, "places": False},
+           "no_schema": {**V1, "schema_hints": False}, "v3k6_loio": {"k_shots": 6}, "v31": {}}
 BENCH = ROOT / "data/benchmark/ingres_bench_v1.jsonl"
 
 
@@ -100,7 +102,8 @@ def stage_run(config, splits):
                                 "intent": r["intent"], "noisy": bool(r["noise"]), "correct": int(ex.correct),
                                 "correct_first_attempt": int(ex0.correct), "exec_error": ex.error,
                                 "n_attempts": len(o["attempts"]), "places_ok": int(gold_places <= {p["db_name"].lower() for p in o["places"]}),
-                                **{k: o[k] for k in ("sql", "first_sql", "hints", "places", "years", "latency_s", "prompt_tokens", "output_tokens")}},
+                                **{k: o[k] for k in ("sql", "first_sql", "hints", "places", "years", "latency_s", "prompt_tokens", "output_tokens", "timings_ms")},
+                                "snapped": [c for a in o["attempts"] for c in a.get("snapped", [])]},
                                ensure_ascii=False) + "\n")
             f.flush()
             if i % 50 == 0:
@@ -162,6 +165,8 @@ def stage_summary():
                 "by_language": df.groupby("language")[col].mean().round(4).to_dict(),
                 "by_difficulty": df.groupby("difficulty")[col].mean().round(4).to_dict()}
     runs = {"baseline-v1 full": load_jsonl(BASELINE / "full.jsonl")}
+    if (OUT / "baseline_v1_rerun.jsonl").exists():
+        runs["baseline-v1 rerun"] = load_jsonl(OUT / "baseline_v1_rerun.jsonl")
     for cfg in CONFIGS:
         if (OUT / f"{cfg}.jsonl").exists():
             runs[cfg] = load_jsonl(OUT / f"{cfg}.jsonl")
@@ -182,16 +187,18 @@ def stage_summary():
         if res:
             out[split] = res
     pairs = {}
-    for a, b in (("v2", "baseline-v1 full"), ("full", "baseline-v1 full"), ("v2", "full"), ("v2", "v2_loio")):
+    for a, b in (("v3", "baseline-v1 rerun"), ("v3", "baseline-v1 full"), ("baseline-v1 rerun", "baseline-v1 full"),
+                 ("v2", "baseline-v1 rerun"), ("v3", "v2"), ("full", "baseline-v1 rerun"), ("v3", "v3_loio"), ("v2", "full"),
+                 ("v3k6_loio", "v3_loio")):
         if a in runs and b in runs:
-            for split in ("test", "hard_test"):
+            for split in ("dev", "test", "hard_test"):
                 x, y = runs[a][runs[a].split == split], runs[b][runs[b].split == split]
                 if len(x) and len(y):
                     pairs[f"{a} vs {b} [{split}]"] = mcnemar(x, y)
     out["paired_tests"] = pairs
     ev = lambda d: d[d.split.isin(["test", "hard_test"])]  # noqa: E731
     out["error_analysis"] = {name: error_analysis(ev(df), gold, OUT / f"errors_{name.replace(' ', '_')}.csv")
-                             for name, df in runs.items() if name in ("baseline-v1 full", "v2") and len(ev(df))}
+                             for name, df in runs.items() if name in ("baseline-v1 rerun", "v3") and len(ev(df))}
     (OUT / "results.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
     for split, res in out.items():
         if split in ("paired_tests", "error_analysis"):
@@ -206,7 +213,7 @@ def stage_summary():
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage", required=True, choices=["places", "run", "summary"])
-    ap.add_argument("--config", default="v2", choices=list(CONFIGS))
+    ap.add_argument("--config", default="v3", choices=list(CONFIGS))
     ap.add_argument("--splits", nargs="+", default=["test"])
     ap.add_argument("--out", default=str(OUT))
     a = ap.parse_args()

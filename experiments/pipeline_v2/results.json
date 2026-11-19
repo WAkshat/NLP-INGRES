@@ -1,0 +1,745 @@
+{
+ "dev": {
+  "v3": {
+   "n": 228,
+   "EX": 0.9211,
+   "EX_ci95": [
+    0.886,
+    0.9518
+   ],
+   "by_language": {
+    "english": 1.0,
+    "hindi": 0.8947,
+    "hinglish": 0.9123,
+    "tamil": 0.8772
+   },
+   "by_difficulty": {
+    "cross_year": 0.7083,
+    "filtered_aggregate": 0.98,
+    "multi_hop": 0.9167,
+    "simple_lookup": 0.9091
+   },
+   "first_attempt_EX": 0.9211,
+   "llm_latency_mean_s": 2.909,
+   "prompt_tokens_mean": 2683.8,
+   "repair_turns_mean": 0.048,
+   "linker_found_all_places": 0.8816,
+   "sql_has_all_gold_places": 0.9737,
+   "sql_year_set_correct": 0.9956
+  },
+  "v3_loio": {
+   "n": 228,
+   "EX": 0.557,
+   "EX_ci95": [
+    0.4956,
+    0.6228
+   ],
+   "by_language": {
+    "english": 0.6491,
+    "hindi": 0.5614,
+    "hinglish": 0.5088,
+    "tamil": 0.5088
+   },
+   "by_difficulty": {
+    "cross_year": 0.3333,
+    "filtered_aggregate": 0.85,
+    "multi_hop": 0.1,
+    "simple_lookup": 0.6364
+   },
+   "first_attempt_EX": 0.557,
+   "llm_latency_mean_s": 3.316,
+   "prompt_tokens_mean": 2856.8,
+   "repair_turns_mean": 0.118,
+   "linker_found_all_places": 0.8816,
+   "sql_has_all_gold_places": 0.9605,
+   "sql_year_set_correct": 0.9693
+  },
+  "v2": {
+   "n": 228,
+   "EX": 0.8333,
+   "EX_ci95": [
+    0.7851,
+    0.8816
+   ],
+   "by_language": {
+    "english": 0.9123,
+    "hindi": 0.7719,
+    "hinglish": 0.8596,
+    "tamil": 0.7895
+   },
+   "by_difficulty": {
+    "cross_year": 0.7917,
+    "filtered_aggregate": 0.86,
+    "multi_hop": 0.8833,
+    "simple_lookup": 0.7273
+   },
+   "first_attempt_EX": 0.8202,
+   "llm_latency_mean_s": 2.417,
+   "prompt_tokens_mean": 2726.1,
+   "repair_turns_mean": 0.105,
+   "linker_found_all_places": 0.8816,
+   "sql_has_all_gold_places": 0.9605,
+   "sql_year_set_correct": 0.9912
+  },
+  "full": {
+   "n": 228,
+   "EX": 0.7719,
+   "EX_ci95": [
+    0.7149,
+    0.8246
+   ],
+   "by_language": {
+    "english": 0.8421,
+    "hindi": 0.6491,
+    "hinglish": 0.8772,
+    "tamil": 0.7193
+   },
+   "by_difficulty": {
+    "cross_year": 0.75,
+    "filtered_aggregate": 0.84,
+    "multi_hop": 0.7833,
+    "simple_lookup": 0.6136
+   },
+   "first_attempt_EX": 0.7544,
+   "llm_latency_mean_s": 2.788,
+   "prompt_tokens_mean": 2766.9,
+   "repair_turns_mean": 0.132,
+   "linker_found_all_places": 0.8816,
+   "sql_has_all_gold_places": 0.9649,
+   "sql_year_set_correct": 0.9254
+  },
+  "v3k6_loio": {
+   "n": 228,
+   "EX": 0.5921,
+   "EX_ci95": [
+    0.5307,
+    0.6535
+   ],
+   "by_language": {
+    "english": 0.6667,
+    "hindi": 0.5789,
+    "hinglish": 0.5789,
+    "tamil": 0.5439
+   },
+   "by_difficulty": {
+    "cross_year": 0.4583,
+    "filtered_aggregate": 0.87,
+    "multi_hop": 0.15,
+    "simple_lookup": 0.6364
+   },
+   "first_attempt_EX": 0.5789,
+   "llm_latency_mean_s": 3.434,
+   "prompt_tokens_mean": 3295.0,
+   "repair_turns_mean": 0.079,
+   "linker_found_all_places": 0.8816,
+   "sql_has_all_gold_places": 0.9649,
+   "sql_year_set_correct": 0.9781
+  },
+  "v31": {
+   "n": 228,
+   "EX": 0.943,
+   "EX_ci95": [
+    0.9123,
+    0.9693
+   ],
+   "by_language": {
+    "english": 1.0,
+    "hindi": 0.9474,
+    "hinglish": 0.9474,
+    "tamil": 0.8772
+   },
+   "by_difficulty": {
+    "cross_year": 0.75,
+    "filtered_aggregate": 0.99,
+    "multi_hop": 0.9667,
+    "simple_lookup": 0.9091
+   },
+   "first_attempt_EX": 0.943,
+   "llm_latency_mean_s": 2.815,
+   "prompt_tokens_mean": 2630.2,
+   "repair_turns_mean": 0.031,
+   "linker_found_all_places": 0.8816,
+   "sql_has_all_gold_places": 0.9781,
+   "sql_year_set_correct": 0.9956
+  }
+ },
+ "test": {
+  "baseline-v1 full": {
+   "n": 384,
+   "EX": 0.7188,
+   "EX_ci95": [
+    0.6745,
+    0.7604
+   ],
+   "by_language": {
+    "english": 0.7812,
+    "hindi": 0.6979,
+    "hinglish": 0.7708,
+    "tamil": 0.625
+   },
+   "by_difficulty": {
+    "cross_year": 0.7667,
+    "filtered_aggregate": 0.8462,
+    "multi_hop": 0.6458,
+    "simple_lookup": 0.5583
+   },
+   "first_attempt_EX": 0.7031,
+   "llm_latency_mean_s": 2.429,
+   "prompt_tokens_mean": 2891.7,
+   "repair_turns_mean": 0.201,
+   "linker_found_all_places": 0.6823,
+   "sql_has_all_gold_places": 0.9141,
+   "sql_year_set_correct": 0.9193
+  },
+  "baseline-v1 rerun": {
+   "n": 384,
+   "EX": 0.7214,
+   "EX_ci95": [
+    0.6745,
+    0.7631
+   ],
+   "by_language": {
+    "english": 0.7917,
+    "hindi": 0.6979,
+    "hinglish": 0.7708,
+    "tamil": 0.625
+   },
+   "by_difficulty": {
+    "cross_year": 0.7833,
+    "filtered_aggregate": 0.8269,
+    "multi_hop": 0.7083,
+    "simple_lookup": 0.5583
+   },
+   "first_attempt_EX": 0.7109,
+   "llm_latency_mean_s": 2.862,
+   "prompt_tokens_mean": 2848.8,
+   "repair_turns_mean": 0.185,
+   "linker_found_all_places": 0.6823,
+   "sql_has_all_gold_places": 0.9167,
+   "sql_year_set_correct": 0.9193
+  },
+  "v3": {
+   "n": 384,
+   "EX": 0.8125,
+   "EX_ci95": [
+    0.7734,
+    0.8516
+   ],
+   "by_language": {
+    "english": 0.9062,
+    "hindi": 0.75,
+    "hinglish": 0.8438,
+    "tamil": 0.75
+   },
+   "by_difficulty": {
+    "cross_year": 0.7833,
+    "filtered_aggregate": 0.9038,
+    "multi_hop": 0.75,
+    "simple_lookup": 0.7333
+   },
+   "first_attempt_EX": 0.8099,
+   "llm_latency_mean_s": 2.662,
+   "prompt_tokens_mean": 2741.7,
+   "repair_turns_mean": 0.086,
+   "linker_found_all_places": 0.7917,
+   "sql_has_all_gold_places": 0.9531,
+   "sql_year_set_correct": 0.987
+  },
+  "v3_loio": {
+   "n": 384,
+   "EX": 0.5104,
+   "EX_ci95": [
+    0.4609,
+    0.5599
+   ],
+   "by_language": {
+    "english": 0.5938,
+    "hindi": 0.5,
+    "hinglish": 0.4688,
+    "tamil": 0.4792
+   },
+   "by_difficulty": {
+    "cross_year": 0.3833,
+    "filtered_aggregate": 0.6603,
+    "multi_hop": 0.0833,
+    "simple_lookup": 0.55
+   },
+   "first_attempt_EX": 0.5052,
+   "llm_latency_mean_s": 3.085,
+   "prompt_tokens_mean": 2922.1,
+   "repair_turns_mean": 0.148,
+   "linker_found_all_places": 0.7917,
+   "sql_has_all_gold_places": 0.9505,
+   "sql_year_set_correct": 0.9714
+  },
+  "v2": {
+   "n": 384,
+   "EX": 0.7839,
+   "EX_ci95": [
+    0.7422,
+    0.8229
+   ],
+   "by_language": {
+    "english": 0.875,
+    "hindi": 0.75,
+    "hinglish": 0.7812,
+    "tamil": 0.7292
+   },
+   "by_difficulty": {
+    "cross_year": 0.8,
+    "filtered_aggregate": 0.8782,
+    "multi_hop": 0.6875,
+    "simple_lookup": 0.6917
+   },
+   "first_attempt_EX": 0.7734,
+   "llm_latency_mean_s": 2.744,
+   "prompt_tokens_mean": 2780.3,
+   "repair_turns_mean": 0.146,
+   "linker_found_all_places": 0.7917,
+   "sql_has_all_gold_places": 0.9505,
+   "sql_year_set_correct": 0.9818
+  },
+  "full": {
+   "n": 384,
+   "EX": 0.7474,
+   "EX_ci95": [
+    0.7057,
+    0.7891
+   ],
+   "by_language": {
+    "english": 0.8021,
+    "hindi": 0.6979,
+    "hinglish": 0.7812,
+    "tamil": 0.7083
+   },
+   "by_difficulty": {
+    "cross_year": 0.8167,
+    "filtered_aggregate": 0.8397,
+    "multi_hop": 0.7083,
+    "simple_lookup": 0.6083
+   },
+   "first_attempt_EX": 0.7422,
+   "llm_latency_mean_s": 2.674,
+   "prompt_tokens_mean": 2730.0,
+   "repair_turns_mean": 0.138,
+   "linker_found_all_places": 0.7917,
+   "sql_has_all_gold_places": 0.9505,
+   "sql_year_set_correct": 0.9193
+  },
+  "v31": {
+   "n": 384,
+   "EX": 0.8151,
+   "EX_ci95": [
+    0.776,
+    0.8516
+   ],
+   "by_language": {
+    "english": 0.9062,
+    "hindi": 0.75,
+    "hinglish": 0.8542,
+    "tamil": 0.75
+   },
+   "by_difficulty": {
+    "cross_year": 0.8,
+    "filtered_aggregate": 0.9038,
+    "multi_hop": 0.75,
+    "simple_lookup": 0.7333
+   },
+   "first_attempt_EX": 0.8125,
+   "llm_latency_mean_s": 2.66,
+   "prompt_tokens_mean": 2741.0,
+   "repair_turns_mean": 0.086,
+   "linker_found_all_places": 0.7865,
+   "sql_has_all_gold_places": 0.9531,
+   "sql_year_set_correct": 0.987
+  }
+ },
+ "hard_test": {
+  "baseline-v1 full": {
+   "n": 260,
+   "EX": 0.5769,
+   "EX_ci95": [
+    0.5191,
+    0.6385
+   ],
+   "by_language": {
+    "english": 0.6462,
+    "hindi": 0.5231,
+    "hinglish": 0.6308,
+    "tamil": 0.5077
+   },
+   "by_difficulty": {
+    "cross_year": 0.55,
+    "filtered_aggregate": 0.725,
+    "multi_hop": 0.6364,
+    "simple_lookup": 0.5
+   },
+   "first_attempt_EX": 0.5615,
+   "llm_latency_mean_s": 2.884,
+   "prompt_tokens_mean": 3283.6,
+   "repair_turns_mean": 0.327,
+   "linker_found_all_places": 0.8077,
+   "sql_has_all_gold_places": 0.8269,
+   "sql_year_set_correct": 0.9077
+  },
+  "baseline-v1 rerun": {
+   "n": 260,
+   "EX": 0.5885,
+   "EX_ci95": [
+    0.5269,
+    0.6462
+   ],
+   "by_language": {
+    "english": 0.6923,
+    "hindi": 0.5385,
+    "hinglish": 0.5846,
+    "tamil": 0.5385
+   },
+   "by_difficulty": {
+    "cross_year": 0.54,
+    "filtered_aggregate": 0.75,
+    "multi_hop": 0.6591,
+    "simple_lookup": 0.5263
+   },
+   "first_attempt_EX": 0.5654,
+   "llm_latency_mean_s": 3.399,
+   "prompt_tokens_mean": 3273.1,
+   "repair_turns_mean": 0.323,
+   "linker_found_all_places": 0.8077,
+   "sql_has_all_gold_places": 0.8308,
+   "sql_year_set_correct": 0.9154
+  },
+  "v3": {
+   "n": 260,
+   "EX": 0.7038,
+   "EX_ci95": [
+    0.65,
+    0.7577
+   ],
+   "by_language": {
+    "english": 0.7538,
+    "hindi": 0.6923,
+    "hinglish": 0.7077,
+    "tamil": 0.6615
+   },
+   "by_difficulty": {
+    "cross_year": 0.62,
+    "filtered_aggregate": 0.85,
+    "multi_hop": 0.75,
+    "simple_lookup": 0.7105
+   },
+   "first_attempt_EX": 0.7,
+   "llm_latency_mean_s": 3.027,
+   "prompt_tokens_mean": 2921.8,
+   "repair_turns_mean": 0.135,
+   "linker_found_all_places": 0.8462,
+   "sql_has_all_gold_places": 0.9077,
+   "sql_year_set_correct": 0.9615
+  },
+  "v2": {
+   "n": 260,
+   "EX": 0.6154,
+   "EX_ci95": [
+    0.5538,
+    0.6731
+   ],
+   "by_language": {
+    "english": 0.6923,
+    "hindi": 0.6154,
+    "hinglish": 0.6154,
+    "tamil": 0.5385
+   },
+   "by_difficulty": {
+    "cross_year": 0.55,
+    "filtered_aggregate": 0.8,
+    "multi_hop": 0.7045,
+    "simple_lookup": 0.5526
+   },
+   "first_attempt_EX": 0.5923,
+   "llm_latency_mean_s": 3.473,
+   "prompt_tokens_mean": 3361.5,
+   "repair_turns_mean": 0.342,
+   "linker_found_all_places": 0.8462,
+   "sql_has_all_gold_places": 0.8423,
+   "sql_year_set_correct": 0.9692
+  },
+  "full": {
+   "n": 260,
+   "EX": 0.5962,
+   "EX_ci95": [
+    0.5346,
+    0.6538
+   ],
+   "by_language": {
+    "english": 0.6769,
+    "hindi": 0.5692,
+    "hinglish": 0.5692,
+    "tamil": 0.5692
+   },
+   "by_difficulty": {
+    "cross_year": 0.53,
+    "filtered_aggregate": 0.775,
+    "multi_hop": 0.6818,
+    "simple_lookup": 0.5395
+   },
+   "first_attempt_EX": 0.5731,
+   "llm_latency_mean_s": 3.353,
+   "prompt_tokens_mean": 3230.0,
+   "repair_turns_mean": 0.308,
+   "linker_found_all_places": 0.8462,
+   "sql_has_all_gold_places": 0.8385,
+   "sql_year_set_correct": 0.9154
+  },
+  "v31": {
+   "n": 260,
+   "EX": 0.7115,
+   "EX_ci95": [
+    0.6577,
+    0.7654
+   ],
+   "by_language": {
+    "english": 0.7538,
+    "hindi": 0.7077,
+    "hinglish": 0.7231,
+    "tamil": 0.6615
+   },
+   "by_difficulty": {
+    "cross_year": 0.63,
+    "filtered_aggregate": 0.85,
+    "multi_hop": 0.75,
+    "simple_lookup": 0.7237
+   },
+   "first_attempt_EX": 0.7077,
+   "llm_latency_mean_s": 3.003,
+   "prompt_tokens_mean": 2910.6,
+   "repair_turns_mean": 0.131,
+   "linker_found_all_places": 0.8462,
+   "sql_has_all_gold_places": 0.9115,
+   "sql_year_set_correct": 0.9615
+  }
+ },
+ "paired_tests": {
+  "v3 vs baseline-v1 rerun [test]": {
+   "n": 384,
+   "wins": 51,
+   "losses": 16,
+   "p": 2.168923876071706e-05
+  },
+  "v3 vs baseline-v1 rerun [hard_test]": {
+   "n": 260,
+   "wins": 42,
+   "losses": 12,
+   "p": 5.209447200793526e-05
+  },
+  "v3 vs baseline-v1 full [test]": {
+   "n": 384,
+   "wins": 51,
+   "losses": 15,
+   "p": 1.0096127351113507e-05
+  },
+  "v3 vs baseline-v1 full [hard_test]": {
+   "n": 260,
+   "wins": 45,
+   "losses": 12,
+   "p": 1.3127443164284712e-05
+  },
+  "baseline-v1 rerun vs baseline-v1 full [test]": {
+   "n": 384,
+   "wins": 5,
+   "losses": 4,
+   "p": 1.0
+  },
+  "baseline-v1 rerun vs baseline-v1 full [hard_test]": {
+   "n": 260,
+   "wins": 6,
+   "losses": 3,
+   "p": 0.5078125
+  },
+  "v2 vs baseline-v1 rerun [test]": {
+   "n": 384,
+   "wins": 32,
+   "losses": 8,
+   "p": 0.0001821658297558315
+  },
+  "v2 vs baseline-v1 rerun [hard_test]": {
+   "n": 260,
+   "wins": 14,
+   "losses": 7,
+   "p": 0.18924713134765625
+  },
+  "v3 vs v2 [dev]": {
+   "n": 228,
+   "wins": 23,
+   "losses": 3,
+   "p": 8.797645568847656e-05
+  },
+  "v3 vs v2 [test]": {
+   "n": 384,
+   "wins": 24,
+   "losses": 13,
+   "p": 0.09887174959294498
+  },
+  "v3 vs v2 [hard_test]": {
+   "n": 260,
+   "wins": 34,
+   "losses": 11,
+   "p": 0.0008240823595997425
+  },
+  "full vs baseline-v1 rerun [test]": {
+   "n": 384,
+   "wins": 12,
+   "losses": 2,
+   "p": 0.012939453125
+  },
+  "full vs baseline-v1 rerun [hard_test]": {
+   "n": 260,
+   "wins": 4,
+   "losses": 2,
+   "p": 0.6875
+  },
+  "v3 vs v3_loio [dev]": {
+   "n": 228,
+   "wins": 84,
+   "losses": 1,
+   "p": 4.446095792472524e-24
+  },
+  "v3 vs v3_loio [test]": {
+   "n": 384,
+   "wins": 123,
+   "losses": 7,
+   "p": 1.6442075142553407e-28
+  },
+  "v2 vs full [dev]": {
+   "n": 228,
+   "wins": 18,
+   "losses": 4,
+   "p": 0.004343509674072266
+  },
+  "v2 vs full [test]": {
+   "n": 384,
+   "wins": 21,
+   "losses": 7,
+   "p": 0.012540951371192932
+  },
+  "v2 vs full [hard_test]": {
+   "n": 260,
+   "wins": 10,
+   "losses": 5,
+   "p": 0.30175781249999994
+  },
+  "v3k6_loio vs v3_loio [dev]": {
+   "n": 228,
+   "wins": 14,
+   "losses": 6,
+   "p": 0.11531829833984375
+  }
+ },
+ "error_analysis": {
+  "baseline-v1 rerun": {
+   "n_errors": 214,
+   "counts": {
+    "other (filters, joins, output shape)": 76,
+    "gold place literal missing from SQL": 72,
+    "wrong assessment year": 35,
+    "wrong metric / column": 20,
+    "wrong aggregation": 7,
+    "no SQL / execution error": 4
+   },
+   "share_of_errors": {
+    "other (filters, joins, output shape)": 0.3551,
+    "gold place literal missing from SQL": 0.3364,
+    "wrong assessment year": 0.1636,
+    "wrong metric / column": 0.0935,
+    "wrong aggregation": 0.0327,
+    "no SQL / execution error": 0.0187
+   },
+   "by_language": {
+    "english": {
+     "gold place literal missing from SQL": 8,
+     "no SQL / execution error": 0,
+     "other (filters, joins, output shape)": 24,
+     "wrong aggregation": 1,
+     "wrong assessment year": 7,
+     "wrong metric / column": 0
+    },
+    "hindi": {
+     "gold place literal missing from SQL": 20,
+     "no SQL / execution error": 2,
+     "other (filters, joins, output shape)": 15,
+     "wrong aggregation": 4,
+     "wrong assessment year": 9,
+     "wrong metric / column": 9
+    },
+    "hinglish": {
+     "gold place literal missing from SQL": 16,
+     "no SQL / execution error": 0,
+     "other (filters, joins, output shape)": 21,
+     "wrong aggregation": 2,
+     "wrong assessment year": 5,
+     "wrong metric / column": 5
+    },
+    "tamil": {
+     "gold place literal missing from SQL": 28,
+     "no SQL / execution error": 2,
+     "other (filters, joins, output shape)": 16,
+     "wrong aggregation": 0,
+     "wrong assessment year": 14,
+     "wrong metric / column": 6
+    }
+   }
+  },
+  "v3": {
+   "n_errors": 149,
+   "counts": {
+    "other (filters, joins, output shape)": 62,
+    "gold place literal missing from SQL": 37,
+    "wrong metric / column": 22,
+    "wrong assessment year": 12,
+    "wrong aggregation": 11,
+    "no SQL / execution error": 5
+   },
+   "share_of_errors": {
+    "other (filters, joins, output shape)": 0.4161,
+    "gold place literal missing from SQL": 0.2483,
+    "wrong metric / column": 0.1477,
+    "wrong assessment year": 0.0805,
+    "wrong aggregation": 0.0738,
+    "no SQL / execution error": 0.0336
+   },
+   "by_language": {
+    "english": {
+     "gold place literal missing from SQL": 5,
+     "no SQL / execution error": 0,
+     "other (filters, joins, output shape)": 14,
+     "wrong aggregation": 4,
+     "wrong assessment year": 1,
+     "wrong metric / column": 1
+    },
+    "hindi": {
+     "gold place literal missing from SQL": 11,
+     "no SQL / execution error": 1,
+     "other (filters, joins, output shape)": 15,
+     "wrong aggregation": 3,
+     "wrong assessment year": 6,
+     "wrong metric / column": 8
+    },
+    "hinglish": {
+     "gold place literal missing from SQL": 8,
+     "no SQL / execution error": 0,
+     "other (filters, joins, output shape)": 14,
+     "wrong aggregation": 3,
+     "wrong assessment year": 3,
+     "wrong metric / column": 6
+    },
+    "tamil": {
+     "gold place literal missing from SQL": 13,
+     "no SQL / execution error": 4,
+     "other (filters, joins, output shape)": 19,
+     "wrong aggregation": 1,
+     "wrong assessment year": 2,
+     "wrong metric / column": 7
+    }
+   }
+  }
+ }
+}

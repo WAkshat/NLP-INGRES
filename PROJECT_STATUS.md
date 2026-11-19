@@ -1,6 +1,6 @@
 # Project status
 
-_Last updated: 2026-10-09. Full explanation of the project, results and remaining work: [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md)._
+_Last updated: 2026-11-19. Full explanation of the project, results and remaining work: [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md)._
 
 | Phase | State | Evidence |
 |---|---|---|
@@ -13,10 +13,11 @@ _Last updated: 2026-10-09. Full explanation of the project, results and remainin
 | 7. Tokenizer / code-mixing study | **Done** (placebo-controlled; linker hints +5.2 EX, p = 0.008) | `docs/TOKENIZATION.md` |
 | 8. Numeric grounding verifier | **Done, validated** (98.1% of planted errors caught, 0% false alarms) | `docs/GROUNDING.md` |
 | 9. Full pipeline (linking + places + examples + repair) | **Done** (71.9% EX test, 57.7% hard_test) | `docs/PIPELINE.md` |
-| 10. Minimal UI | **Done**, tested end to end | `app/streamlit_app.py`, `reports/screenshots/` |
+| 10. UI | **Done**; rebuilt in Phase 12 (Ask / Explore / Results) | `app/streamlit_app.py`, `reports/screenshots/` |
 | 11. Ablations, error analysis, final docs | **Done** | `docs/PIPELINE.md`, `PROJECT_OVERVIEW.md` |
+| 12. Modernization: audit, Tamil fix, year rule, value snapping, speed-ups, new app, docs 00–09 + deep dive | **Done** (v3: 81.3% test, 70.4% hard_test; original re-run 72.1% / 58.8%) | `docs/00`–`09`, `INGRES_COMPLETE_TECHNICAL_DEEP_DIVE.md`, `experiments/pipeline_v2/`, `experiments/perf/` |
 
-## Environment (inspected 2026-09-28)
+## Environment (inspected 2026-09-28; for the November 2026 environment see `docs/06_REPRODUCIBILITY.md`)
 - Windows 11, Python 3.12.10, git 2.52, GitHub CLI 2.101 (not authenticated; releases skipped at user's request)
 - GPU: NVIDIA GeForce RTX 5060, 8 GB. **The installed torch 2.14.0 is a CPU build.** Training phases (5, 6, 7) need a
   CUDA build of torch that supports this GPU (Blackwell). Install before Phase 5.

@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import pickle
+import time
 from collections import Counter
 from pathlib import Path
 
@@ -22,6 +23,7 @@ from src.entity_resolution.gazetteer import build_gazetteer
 from src.entity_resolution.resolver import Resolver
 from src.grounding.verifier import grounded_answer
 from src.pipeline import years
+from src.pipeline.values import ValueSnapper
 from src.schema_linking.retrieval import EmbeddingRetriever, init_elements
 from src.tokenization.metrics import PUNCT, words
 from src.utils.safe_sql import UnsafeSQL, execute
@@ -29,6 +31,14 @@ from src.utils.safe_sql import UnsafeSQL, execute
 ROOT = Path(__file__).resolve().parents[2]
 FT_CKPT = ROOT / "experiments/schema_linking/checkpoints/finetuned_e5"
 RANKER = ROOT / "experiments/entity_resolution/ranker.pkl"
+# Definitions added after the dev-set error analysis (docs/PIPELINE.md): 9 of 38 dev errors used stage_of_extraction_pct
+# for "what share of extraction was for irrigation", and 5 listed extra columns. Kept out of CONVENTIONS so earlier
+# experiments keep their exact prompts.
+DOMAIN_NOTES = ("Definitions: stage_of_extraction_pct = extraction_total_ham / extractable_resource_ham x 100 (use of the "
+                "available resource); it is NOT a share of total extraction. \"What percent/share of extraction was for "
+                "irrigation\" = 100.0 * extraction_irrigation_ham / extraction_total_ham (likewise extraction_domestic_ham, "
+                "extraction_industrial_ham). When the question asks which units/districts/states, select only their names "
+                "unless it also asks for values.")
 ALIAS_CACHE = ROOT / "cache/alias_emb"       # alias embeddings of the base encoder (git-ignored, rebuilt if missing)
 
 
@@ -67,13 +77,21 @@ class PlaceLinker:
                 used |= set(range(i, i + n))
                 picked.append({"mention": " ".join(ws[i:i + n]), "level": e.level, "db_name": e.db_name,
                                "district": e.district, "state": e.state, "score": round(s, 3)})
-        # second pass: re-resolve districts / units with the detected states as hierarchy context
+        # second pass: re-resolve districts / units with the detected states as hierarchy context. The new match must clear
+        # the same threshold (baseline-v1 kept it whatever its score, e.g. "शीर्ष" -> SIRSA at 0.0); a place outside the
+        # stated states that has no confident match inside them is dropped.
         states = {p["db_name"] for p in picked if p["level"] == "state"}
         if states:
+            kept = []
             for p in picked:
                 if p["level"] != "state":
                     e, s = self.res.resolve(p["mention"], {"states": states, "districts": set()}, k=1)[0]
-                    p.update(level=e.level, db_name=e.db_name, district=e.district, state=e.state, score=round(s, 3))
+                    if s >= self.tau:
+                        p.update(level=e.level, db_name=e.db_name, district=e.district, state=e.state, score=round(s, 3))
+                    elif p["state"] not in states:
+                        continue
+                kept.append(p)
+            picked = kept
         return picked
 
     @staticmethod
@@ -91,11 +109,14 @@ class PlaceLinker:
 class Pipeline:
     def __init__(self, con, train_rows: list[dict], model: str = "qwen3:8b", schema_hints: bool = True,
                  places: bool = True, fewshot: bool = True, max_repairs: int = 2, k_cols: int = 5, k_shots: int = 3,
-                 encoder=None, place_linker: PlaceLinker | None = None, year_hints: bool = True):
+                 encoder=None, place_linker: PlaceLinker | None = None, year_hints: bool = True,
+                 snap_values: bool = True, domain_notes: bool = True):
         from sentence_transformers import SentenceTransformer
         self.con, self.train = con, train_rows
         self.cfg = {"model": model, "schema_hints": schema_hints, "places": places, "fewshot": fewshot,
-                    "max_repairs": max_repairs, "k_cols": k_cols, "k_shots": k_shots, "year_hints": year_hints}
+                    "max_repairs": max_repairs, "k_cols": k_cols, "k_shots": k_shots, "year_hints": year_hints,
+                    "snap_values": snap_values, "domain_notes": domain_notes}
+        self.snapper = ValueSnapper(con) if snap_values else None
         self.intents = np.array([r.get("intent", "") for r in train_rows])
         self.llm = LLMBaseline(con, train_rows, model=model, backend="ollama")
         self.enc = encoder or SentenceTransformer(str(FT_CKPT), device="cpu")
@@ -128,24 +149,36 @@ class Pipeline:
         return r, None
 
     def sql(self, question: str, exclude_intent: str | None = None) -> dict:
+        t = {}
+        t0 = time.perf_counter()
         q_emb = self.enc.encode([f"query: {question}"], normalize_embeddings=True)[0]
+        t["encode_ms"] = time.perf_counter() - t0
         hints = None
         if self.linker is not None:
             sc = q_emb @ self.linker.E.T
             hints = [self.els[i].key for i in sorted(self.cols, key=lambda i: -sc[i])[: self.cfg["k_cols"]]]
+        t0 = time.perf_counter()
         places = self.places.link(question) if self.places else []
+        t["place_link_ms"] = time.perf_counter() - t0
         examples = self._examples(q_emb, exclude_intent) if self.TQ is not None else ""
         yrs = years.year_labels(question) if self.cfg.get("year_hints") else []
-        extra = "\n".join(x for x in (PlaceLinker.render(places), years.render(yrs)) if x)
+        notes = DOMAIN_NOTES if self.cfg.get("domain_notes") else ""
+        extra = "\n".join(x for x in (PlaceLinker.render(places), years.render(yrs), notes) if x)
         msgs = [{"role": "system", "content": SYSTEM},
                 {"role": "user", "content": self.llm.prompt(question, hints, examples, extra)}]
         attempts, lat, ptok, otok = [], 0.0, 0, 0
+        t_exec = 0.0
         for turn in range(self.cfg["max_repairs"] + 1):
             out = self.llm.client.generate(messages=msgs)
             lat, ptok, otok = lat + out["latency_s"], ptok + out["prompt_tokens"], otok + out["output_tokens"]
             s = extract_sql(out["text"])
+            raw, snapped = s, []
+            if self.snapper is not None:
+                s, snapped = self.snapper.snap(s, places)
+            t0 = time.perf_counter()
             res, problem = self._run(s)
-            attempts.append({"sql": s, "problem": problem})
+            t_exec += time.perf_counter() - t0
+            attempts.append({"sql": s, "problem": problem, **({"llm_sql": raw, "snapped": snapped} if snapped else {})})
             if problem is None or turn == self.cfg["max_repairs"]:
                 break
             msgs += [{"role": "assistant", "content": out["text"]},
@@ -154,13 +187,17 @@ class Pipeline:
                       "is really the right answer, return the same query."}]
             if attempts[-1]["sql"] and len(attempts) >= 2 and attempts[-1]["sql"] == attempts[-2]["sql"]:
                 break                                   # model insists: stop
+        t["llm_ms"], t["sql_exec_ms"] = lat, t_exec
         return {"sql": attempts[-1]["sql"], "first_sql": attempts[0]["sql"], "attempts": attempts, "hints": hints,
                 "places": places, "years": yrs, "latency_s": round(lat, 3), "prompt_tokens": ptok, "output_tokens": otok,
-                "result": res}
+                "timings_ms": {k: round(1000 * v, 1) for k, v in t.items()}, "result": res}
 
     def answer(self, question: str) -> dict:
         out = self.sql(question)
         r = out.pop("result")
         if r is None or r.error:
             return {**out, "answer": "Could not produce a valid query for this question.", "columns": [], "rows": []}
-        return {**out, **grounded_answer(self.llm.client, question, r.columns, r.rows), "columns": r.columns, "rows": r.rows}
+        t0 = time.perf_counter()
+        ans = grounded_answer(self.llm.client, question, r.columns, r.rows)
+        out["timings_ms"]["answer_ms"] = round(1000 * (time.perf_counter() - t0), 1)
+        return {**out, **ans, "columns": r.columns, "rows": r.rows}

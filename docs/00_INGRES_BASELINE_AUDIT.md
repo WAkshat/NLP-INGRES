@@ -103,31 +103,43 @@ Full pipeline by language (test): English 78.1, Hindi 69.8, Hinglish 77.1, Tamil
 Components: schema-linker column R@3 0.896; resolver top-1 0.973 on ambiguous names with context, 0.645 on hand-written
 Tamil with context; place linker dev F1 0.852 (Tamil 0.65); verifier 98.1% detection, 0% false alarms.
 
-## 6. Baseline performance (measured today on the baseline code)
+## 6. Baseline performance (measured on the baseline code)
 
-`python scripts/benchmark_perf.py --label baseline --stage components` → `experiments/perf/baseline_components.json` — BENCH.
-Hardware: AMD Ryzen 7 9700X (16 logical cores), 32 GB RAM, Windows 11; CPU inference (`torch 2.14.0+cpu`); 200 test
-questions (50 per language), 5 warm-up runs, batch size 1, no concurrency.
+`python scripts/benchmark_perf.py --label baseline --stage components|llm|e2e`, run from a worktree of `baseline-v1`
+on 2026-11-19 → `experiments/perf/baseline_*.json`. Hardware: AMD Ryzen 7 9700X (16 logical cores), 32 GB RAM,
+RTX 5060 8 GB, Windows 11; encoders on CPU (`torch 2.14.0+cpu`). Components: 200 TEST questions (50 per language);
+LLM and end-to-end: 100 TEST questions; 5 warm-up requests on DEV questions; batch size 1; no concurrency.
 
 | Stage (per question, before the LLM) | mean | median | p95 | p99 |
 |---|---|---|---|---|
-| Query encoding (fine-tuned e5) | 10.6 ms | 10.3 ms | 12.6 ms | 13.8 ms |
-| Schema ranking (dot product + sort) | 0.07 ms | 0.07 ms | 0.08 ms | 0.15 ms |
-| **Place linking** | **133.4 ms** | 129.8 ms | 254.0 ms | 274.5 ms |
-| Example retrieval | 0.07 ms | 0.07 ms | 0.09 ms | 0.12 ms |
-| **Total before the LLM** | **144.0 ms** | 140.5 ms | 265.5 ms | 286.8 ms |
+| Query encoding (fine-tuned e5) | 8.50 ms | 8.48 ms | 9.79 ms | 11.10 ms |
+| Schema ranking (dot product + sort) | 0.06 ms | 0.06 ms | 0.07 ms | 0.08 ms |
+| **Place linking** | **107.16 ms** | 104.81 ms | 192.41 ms | 219.26 ms |
+| Example retrieval | 0.06 ms | 0.06 ms | 0.07 ms | 0.09 ms |
+| **Total before the LLM** | **115.78 ms** | 113.22 ms | 202.77 ms | 229.06 ms |
 
 | Cold start | seconds |
 |---|---|
-| Load fine-tuned encoder | 0.49 |
-| Load base encoder | 4.45 |
-| **Build place linker** (gazetteer, TF-IDF, embed all aliases) | **16.54** |
-| Build schema index + embed 612 train questions | 3.21 |
-| **Total** | **24.69** |
+| Load fine-tuned encoder | 0.48 |
+| Load base encoder | 4.50 |
+| **Build place linker** (gazetteer, TF-IDF, embed all 16,681 aliases) | **14.27** |
+| Build schema index + embed 612 train questions | 2.88 |
+| **Total** | **22.13** |
 
-Process memory: 1,295 MB after load, peak 1,377 MB. Encoder throughput: 120 queries/s at batch 1, 267 at batch 32.
-LLM latency recorded during the October runs (inside the client, per call): mean 2.43 s per test question
-(`experiments/pipeline/results.json`). LLM serving benchmarks (TTFT, tokens/s, VRAM) are in `docs/04_BENCHMARKS_AND_PERFORMANCE.md`.
+| LLM and end to end | value |
+|---|---|
+| LLM request (stream) median / mean / p95 | 2,009 / 2,198 / 3,314 ms |
+| Time to first token, median | 281 ms |
+| Generation / prompt processing | 51.7 / 8,762 tokens/s |
+| `Pipeline.sql` end to end, median / p95 | 2,085 / 3,468 ms |
+| Non-LLM overhead, mean | 120.9 ms |
+| LLM share of end-to-end time | 94.7% |
+
+Process memory: 1,295 MB after load, peak 1,378 MB. Encoder throughput: 141 queries/s at batch 1, 298 at batch 32.
+
+_Correction note:_ an earlier, preliminary run on 2026-11-17 reported 144 ms pre-LLM and 24.7 s cold start. That run
+used measured questions as warm-up and ran while other GPU applications were active, so it is superseded by the
+numbers above. The method is described in `docs/04_BENCHMARKS_AND_PERFORMANCE.md`.
 
 ## 7. Findings
 
@@ -147,11 +159,11 @@ LLM latency recorded during the October runs (inside the client, per call): mean
 
 | ID | Finding | Evidence |
 |---|---|---|
-| D1 | Place linking makes one resolver call (one transformer forward pass + ≈30 `SequenceMatcher` pairs ×2) **per span**, sequentially: 133 of the 144 ms spent before the LLM | BENCH §6 |
-| D2 | All ≈19 k gazetteer aliases are re-embedded at every start-up: 16.5 s of the 24.7 s cold start | BENCH §6 |
+| D1 | Place linking makes one resolver call (one transformer forward pass + ≈30 `SequenceMatcher` pairs ×2) **per span**, sequentially: 107 of the 116 ms spent before the LLM | BENCH §6 |
+| D2 | All 16,681 gazetteer aliases are re-embedded at every start-up: most of the 14.3 s place-linker build, in a 22.1 s cold start | BENCH §6 |
 | D3 | Two copies of e5-small are held in memory (fine-tuned for linking, base for mentions): ≈470 MB of weights each | RUNTIME (`models.json`: 470,615,040 bytes each) |
 | D4 | 147,840 pooler parameters and 35 embedding rows of e5-small are loaded but never used (mean pooling; tokenizer has 250,002 entries vs 250,037 rows) | RUNTIME (`models.json`) |
-| D5 | The LLM dominates latency (≈2.4 s of ≈2.6 s per question); requests are strictly serial; no streaming in the UI | BENCH + CODE |
+| D5 | The LLM dominates latency (94.7% of the 2.09 s median per question); requests are strictly serial; no streaming in the UI | BENCH + CODE |
 | D6 | The headline 71.9% rests on retrieved examples (−36.5 points without them) while 376/384 test instances share their question type with TRAIN. No evaluation isolates unseen question types for the *pipeline* | `docs/PIPELINE.md` §3 — BENCH |
 | D7 | The year convention ("the N assessment" = `'(N-1)-N'`) is left to the LLM: 55 of 644 pipeline SQLs have a wrong year set (EX among them 21.8%); a deterministic rule is right on 45 of those 55 | RUNTIME (changelog E-02) |
 | D8 | CIs are computed over instances, but the 4 language versions of an item are correlated → intervals are optimistic | DOC (acknowledged) |

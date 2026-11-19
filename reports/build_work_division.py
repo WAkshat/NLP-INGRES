@@ -88,19 +88,21 @@ story += [p("1. The project in one page", H1),
                  ["Place resolver, ambiguous names", "0.447 -> 0.973 top-1 with state context"],
                  ["LLM + schema-linker hints (test)", "23.2% EX vs 18.0% (+5.2 points, McNemar p = 0.008)"],
                  ["Unsupported numbers in answers", "0.83% -> 0% with the numeric verifier"],
-                 ["<b>Full pipeline EX (test / hard_test)</b>", "<b>71.9% / 57.7%</b> (baselines 32.6% / 30.8% and 18.0% / 13.1%; p < 1e-6)"],
+                 ["Original pipeline EX (test / hard_test)", "72.1% / 58.8% (October run: 71.9% / 57.7%)"],
+                 ["<b>Improved pipeline v3 EX (Nov 2026)</b>", "<b>81.3% / 70.4%</b> (test: 51 wins / 16 losses, McNemar p = 2e-05)"],
+                 ["v3 with same-type examples hidden (test)", "51.0% (honest estimate for new question types)"],
                  ["Biggest contributors (test, leave-one-out)", "retrieved examples +36.5, place hints +4.4, repair +1.6"]],
                 [9 * cm, 8 * cm]),
           Spacer(1, 8),
           p("2. Division of work", H1),
           table([["Member", "Role", "Phases / components"],
                  ["Akshat", "Data engineering, system integration, project lead",
-                  "Ph 1-2 data access + database, SQL safety layer, Ph 9 full pipeline (71.9% EX), Ph 11 ablations, error analysis, docs"],
+                  "Ph 1-2 data access + database, SQL safety layer, Ph 9 pipeline, Ph 11 ablations, Nov 2026: pipeline v3 (year rule, value snapping), re-run of the original"],
                  ["Aryan", "Benchmark, evaluation, baselines",
-                  "Ph 3 INGRES-Bench, execution-accuracy evaluator, Ph 4 baselines, LLM clients and prompts"],
-                 ["Akshit", "Learned models", "Ph 5 schema linker, Ph 6 entity resolver, place linker"],
+                  "Ph 3 INGRES-Bench, execution-accuracy evaluator, Ph 4 baselines, LLM clients and prompts, Nov 2026: model forensics + performance benchmarks"],
+                 ["Akshit", "Learned models", "Ph 5 schema linker, Ph 6 entity resolver, place linker, Nov 2026: Tamil romanisation fix"],
                  ["Waie", "Multilingual analysis, answer trust, UI",
-                  "Ph 7 tokenization study, Ph 8 numeric verifier, Ph 10 UI, mid-term report and slides"]],
+                  "Ph 7 tokenization study, Ph 8 numeric verifier, Ph 10 UI (rebuilt Nov 2026: Ask / Explore / Results), reports"]],
                 [2.3 * cm, 5.2 * cm, 9.5 * cm]),
           Spacer(1, 6),
           p("<b>How the pieces connect at run time:</b> question -> schema linker (Akshit) suggests columns -> place linker "
@@ -158,7 +160,7 @@ story += [p("3. Akshat: data engineering, integration, project lead", H1),
       "repairs; it stops if the model repeats the same query). Each component can be switched off for ablation. "
       "<b>Why:</b> zero-shot errors were systematic (wrong year label, wrong column, wrong place spelling), and each component "
       "targets one of them; ablations show which ones actually help."),
-    p("Final results and ablations (Phases 9 and 11)", H3),
+    p("Original pipeline results and ablations (Phases 9 and 11, October)", H3),
     table([["System", "test EX (n=384)", "hard_test EX (n=260)"],
            ["Keyword/template baseline", "32.6%", "30.8%"],
            ["qwen3:8b zero-shot", "18.0%", "13.1%"],
@@ -168,18 +170,42 @@ story += [p("3. Akshat: data engineering, integration, project lead", H1),
            ["Full without place hints", "67.4% (-4.4, p = 0.019)", "-"],
            ["Full, first attempt only (no repair)", "70.3% (-1.6; 6 fixed, 0 broken)", "56.1%"]],
           [7 * cm, 5 * cm, 5 * cm]),
-    p("By language (test): English 78.1, Hindi 69.8, Hinglish 77.1, Tamil 62.5. Error analysis of 218 failures: place not "
-      "linked 41%, other logic 33%, wrong year 13%, wrong column 8%, wrong aggregation 2%, execution error 2%; place errors "
-      "are worst in Tamil. <b>Caveat:</b> 376 of 384 test questions use question types that also appear in training (with "
-      "other places, years and wording), so retrieved examples benefit from the template structure; the keyword baseline "
-      "has the same advantage and is still beaten by 39 points."),
+    p("<b>Caveat:</b> 376 of 384 test questions use question types that also appear in training (with other places, years "
+      "and wording), so retrieved examples benefit from the template structure; the keyword baseline has the same advantage "
+      "and is still beaten by 39 points."),
+    p("Pipeline v3 (November 2026)", H3),
+    p("<b>How:</b> two deterministic additions around the LLM, designed only on DEV errors. (1) A <b>year rule</b> "
+      "(" + code("src/pipeline/years.py") + "): '2024-25' or 'the 2025 assessment' (also in Hindi, Hinglish, Tamil, and "
+      "Devanagari/Tamil digits) becomes the cycle label '2024-2025', given to the LLM as a hint; correct on 612/612 TRAIN and "
+      "228/228 DEV questions. (2) <b>Value snapping</b> (" + code("src/pipeline/values.py") + "): every place name the SQL "
+      "compares with state/district/unit names is checked against the database; a wrong case ('MAHABUBABAD' for "
+      "'Mahabubabad') or a close misspelling ('E Lungdah' for 'E LUNGDAR') is replaced by the stored name before execution. "
+      "Plus a two-sentence <b>metric definition</b> note (stage of extraction is not a share of extraction)."),
+    p("<b>Why:</b> 55 of 644 original SQLs had a wrong year set. The model also rewrote correct spellings it was given, and "
+      "because a COUNT over zero rows returns 0, the repair loop never saw those errors. 9 of 38 DEV errors were one "
+      "question type confusing two metrics. Replayed on DEV outputs, value snapping fixed 12 errors and broke none."),
+    table([["Configuration", "DEV (228)", "TEST (384)", "HARD (260)"],
+           ["Original pipeline, re-run Nov 2026 (same environment)", "-", "72.1%", "58.8%"],
+           ["+ Tamil-aware resolver (Akshit)", "77.2%", "74.7%", "59.6%"],
+           ["+ year rule", "83.3%", "78.4%", "61.5%"],
+           ["<b>+ value snapping + definitions = v3</b>", "<b>92.1%</b>", "<b>81.3%</b>", "<b>70.4%</b>"],
+           ["v3, examples of the question's own type hidden", "-", "51.0%", "-"]],
+          [7.6 * cm, 3 * cm, 3.2 * cm, 3.2 * cm]),
+    p("v3 vs the original (paired): test 51 wins / 16 losses, McNemar p = 2e-05; hard_test 42 wins / 12 losses, McNemar p = 5e-05. v3 by language (test): "
+      "English 90.6, Hindi 75.0, Hinglish 84.4, Tamil 75.0. <b>Why re-run the original?</b> The re-installed LLM (same model ID, newer GPU driver) reproduced only "
+      "24 of 39 October answers exactly, so October and November numbers are not directly comparable. The original "
+      "code (git tag baseline-v1) was re-run in the same environment; it scored 72.1% (October: 71.9%, p = 1.0). "
+      "A later bug fix (a place-linker second pass that kept zero-score matches) gives the shipped v3.1: 81.5% test, 71.2% hard_test, with no question getting worse."),
     p("Main files to show", H2),
     table([["File", "What to point at"],
            [code("src/ingestion/ingres_api.py"), "IngresClient.fetch (line 48): one cached request; crawl_year (85): the country->state->district walk"],
            [code("src/ingestion/flatten.py, build_db.py"), "flatten (44): nested JSON to long table; build (101): creates the 9 SQLite tables"],
            [code("src/normalization/crosswalk.py"), "crosswalk (72): the 4-stage matcher; _mutual_best (56): guarded fuzzy matching"],
            [code("src/utils/safe_sql.py"), "_authorizer (36): allow-list; execute (50): timeout + row cap"],
-           [code("src/pipeline/agent.py"), "Pipeline.sql (122): prompt + repair loop; Pipeline.answer (151)"],
+           [code("src/pipeline/agent.py"), "Pipeline.sql (143): prompt, value snapping, repair loop; Pipeline.answer (187); DOMAIN_NOTES (37)"],
+           [code("src/pipeline/years.py"), "year_labels (20): the year rule"],
+           [code("src/pipeline/values.py"), "ValueSnapper._snap (45) and snap (69): place literals -> exact DB values"],
+           [code("docs/PIPELINE.md, docs/00_INGRES_BASELINE_AUDIT.md"), "results, ablations, error analysis; the audit of the original"],
            [code("docs/DATA_ACCESS_REPORT.md"), "the full data audit and reconciliation table"]],
           [6.3 * cm, 10.7 * cm]),
     p("Viva questions and answers", H2)] + qa([
@@ -205,10 +231,15 @@ story += [p("3. Akshat: data engineering, integration, project lead", H1),
     ("Which component mattered most in the final system?",
      "Retrieved examples: removing them drops test accuracy from 71.9% to 35.4%. Place hints add 4.4 points (p = 0.019) "
      "and the repair loop 1.6 points (it fixed 6 questions and broke none). Schema hints added 5.2 points over zero-shot."),
-    ("Isn't 71.9% inflated because test questions resemble training questions?",
-     "Partly, and we say so. Test question types also occur in training, with different places, years and wording, so "
-     "retrieved examples are structurally similar. The keyword baseline has the same advantage and scores 32.6%; and "
-     "hard_test, with noise and more complex questions, still reaches 57.7%. A leave-intents-out run is the planned check."),
+    ("Isn't the accuracy inflated because test questions resemble training questions?",
+     "Partly, and we measured it. With every training example of the question's own type hidden, v3 scores 51.0% "
+     "instead of 81.3%. That lower number is the honest estimate for new question types. The keyword baseline has the "
+     "same advantage and scores 32.6%."),
+    ("What is value snapping and can it make things worse?",
+     "After the LLM writes SQL, place names compared with the name columns are replaced by the exact stored value when the "
+     "case differs or the spelling is close. It cannot invent a place, and exact names are never touched. It can turn a "
+     "wrong-but-similar name into a valid but wrong place (we saw MAHBUBNAGAR -> Mahabubnagar when Mahabubabad was meant); "
+     "the UI shows every correction so a user can see it."),
     ("Why SQLite and not PostgreSQL/MySQL?",
      "The data is 22 MB and read-only; SQLite needs no server, ships as one file that teammates can copy, and its authorizer "
      "hook gives fine-grained read-only control.")]) + [PageBreak()]
@@ -220,7 +251,10 @@ story += [p("4. Aryan: benchmark, evaluation, baselines", H1), p("What was built
     "<b>Quality control</b> with 7 automatic checks and a mutation test.",
     "<b>Execution-accuracy evaluator</b> with bootstrap confidence intervals and per-language/difficulty breakdowns.",
     "<b>Baselines (Phase 4):</b> keyword/template retrieval, BM25 and multilingual-embedding schema retrieval, and the "
-    "local LLM (qwen3:8b) with a compact schema prompt."]) + [
+    "local LLM (qwen3:8b) with a compact schema prompt.",
+    "<b>Model forensics and performance benchmarks (Nov 2026):</b> exact parameter counts read from the model files "
+    "(" + code("scripts/model_forensics.py") + ") and latency / throughput / memory before and after the optimizations "
+    "(" + code("scripts/benchmark_perf.py") + ")."]) + [
     p("How and why", H2),
     p("Building the benchmark", H3),
     p("<b>How:</b> each intent is an SQL template with slots (place, year, metric, category, threshold) plus at least 3 "
@@ -259,6 +293,15 @@ story += [p("4. Aryan: benchmark, evaluation, baselines", H1), p("What was built
     p("<b>Why baselines matter:</b> they define what 'improvement' means. A surprising but honest finding is that the "
       "simple template baseline beats the 8B LLM, because the benchmark is template-based and the LLM makes systematic "
       "convention errors; the later components target exactly those errors."),
+    p("Model forensics and performance (November 2026)", H3),
+    p("<b>How:</b> the LLM's parameters were counted from the shapes of all 399 tensors in the GGUF file Ollama loads: "
+      "<b>8,190,735,360</b> (36 layers, hidden 4,096, 32 query / 8 key-value heads, vocabulary 151,936; 79.5% of weights "
+      "4-bit, 18.7% 6-bit, 1.8% F16). The encoder's were counted with PyTorch: <b>117,653,760</b>, 82% of them the "
+      "multilingual word-embedding table. The performance benchmark times every stage on 200 test questions (5 warm-up "
+      "requests, one request at a time, response cache bypassed) and records the hardware and versions. <b>Results:</b> "
+      "before the LLM 116 ms -> 48 ms per question; cold start 22.1 s -> 8.3 s; LLM request "
+      "median 2.01 s, first token after 285 ms, 51.8 tokens/s; the LLM is 97.6% of end-to-end time. "
+      "<b>Why:</b> claims about model size and speed must be measured, not copied from model cards."),
     p("<b>Why a local model and not Gemini/ChatGPT:</b> the Gemini free tier allowed 20 requests per day (logged), and one "
       "evaluation pass is 872 requests. A local model is free, private and reproducible (fixed seed, cached responses)."),
     p("Main files to show", H2),
@@ -270,7 +313,9 @@ story += [p("4. Aryan: benchmark, evaluation, baselines", H1), p("What was built
            [code("src/evaluation/report.py"), "bootstrap_ci (34): confidence intervals"],
            [code("src/baselines/keyword.py"), "KeywordBaseline.predict (162): retrieve and re-fill"],
            [code("src/baselines/llm.py"), "OllamaClient.generate (134): cached LLM call; compact_schema_prompt (176); CONVENTIONS (221)"],
-           [code("docs/INGRES_BENCH.md, docs/BASELINES.md"), "benchmark protocol and baseline results"]],
+           [code("scripts/model_forensics.py"), "parse_gguf: counts LLM parameters from tensor shapes; encoder_facts"],
+           [code("scripts/benchmark_perf.py"), "components / llm / e2e stages; stats(): mean, median, p90/95/99"],
+           [code("docs/INGRES_BENCH.md, docs/BASELINES.md, docs/01, docs/04"), "benchmark protocol, baselines, model specs, benchmarks"]],
           [6.3 * cm, 10.7 * cm]),
     p("Viva questions and answers", H2)] + qa([
     ("An AI helped write your questions. Is the benchmark valid?",
@@ -293,6 +338,12 @@ story += [p("4. Aryan: benchmark, evaluation, baselines", H1), p("What was built
     ("Why Tamil as the Dravidian language?",
      "Tamil Nadu is data-rich in INGRES, the script is different from both Devanagari and Latin (useful for the tokenizer "
      "study), and open-source support for Tamil is good."),
+    ("How many parameters does your LLM have, and how do you know?",
+     "8,190,735,360, counted from the shapes of all 399 tensors in the model file Ollama loads, not from a model card: "
+     "622 M in the token embedding, 6,946 M in 36 transformer blocks, 622 M in the separate output head."),
+    ("How fast is the system, and what is the bottleneck?",
+     "The LLM: median 2.01 s per SQL request on the RTX 5060, 97.6% of end-to-end time. Everything before the "
+     "LLM takes 48 ms per question after the optimizations (116 ms before)."),
     ("What does a 95% confidence interval mean here?",
      "We resample the questions 2,000 times and recompute accuracy; 95% of those values fall in the interval. It shows how "
      "much the number could change with a different sample of questions.")]) + [PageBreak()]
@@ -329,10 +380,18 @@ story += [p("5. Akshit: learned schema linking and entity resolution", H1), p("W
       "district mentioned elsewhere in the question? does it conflict?). It was trained only on synthetic noisy mentions "
       "(typos, transliteration variants, script changes) of 70% of places and tested on the other 30%."),
     p("<b>Result (top-1):</b> held-out synthetic noise 0.841 -> 0.885 with context; hand-written Hindi/Tamil names 0.674 -> "
-      "0.740; real historical INGRES respellings 0.623 -> 0.754; <b>ambiguous names 0.447 -> 0.973</b> with context. "
-      "Weakest: hand-written Tamil (0.65), because Tamil script does not mark voicing or aspiration."),
+      "0.740; real historical INGRES respellings 0.623 -> 0.754; <b>ambiguous names 0.447 -> 0.973</b> with context."),
     p("<b>Why logistic regression and not a big model:</b> 12 interpretable features, trains in minutes, and the learned "
-      "weights can be explained (edit similarity +21.5, embedding similarity +10.6, state conflict -8.8)."),
+      "weights can be explained (after retraining: edit similarity +18.9, embedding similarity +13.8, state conflict -14.9)."),
+    p("Tamil romanisation fix (November 2026)", H3),
+    p("<b>Problem found by measurement:</b> the transliteration library read Tamil stops as voiced aspirates, so "
+      "Karnataka in Tamil script came out as 'gharnadhagha' and Tripura as 'dhiribhura'. Tamil state names scored 0.03-0.32, "
+      "far below the 0.9 threshold. <b>How:</b> a 30-line Tamil romaniser (" + code("romanise_tamil") + ") that reads stops "
+      "as unvoiced (k, t, p, s), plus a voicing-neutral comparison (" + code("devoice") + ": g->k, d->t, b->p, j/s->c) used "
+      "only for Tamil-script mentions, because Tamil writes k/g, t/d, p/b with one letter. The ranker was retrained with "
+      "the same seed and data. <b>Results:</b> hand-written Tamil top-1 0.568 -> <b>0.806</b> (0.645 -> 0.857 with "
+      "context; 128 fixed, 5 broken, p = 6e-32); automatic Tamil 0.688 -> 0.841; place-linker DEV F1 0.852 -> 0.905 "
+      "(Tamil 0.654 -> 0.833)."),
     p("Place linker", H3),
     p("<b>How:</b> scan every 1-3 word span of the question, resolve it, keep confident (score >= 0.9) non-overlapping "
       "matches, then re-resolve with the detected state as context. Spans made only of common question words are skipped. "
@@ -343,9 +402,9 @@ story += [p("5. Akshit: learned schema linking and entity resolution", H1), p("W
     table([["File", "What to point at"],
            [code("src/schema_linking/train.py"), "hard_negatives (31): the confusable columns; train (69): the contrastive loop (InfoNCE loss)"],
            [code("src/schema_linking/retrieval.py"), "EmbeddingRetriever (100): ranking; rank_metrics: recall@k, MRR"],
-           [code("src/entity_resolution/gazetteer.py"), "fold (42): phonetic folding; build_gazetteer (72)"],
-           [code("src/entity_resolution/resolver.py"), "features (57): the 12 features; resolve (86); fit (101): training the ranker"],
-           [code("src/pipeline/agent.py"), "PlaceLinker.link (51): finding places in a question"],
+           [code("src/entity_resolution/gazetteer.py"), "romanise_tamil (41): Tamil fix; fold (71): phonetic folding; devoice (88); build_gazetteer (109)"],
+           [code("src/entity_resolution/resolver.py"), "_forms (67): picks the comparison space; features (84): the 12 features; resolve (116); fit (137)"],
+           [code("src/pipeline/agent.py"), "PlaceLinker.link (63): finding places in a question (one batched embedding pass)"],
            [code("scripts/train_schema_linker.py, train_entity_resolver.py"), "training + evaluation entry points"],
            [code("docs/SCHEMA_LINKING.md, ENTITY_RESOLUTION.md"), "methods and full results"]],
           [6.3 * cm, 10.7 * cm]),
@@ -365,9 +424,10 @@ story += [p("5. Akshit: learned schema linking and entity resolution", H1), p("W
     ("How do you tell apart two places with the same name?",
      "Hierarchy context. If the question also mentions the state or district, candidates in that state get a strong "
      "boost and conflicting ones a strong penalty. Accuracy on ambiguous names goes from 0.45 to 0.97."),
-    ("Why is Tamil the hardest?",
-     "Tamil script uses one letter for sounds that are distinct in Hindi/English (k/g, t/d, aspirated or not), so a "
-     "romanised Tamil name can differ a lot from the INGRES spelling."),
+    ("Why was Tamil the hardest, and what did you change?",
+     "Mainly a bug: the library romanised Tamil stops as voiced aspirates ('gharnadhagha' for Karnataka). We wrote a Tamil "
+     "romaniser and compare Tamil-script names in a voicing-neutral form, because Tamil uses one letter for k/g, t/d and "
+     "p/b. Hand-written Tamil accuracy went from 0.568 to 0.806. Remaining place errors are mostly block/taluk names."),
     ("Why train on synthetic noise?",
      "There is no labelled dataset of misspelled Indian place names. We generate realistic noise (typos, transliteration "
      "variants, script changes) for 70% of places and test on the unseen 30%, plus on real data: hand-written names and 445 "
@@ -377,7 +437,8 @@ story += [p("5. Akshit: learned schema linking and entity resolution", H1), p("W
 story += [p("6. Waie: multilingual analysis, answer trust, user interface", H1), p("What was built", H2)] + bullets([
     "<b>Tokenization and code-mixing study (Phase 7)</b> with a placebo control, plus three mitigation experiments.",
     "<b>Numeric grounding verifier (Phase 8)</b> that checks every number in an answer against the SQL result.",
-    "<b>Streamlit UI (Phase 10)</b>, tested end to end with screenshots; the mid-term report and slides."]) + [
+    "<b>Streamlit app</b> (Phase 10, rebuilt in November 2026 with three pages: Ask, Explore, Results); the mid-term "
+    "report and slides."]) + [
     p("How and why", H2),
     p("Tokenization study", H3),
     p("<b>Why:</b> a common explanation for weaker performance on Indian languages is that tokenizers split their words into "
@@ -407,11 +468,14 @@ story += [p("6. Waie: multilingual analysis, answer trust, user interface", H1),
       "the 4 misses became 1900-2099 values, treated as years). False alarms: 0%. After the fallback: 0% unsupported numbers. "
       "The evaluation also found two bugs in the verifier (SQL-expression column headers; lakh precision), fixed with tests."),
     p("User interface", H3),
-    p("<b>How:</b> a Streamlit page: question box with examples in all 4 languages; shows the answer, a warning if the "
-      "verifier replaced the model's wording, the SQL, the result table, and a 'How it got there' panel (schema hints, "
-      "resolved places, repair attempts, latency). <b>Why:</b> showing the SQL and table lets a user check the answer instead "
-      "of trusting it blindly. Tested end to end: a Hindi question about Ludhiana returned the correct SQL and a Hindi answer "
-      "(240,136.75 ham). Screenshots: " + code("reports/screenshots/") + "."),
+    p("<b>How:</b> three pages. <b>Ask</b>: a chat in 4 languages. Every answer has a badge ('N numbers verified against "
+      "the data' or a warning when the verifier replaced the wording), the result table with CSV download, an automatic bar "
+      "chart, the SQL with any place-name corrections, and a trace (schema hints, resolved places, year labels, attempts, "
+      "time per stage). Sidebar switches turn pipeline components off for a live ablation. The 16 example questions were all "
+      "answered correctly on DEV. <b>Explore</b>: dashboards straight from the database, without the LLM; All-India 2024-25 "
+      "shows 60.6% stage of extraction, 247.22 BCM extraction and 448.51 BCM recharge, the published figures. "
+      "<b>Results</b>: every measured number, read from the result files. <b>Why:</b> showing the SQL and the data lets a "
+      "user check an answer instead of trusting it, and the Explore page is useful even when no GPU is available."),
     p("Main files to show", H2),
     table([["File", "What to point at"],
            [code("src/tokenization/metrics.py"), "tokenizer_stats (34): fertility; LanguageTagger.cmi (91): code-mixing index"],
@@ -419,7 +483,7 @@ story += [p("6. Waie: multilingual analysis, answer trust, user interface", H1),
            [code("src/tokenization/mitigation.py"), "translate (22); select_new_tokens (29); adapt_vocabulary (42)"],
            [code("src/grounding/verifier.py"), "numbers (24): Indic digits + lakh; verify (59); grounded_answer (98): fallback"],
            [code("scripts/run_grounding.py"), "the perturbation test and false-alarm checks"],
-           [code("app/streamlit_app.py"), "the UI"],
+           [code("app/streamlit_app.py"), "render_answer: badges, table, chart, SQL, trace; components(): live ablation; Explore and Results pages"],
            [code("docs/TOKENIZATION.md, docs/GROUNDING.md"), "methods and full results"]],
           [6.3 * cm, 10.7 * cm]),
     p("Viva questions and answers", H2)] + qa([
@@ -460,19 +524,19 @@ story += [p("7. Questions any member may be asked", H1)] + qa([
      "with temperature 0 gives identical results), privacy, and a general chatbot does not know INGRES spellings, year "
      "conventions or units. A paid frontier-model comparison is planned as future work."),
     ("What hardware did you use?",
-     "An NVIDIA RTX 5060 (8 GB) ran the LLM (qwen3:8b, 4-bit) through Ollama: about 3,700 calls, ~2.1 GPU-hours, ~2.5 s per "
-     "question. Our own models (118M-parameter encoder, logistic regression) were trained on the CPU (Ryzen 7 9700X) in about "
-     "6 minutes each, because they are small and the installed PyTorch build is CPU-only."),
+     "An NVIDIA RTX 5060 (8 GB) ran the LLM (qwen3:8b, 4-bit) through Ollama, at about 2-3 s per question. Our own models "
+     "(118M-parameter encoder, logistic regression) were trained on the CPU (Ryzen 7 9700X) in about 4-7 minutes each, "
+     "because they are small and the installed PyTorch build is CPU-only."),
     ("What is the biggest weakness?",
-     "Most of the gain comes from retrieved examples, and test question types also appear in training, so accuracy on truly "
-     "new question types is probably below 71.9%. The Hindi/Tamil questions have not been verified by native speakers, and "
-     "Tamil place names remain the biggest single error source."),
+     "Generalisation: with examples of the question's own type hidden, v3 drops from 81.3% to 51.0%. The "
+     "Hindi/Tamil questions have not been verified by native speakers, and block/taluk names are the largest place-error source."),
     ("How do you make sure your numbers are not made up?",
      "Every reported number is written by a script into a results file in the repository; responses from the LLM are cached, "
-     "so anyone can rerun and get the same numbers; 61 automated tests cover the data, safety, metrics and verifier."),
+     "so anyone can rerun and get the same numbers; 69 automated tests cover the data, safety, metrics, verifier, year rule and value snapping."),
     ("What would you do next?",
-     "A leave-intents-out evaluation; better Tamil place resolution (41% of errors are place misses); a deterministic year "
-     "normaliser (13% of errors); native-speaker review of a sample; a frontier-model comparison; re-timing training on the GPU.")])
+     "Close the gap on unseen question types (pattern-level examples or QLoRA on training SQL); level-aware block/taluk "
+     "name resolution; output-shape control (24 remaining errors add extra columns); native-speaker review; a frontier-model "
+     "comparison.")])
 
 story += [Spacer(1, 10), p("8. Glossary", H1),
           table([["Term", "Meaning"],

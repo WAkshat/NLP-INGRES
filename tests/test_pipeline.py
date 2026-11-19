@@ -26,7 +26,7 @@ def make(replies, max_repairs=2):
     p.con.execute("CREATE TABLE t(x)")
     p.con.execute("INSERT INTO t VALUES (1)")
     p.cfg = {"max_repairs": max_repairs, "k_cols": 5, "k_shots": 3}
-    p.llm, p.linker, p.places, p.TQ = FakeLLM(replies), None, None, None
+    p.llm, p.linker, p.places, p.TQ, p.snapper = FakeLLM(replies), None, None, None, None
     p.enc = type("E", (), {"encode": lambda self, xs, **k: [[0.0]]})()
     return p
 

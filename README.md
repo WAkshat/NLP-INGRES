@@ -1,90 +1,72 @@
 # INGRES-Text2SQL
 
-Multilingual (English / Hindi / Hinglish / a Dravidian language) Text-to-SQL research over
-India's official groundwater assessment data (**INGRES**, CGWB + IIT Hyderabad).
+Ask questions about India's official groundwater assessments in **English, Hindi, Hinglish or Tamil** and get a
+verified answer, the SQL that produced it, and the data. Built over the **INGRES** database (CGWB + IIT Hyderabad).
 
-> Status: **All 11 phases done.** Full pipeline: 71.9% execution accuracy on test (keyword baseline 32.6%, LLM zero-shot 18.0%).
-> **Start here: [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md)**, which explains the problem, tech stack, workflow, code,
-> all results and the remaining work. Status table: [`PROJECT_STATUS.md`](PROJECT_STATUS.md).
+> **Accuracy (execution accuracy, test split, 384 questions):** improved pipeline v3 **81.3%** · original pipeline
+> 72.1% · keyword/template baseline 32.6% · LLM alone 18.0%. Hard test (260): 70.4% vs 58.8%.
+> The shipped code (v3.1, with one later place-linker bug fix) scores 81.5% / 71.2%.
+> Everything runs locally: qwen3:8b (8.19 B parameters, 4-bit) on one RTX 5060 + a fine-tuned 117.65 M-parameter encoder.
 
-## 1. Problem
-INGRES publishes block/mandal/taluk-level groundwater assessments (recharge, extraction,
-stage of extraction, Safe / Semi-Critical / Critical / Over-Exploited categories) through a
-map-based portal. Answering questions such as *"Ludhiana ke kitne blocks over-exploited hain?"*
-or *"Which Punjab blocks moved from Critical to Over-Exploited between 2022 and 2025?"*
-requires navigating that portal by hand.
+**Documentation**
+- [`INGRES_COMPLETE_TECHNICAL_DEEP_DIVE.md`](INGRES_COMPLETE_TECHNICAL_DEEP_DIVE.md): the complete technical reference
+  (models, algorithms, execution trace, benchmarks, decisions, interview Q&A, fact sheet).
+- [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md): the project explained for the team and examiners.
+- `docs/00`–`09`: baseline audit, model specifications, architecture, features, benchmarks, design decisions,
+  reproducibility, interview preparation, roadmap, changelog and evidence ledger.
+- Phase reports: [`DATA_ACCESS_REPORT`](docs/DATA_ACCESS_REPORT.md) · [`INGRES_BENCH`](docs/INGRES_BENCH.md) ·
+  [`BASELINES`](docs/BASELINES.md) · [`SCHEMA_LINKING`](docs/SCHEMA_LINKING.md) · [`ENTITY_RESOLUTION`](docs/ENTITY_RESOLUTION.md) ·
+  [`TOKENIZATION`](docs/TOKENIZATION.md) · [`GROUNDING`](docs/GROUNDING.md) · [`PIPELINE`](docs/PIPELINE.md).
 
-## 2. Research question
-How well can a natural-language interface translate Indian multilingual and code-mixed questions
-into correct, executable SQL over the INGRES schema, and which components (schema linking,
-geographic entity resolution, tokenizer adaptation, numeric grounding, agentic decomposition)
-measurably improve **execution accuracy**? Hypotheses (to be tested, not assumed) are listed
-in `PROJECT_STATUS.md`.
+## Quick start
 
-## 3. Dataset
-Official INGRES data, crawled from the portal's public JSON endpoint and reconciled against the
-published national reports. Details, caveats and all numbers: [`docs/DATA_ACCESS_REPORT.md`](docs/DATA_ACCESS_REPORT.md).
-Schema: [`docs/INGRES_SCHEMA.md`](docs/INGRES_SCHEMA.md) / `data/schema/schema.json`.
-
-## 4. INGRES-Bench
-371 items × 4 languages (English, Hindi, Hinglish, Tamil) = 1,484 NL→SQL instances with executed gold results,
-4 difficulty levels, train/dev/test/hard-test splits. Construction protocol, QC and limitations:
-[`docs/INGRES_BENCH.md`](docs/INGRES_BENCH.md).
-
-## 5. Baselines, schema linking, entity resolution
-- Baselines (keyword/template EX 38.8%, local qwen3:8b zero-shot EX 18.2%, BM25 / embedding schema retrieval):
-  [`docs/BASELINES.md`](docs/BASELINES.md)
-- Learned schema linker (column recall@3 0.409 -> 0.896; 0.851 on unseen question types): [`docs/SCHEMA_LINKING.md`](docs/SCHEMA_LINKING.md)
-- Geographic entity resolver (top-1 0.84-0.89 on noisy names, 0.45 -> 0.97 on ambiguous names with context):
-  [`docs/ENTITY_RESOLUTION.md`](docs/ENTITY_RESOLUTION.md)
-
-## 6-11. Tokenization study, numeric grounding, pipeline, UI
-- Tokenization / code-mixing (Qwen3 fertility: English 2.04, Tamil 8.96; fragmentation does not explain accuracy;
-  linker hints +5.2 EX): [`docs/TOKENIZATION.md`](docs/TOKENIZATION.md)
-- Numeric grounding (LLM answers with unsupported numbers 0.83% → 0%; 98.1% of planted errors caught):
-  [`docs/GROUNDING.md`](docs/GROUNDING.md)
-- Full pipeline + ablations + error analysis (71.9% EX on test, 57.7% on hard_test; retrieved examples +36.5, place hints +4.4,
-  repair +1.6): [`docs/PIPELINE.md`](docs/PIPELINE.md). UI: `streamlit run app/streamlit_app.py`
-
-## 12. Evaluation methodology
-Primary metric: execution accuracy (Spider/BIRD style result-set comparison), 95% bootstrap CIs, paired McNemar tests.
-
-## 13. Results
-| System | test EX | hard_test EX |
-|---|---|---|
-| Keyword/template baseline | 32.6% | 30.8% |
-| qwen3:8b zero-shot | 18.0% | 13.1% |
-| Full pipeline | **71.9%** | **57.7%** |
-
-All results: [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md) section 7.
-
-## 14. Limitations
-See `docs/DATA_ACCESS_REPORT.md` §Limitations for data-level limitations.
-
-## 15. Reproduction
 ```bash
 pip install -r requirements.txt
-python scripts/crawl_ingres.py      # ~12 min per assessment year, resumable; raw JSON -> data/raw/ingres_api/
-python scripts/audit_data.py        # interim parquet + reports/data_audit.json
-python scripts/build_schema.py      # data/processed/ingres.db + data/schema/schema.json + docs/INGRES_SCHEMA.md
-python scripts/build_benchmark.py   # data/benchmark/*.jsonl (INGRES-Bench v1)
-python scripts/qc_benchmark.py      # benchmark quality control
-python scripts/run_baselines.py --baseline A
-python scripts/run_baselines.py --baseline D --backend ollama --model qwen3:8b   # needs Ollama running
-python scripts/run_schema_linking_baselines.py
-python scripts/train_schema_linker.py
-python scripts/train_entity_resolver.py
-python -m pytest
+ollama pull qwen3:8b            # Ollama 0.35.1 from ollama.com
+ollama serve
+streamlit run app/streamlit_app.py
+```
+Open http://localhost:8501. You need `data/processed/ingres.db` (21.8 MB) and the fine-tuned encoder
+`experiments/schema_linking/checkpoints/finetuned_e5/` (466 MB). Both are git-ignored: rebuild them with the commands in
+`docs/06_REPRODUCIBILITY.md` or copy them from a teammate.
+
+## The app
+
+| Page | What it does |
+|---|---|
+| 💬 **Ask** | Chat in 4 languages. Each answer shows a verification badge (every number checked against the result), the table (CSV download), an automatic chart, the SQL with any place-name corrections, and a trace: schema hints, resolved places, year labels, attempts, time per stage. Sidebar: example questions per language, and switches that turn pipeline components off for a live ablation |
+| 📊 **Explore** | Dashboards straight from the database, no LLM: stage of extraction, extraction, recharge and over-exploited units for any year and region; category donut; state or district bar chart; 25 most stressed units; category shares across cycles |
+| 📈 **Results** | Every measured accuracy and speed number, read from `experiments/` |
+
+## How it works
+
+```mermaid
+flowchart LR
+  Q[question] --> A[schema linker<br/>top-5 columns] --> P[prompt]
+  Q --> B[place linker<br/>Tamil-aware resolver] --> P
+  Q --> C[3 similar solved examples] --> P
+  Q --> D[year rule] --> P
+  P --> L[qwen3:8b] --> S[value snapping] --> X[read-only SQL] -->|error: repair x2| L
+  X --> V[answer + numeric verifier]
 ```
 
 ## Repository layout
 ```
-configs/            data.yaml (years, paths, crawl politeness)
-src/ingestion/      INGRES API client/crawler, raw->interim flattening, canonical DB builder
-src/normalization/  cross-year location crosswalk
-src/utils/          read-only SQL executor (authorizer-enforced)
-src/benchmark/      INGRES-Bench entity pool, lexicon, intents, builder
-scripts/            crawl / audit / build entry points
-data/raw|interim|processed|schema   (raw + interim + db are regenerable and git-ignored)
-docs/  reports/  tests/
+src/ingestion/  src/normalization/   crawl INGRES, flatten, cross-year crosswalk, build the SQLite DB
+src/utils/safe_sql.py                read-only SQL executor (SQLite authorizer)
+src/benchmark/                       INGRES-Bench v1 (371 items x 4 languages)
+src/evaluation/                      execution accuracy, bootstrap CIs
+src/baselines/                       keyword baseline; LLM clients + prompt
+src/schema_linking/                  BM25 / embedding retrievers, contrastive fine-tuning
+src/entity_resolution/               gazetteer, Tamil/Devanagari romanisation, LR ranker
+src/tokenization/  src/grounding/    tokenizer study; numeric verifier
+src/pipeline/                        full pipeline, place linker, year rule, value snapping
+app/                                 Streamlit app
+scripts/                             one entry point per experiment (+ model_forensics, benchmark_perf)
+experiments/                         every result file; docs/  reports/  tests/ (69 tests)
+```
+
+## Tests
+```bash
+python -m pytest     # 69 tests
 ```

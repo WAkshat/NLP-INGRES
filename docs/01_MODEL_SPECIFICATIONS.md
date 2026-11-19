@@ -44,12 +44,12 @@ No LoRA/PEFT adapters exist anywhere in the project.
 - The output projection is stored as a separate tensor (not tied to the input embedding in this file), so both are counted.
 - Trainable in INGRES: **0** (inference only).
 
-| Storage type | Parameters | Share |
-|---|---|---|
-| Q4_K (4-bit k-quant) | 6,511,132,672 | 79.5% |
-| Q6_K (6-bit k-quant) | 1,528,299,520 | 18.7% |
-| F16 | 150,994,944 | 1.8% |
-| F32 (norm weights) | 308,224 | 0.004% |
+| Storage type | Parameters | Share | Tensors |
+|---|---|---|---|
+| Q4_K (4-bit k-quant) | 6,511,132,672 | 79.5% | token embedding, Q/K/O projections, FFN gate/up, FFN down in 18 layers |
+| Q6_K (6-bit k-quant) | 1,528,299,520 | 18.7% | output head (622,329,856) + FFN down in the other 18 layers (905,969,664) |
+| F16 | 150,994,944 | 1.8% | attention V projection in all 36 layers |
+| F32 | 308,224 | 0.004% | RMSNorm weights |
 
 `general.file_type = 15` (llama.cpp "mostly Q4_K_M"). File size ÷ parameters = 5.10 bits per weight (includes vocabulary and metadata; derived).
 

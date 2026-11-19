@@ -19,7 +19,38 @@ Results: `experiments/entity_resolution/{results.json, per_mention.csv, errors_s
   Learned weights: edit ratio (+21.5) and embedding similarity (+10.6) dominate; state conflict is strongly
   penalised (-8.8); district context helps (+2.1).
 
-## Results (top-1 / top-3 accuracy)
+## Update 2026-11-17: Tamil romanisation bug fixed (audit finding B1)
+`romanise()` used `indic_transliteration`'s TAMIL→ISO scheme. That scheme reads every Tamil stop as a voiced aspirate:
+கர்நாடகா came out as `gharnadhagha` instead of `karnataka`, and திரிபுரா as `dhiribhura`. Tamil-script names therefore
+rarely matched INGRES spellings. Three changes:
+1. **A dedicated Tamil romaniser** (`romanise_tamil`, `src/entity_resolution/gazetteer.py:41`). It reads stops as unvoiced
+   (k, t, p, s), which is how Tamil writes both voiced and unvoiced sounds.
+2. **A voicing-neutral comparison space** (`devoice`, `gazetteer.py:88`) for mentions written in Tamil script:
+   g→k, d→t, b→p, j/s→c, h dropped, repeated letters collapsed. The resolver keeps two TF-IDF indexes and picks one per
+   mention (`Resolver._forms`, `resolver.py:67`).
+3. **Devanagari anusvara** is now homorganic (बंगाल → `bangala`, not `bamgala`).
+
+The ranker was retrained with the same seed, data and procedure (`python scripts/train_entity_resolver.py`). The
+baseline-v1 result files are kept in `experiments/entity_resolution/baseline_v1/`.
+
+| Top-1 (n per condition) | before | after | paired change |
+|---|---|---|---|
+| **Hand-written Tamil, no context** (273) | 0.568 | **0.806** | |
+| **Hand-written Tamil, with context** (273) | 0.645 | **0.857** | 128 fixed / 5 broken over both conditions, McNemar p = 6e-32 |
+| Hand-written Hindi, no / with context (273 each) | 0.780 / 0.835 | 0.817 / 0.857 | 19 fixed / 3 broken, p = 0.0009 |
+| Synthetic automatic Tamil, no / with context (855 each) | 0.688 / 0.768 | **0.841 / 0.902** | |
+| Synthetic, all other noise types | unchanged (±0.005) | | |
+| Historical respellings / ambiguous / colloquial | 0.689 / 0.710 / 0.500 | 0.689 / 0.710 / 0.500 | unchanged |
+| Hand-script overall (1,092) | 0.707 | **0.834** | |
+
+Top-3 on hand-written Tamil: 0.667 → 0.916 (no context). The claim in the original write-up, "Tamil is weakest because
+the script does not mark voicing", was incomplete: the main cause was this bug.
+Training also got faster: mention embeddings are now computed in one batch, and the run took 248 s instead of 364 s.
+
+Effect on full-question place linking (DEV, τ re-tuned on DEV = 0.9): F1 **0.852 → 0.905**. Tamil F1 0.654 → 0.833;
+Tamil recall at τ = 0.9: 0.725.
+
+## Results (top-1 / top-3 accuracy) — baseline-v1 (before the fix)
 
 | Evaluation set | n (per condition) | No context top-1 | top-3 | With context top-1 | top-3 |
 |---|---:|---:|---:|---:|---:|

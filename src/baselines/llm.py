@@ -20,7 +20,7 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-CACHE = ROOT / "cache/llm"
+CACHE = Path(os.environ.get("INGRES_LLM_CACHE", ROOT / "cache/llm"))   # override to start a fresh, separate response cache
 QUOTA_LOG = ROOT / "experiments/baselines/gemini_quota_log.jsonl"
 API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 
